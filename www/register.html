@@ -14,13 +14,22 @@
             <div layout layout-sm="column">
 
                 <md-input-container flex>
-                    <label>Username</label>
-                    <input ng-model="person.username" required md-minlenght="2" md-maxlength="10" name="username">
+                    <label>Full name:</label>
+                    <input ng-model="person.name" required md-minlenght="2" md-maxlength="65" name="name">
 
-                    <div ng-messages="registerForm.username.$error">
+                    <div ng-messages="registerForm.name.$error">
                         <div ng-message="required">This is required.</div>
-                        <div ng-message="md-maxlength">Username has to be less than 10 characters long.</div>
-                        <div ng-message="md-minlength">Username has to be minimum 2 characters long.</div>
+                        <div ng-message="md-maxlength">Name has to be less than 65 characters long.</div>
+                        <div ng-message="md-minlength">Name has to be minimum 2 characters long.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <label>Email:</label>
+                    <input ng-model="person.email" type="email" required name="email">
+
+                    <div ng-messages="registerForm.email.$error">
+                        <div ng-message="required">This is required.</div>
                     </div>
                 </md-input-container>
 
