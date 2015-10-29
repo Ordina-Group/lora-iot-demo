@@ -8,10 +8,6 @@
     function EndGameCtrl($scope, $location) {
         console.log("EndGameCtrl loaded");
 
-        $scope.name = window.sessionStorage.getItem('name');
 
-        $scope.newGame = function() {
-            $location.path('/register');
-        }
     }
 })();
