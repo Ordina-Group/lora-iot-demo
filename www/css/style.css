@@ -153,12 +153,34 @@ p.title{
 	border-top: 20px dotted #A48E4E;
 }
 
+ .dialogdemoBasicUsage #popupContainer {
+	 position: relative;
+ }
+
+ .dialogdemoBasicUsage .debt-be-gone {
+	 font-weight: bold;
+	 color: blue;
+	 text-decoration: underline;
+ }
+
+ .dialogdemoBasicUsage .footer {
+	 width: 100%;
+	 text-align: center;
+	 margin-left: 20px;
+ }
+
+ .dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+	 font-size: 0.8em;
+	 margin-top: 50px;
+ }
+
  .containerslotmain {
 	text-align: center;
 	margin:0 auto;
 	 position:absolute;
 	 left:-80px;
-}
+
+ }
 
 .machineDiv{
 	position:absolute;
@@ -178,6 +200,7 @@ p.title{
 	top:390px;
 	left:206px;
 	width:900px;
+
 }
 .slotMachine{
 	width: 250px;

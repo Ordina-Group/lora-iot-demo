@@ -15,12 +15,7 @@
         .config(function ($routeProvider) {
             $routeProvider
                 .when('/', {
-                    redirectTo: '/register'
-                })
-
-                .when('/register', {
-                    templateUrl: 'register.html',
-                    controller: 'RegisterCtrl'
+                    redirectTo: '/game'
                 })
                 .when('/game', {
                     templateUrl: 'game.html',

@@ -1,7 +1,8 @@
-<div style="position:relative;">
-		<div class="containerslotmain">
+<div ng-init="showAdvanced($event)" style="position:relative; z-index: 0">
 
-			<div class="machineDiv">
+	<div class="containerslotmain">
+
+		<div class="machineDiv">
 				<img src="img/machine.png" />
 			</div>
 			<div class="slotsRelative">
@@ -40,5 +41,10 @@
 				
 				</div>
 			</div>
+
+
+</div>
+<div class="md-padding" style="z-index: -2;" id="popupContainer" ng-cloak>
+
 
 </div>

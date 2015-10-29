@@ -4,9 +4,27 @@
 
     angular.module('devoxx')
         .controller('GameCtrl', GameCtrl);
-    GameCtrl.$inject = ['$scope', '$location'];
+    GameCtrl.$inject = ['$scope', '$location', '$mdDialog'];
 
-    function GameCtrl($scope, $location) {
+    function GameCtrl($scope, $location, $mdDialog) {
+        $scope.status = '  ';
+
+
+        $scope.showAdvanced = function (ev) {
+            $mdDialog.show({
+                templateUrl: 'register.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            })
+                .then(function (answer) {
+                    $scope.status = 'You said the information was "' + answer + '".';
+                }, function () {
+                    $scope.status = 'You cancelled the dialog.';
+                });
+        };
+
+
 
         $(document).ready(function () {
             var machine1 = $("#machine1").slotMachine({

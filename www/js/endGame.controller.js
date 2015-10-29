@@ -11,7 +11,7 @@
         $scope.name = window.sessionStorage.getItem('name');
 
         $scope.newGame = function() {
-            $location.path('/register');
+            $location.path('/game');
         }
     }
 })();

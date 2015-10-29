@@ -1,17 +1,15 @@
-<style>
 
-
-</style>
 <header>
-    <img style="margin-left: 15%" src="img/ordinalogo.png">
+    <img src="img/ordinalogo.png">
 </header>
-<form name="registerForm">
+
+<form name="registerForm" ng-controller="RegisterCtrl">
     <md-content>
         <form name="userForm">
             <div layout="column" layout-wrap>
 
 
-                <md-input-container style="margin-left: 30%;padding-top: 5%;" flex="30">
+                <md-input-container style="margin-left: 30%;padding-top: 2%;" flex="30">
                     <label>Full name:</label>
                     <input flex="50" ng-model="person.name" required md-minlenght="2" name="name">
 

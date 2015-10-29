@@ -4,9 +4,9 @@
 
     angular.module('devoxx')
         .controller('RegisterCtrl', RegisterCtrl);
-    RegisterCtrl.$inject = ['$scope', '$location', '$mdToast', '$timeout'];
+    RegisterCtrl.$inject = ['$scope', '$location', '$mdToast', '$timeout', '$mdDialog'];
 
-    function RegisterCtrl($scope, $location, $mdToast, $timeout) {
+    function RegisterCtrl($scope, $location, $mdToast, $timeout, $mdDialog) {
 
         console.log("gamectrl loaded");
         var last = {
@@ -33,6 +33,15 @@
             last = angular.extend({}, current);
         }
 
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
+        $scope.answer = function (answer) {
+            $mdDialog.hide(answer);
+        };
         $scope.validate = function (person) {
 
             if ($scope.registerForm.$valid) {
@@ -40,7 +49,7 @@
                 window.sessionStorage.setItem('email', person.email);
                 $scope.showActionToast();
                 $timeout(function () {
-                    $location.path('/game')
+                    $mdDialog.cancel();
                 }, 1000);
 
 
