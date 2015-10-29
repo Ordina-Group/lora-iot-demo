@@ -24,7 +24,9 @@
                 });
         };
 
-
+        var index1 = 0;
+        var index2 = 0;
+        var index3 = 0;
 
         $(document).ready(function () {
             var machine1 = $("#machine1").slotMachine({
@@ -45,15 +47,30 @@
             function onComplete(active) {
                 switch (this.element[0].id) {
                     case 'machine1':
-                        $("#machine1Result").text("Index: " + this.active);
+                        index1 = this.active;
                         break;
                     case 'machine2':
-                        $("#machine2Result").text("Index: " + this.active);
+                        index2 = this.active;
                         break;
                     case 'machine3':
-                        $("#machine3Result").text("Index: " + this.active);
+                        index3 = this.active;
+
+                        if(index1 == index2 && index2 == index3)
+                            setTimeout(startFireworks, 500);
                         break;
                 }
+            }
+
+            function startFireworks(){
+                document.body.appendChild(canvas);
+                canvas.width = SCREEN_WIDTH;
+                canvas.height = SCREEN_HEIGHT;
+                setInterval(launch, 100);
+                setInterval(launch, 200);
+                setInterval(launch, 300);
+                setInterval(launch, 400);
+                setInterval(launch, 500);
+                setInterval(loop, 1000 / 60);
             }
 
             $("#slotMachineButton1").click(function () {
