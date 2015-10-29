@@ -18,9 +18,7 @@ html {
     position: relative;
     min-height: 100%;
 }
-body {
-	background:#000;
-}
+
 footer {
     position: absolute;
     left: 0;
@@ -155,7 +153,7 @@ p.title{
 	border-top: 20px dotted #A48E4E;
 }
 
-.container{
+ .containerslotmain {
 	text-align: center;
 	margin:0 auto;
 	width:1300px;
