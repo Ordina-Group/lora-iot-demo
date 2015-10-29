@@ -2,7 +2,8 @@
   "name": "bowerdev",
   "homepage": "https://github.com/ordina-oraj/Devoxx-Booth",
   "authors": [
-    "kevindahub <kevin.van.houtte1@gmail.com>"
+    "kevindahub <kevin.van.houtte1@gmail.com>",
+    "beele <kevin.vandenabeele@ordina.be>"
   ],
   "description": "libs for devoxx booth",
   "main": "bower",
