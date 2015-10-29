@@ -42,11 +42,14 @@ var Server = function() {
      */
     function mapRestEndpoints() {
         var GenericEndpoints    = require("./../../services/genericendpoints");
+        var RegisterService     = require("./../../services/datalogging/registerService");
 
         var genericEndpoints    = new GenericEndpoints();
+        var registerService     = new RegisterService();
         return {
             "/"                             : {execute : genericEndpoints.index,                       params: null},
-            "/upload"                       : {execute : genericEndpoints.upload,                      params: null},
+            "/register"                     : {execute : registerService.register,                     params: null},
+            "/upload"                       : {execute : genericEndpoints.upload,                      params: null}
         };
     }
 

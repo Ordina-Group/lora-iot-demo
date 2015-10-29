@@ -1,5 +1,5 @@
 var ArduinoService = function() {
-    var logger          = require("../../logging/logger").makeLogger("SERV-ARDUIN---");
+    var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
     var ws              = require("nodejs-websocket");
 
