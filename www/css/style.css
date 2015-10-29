@@ -1,0 +1,316 @@
+ @charset "utf-8";
+/* CSS Document */
+
+@import url(http://fonts.googleapis.com/css?family=Pathway+Gothic+One);
+
+a{
+	color: #ccd500;
+	text-decoration: none;
+}
+a:hover{
+	text-decoration: underline;
+	color: #a9b119;
+}
+.clear {
+    clear: both;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+	background:#000;
+}
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background: black;
+}
+b{
+	font-weight: 600;
+}
+
+
+/* Titulos
+-------------------------------------------------------------------------*/
+h1{
+	width: 100%;
+	color: #000000;
+	font-size: 40px;
+	margin-bottom: 25px;
+}
+h2{
+	color: #000000;
+    display: table-cell;
+    float: left;
+    font-size: 45px;
+    line-height: 40px;
+    margin: 0 0 50px;
+    text-align: center;
+    width: 100%;
+    font-weight: 300;
+}
+h2 span{
+	font-weight: 400;
+}
+h3{
+	float: left;
+	width: 100%;
+	margin: 0 0 20px 0;
+	color: white;
+	font-size:40px;
+	font-family: 'Lato', 'sans-serif';
+	font-weight: 300;
+}
+h4{
+	color: #ffffff;
+    display: table-cell;
+    float: left;
+    font-size: 35px;
+    line-height: 31px;
+    margin: 0 0 0;
+    text-align: center;
+    width: 100%;
+    font-weight: 400;
+}
+
+p.title{
+	color: #000000;
+    display: table-cell;
+    float: left;
+    font-size: 45px;
+    line-height: 40px;
+    margin: 0 0 50px;
+    text-align: center;
+    width: 100%;
+    font-weight: 300;
+}
+
+.grey {	color:#444;}
+
+/* INICIO
+-------------------------------------------------------------------------*/
+#header{
+	margin: 0 auto 0;
+	width: 100%;
+	position: absolute;
+	text-align: center;
+	top: 0px;
+	background-color: #6C5726;
+	overflow: hidden;
+	position: relative;
+	padding: 50px 0px;
+    border-top: 10px solid #A48E4E;
+    border-bottom: 10px solid #A48E4E;
+}
+#header table, #footer table{
+	height: 100%;
+	width: 100%;
+}
+#header table td, #footer table td{
+	vertical-align: middle;
+}
+#header .content{
+	color: #FFFFFF;
+    float: left;
+    font-size: 50px;
+    font-weight: 300;
+    line-height: 42px;
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+#header .content, #footer .content{
+	font-family: 'Pathway Gothic One';
+	color: #ffffff;
+    float: left;
+    font-size: 70px;
+    font-weight: 300;
+    line-height: 80px;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    padding: 30px 0px;
+}
+#header .content > div, #footer .content > div{
+	display: inline-block;
+}
+
+#footer{
+	width:100%;
+	background-color: #6C5726;
+	border-top: 20px dotted #A48E4E;
+	height: 200px;
+}
+
+
+.line{
+	background-color: #DCD293;
+	padding: 50px 0px 25px 0px;
+	width:100%;
+	border-top: 20px dotted #A48E4E;
+}
+
+.container{
+	text-align: center;
+	margin:0 auto;
+	width:1300px;
+	height:955px;
+}
+
+.machineDiv{
+	position:absolute;
+	z-index:100;
+}
+
+.slotsRelative{
+	margin:0 auto;
+	width:1300px;
+	height:955px;
+	position:relative;
+}
+
+.machineContainer{
+	padding: 5px 1px 5px 1px;
+	overflow: hidden;
+	height: 240px;
+	position:absolute;
+	top:390px;
+	left:206px;
+	width:900px;
+}
+.slotMachine{
+	width: 250px;
+	height: 240px;
+	padding: 0px;
+	margin-right:14px;
+	overflow: hidden;
+	display: inline-block;
+	text-align: center;
+	/*margin: 0px 5px;*/
+	/*border: 5px solid #000;*/
+	background-color: #fefefe;
+}
+.machineResult{
+	color:#fff;
+	text-align:center;
+	font-weight: 900;
+}
+.noBorder{
+	border:none !important;
+	background: transparent !important;
+}
+.slotMachine .slot{
+	height:240px;
+	background-position-x: 55%;
+	background-repeat: no-repeat;
+}
+.slot1{
+	background-image: url("../img/slot1.png");
+}
+.slot2{
+	background-image: url("../img/slot2.png");
+}
+.slot3{
+	background-image: url("../img/slot3.png");
+}
+.slot4{
+	background-image: url("../img/slot4.png");
+}
+.slot5{
+	background-image: url("../img/slot5.png");
+}
+.slot6{
+	background-image: url("../img/slot6.png");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#textMachine, #textMachine2{
+	width:520px;
+	height: 67px;
+	overflow: hidden;
+	display: inline-block;
+	text-align: left;
+}
+#textMachine > *, #textMachine2 > *{
+	padding: 0px 0px;
+}
+
+
+
+.slotMachineButtonContainer{
+	position:absolute;
+	width:1300px;
+	top:850px;
+	margin: 0 auto;
+	z-index:200;
+	text-align:center;
+}
+
+.slotMachineButton{
+	width:140px;
+	height: 140px;
+	overflow: hidden;
+	display: inline-block;
+	text-align: center;
+}
+.slotMachineButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ff0000;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ff0000;
+	box-shadow:inset 0px 1px 0px 0px #ff0000;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff3d3d), color-stop(1, #ff0000) );
+	background:-moz-linear-gradient( center top, #ff3d3d 5%, #ff0000 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3d3d', endColorstr='#ff0000');
+	background-color:#ff1212;
+	border-radius: 75px;
+	text-indent:0px;
+	border:6px solid #cc0000;
+	display:inline-block;
+	color:#ffffff;
+	font-size:40px;
+	font-weight:bold;
+	font-style:normal;
+	height:140px;
+	line-height:140px;
+	margin-top:10px;
+	width:140px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #cc9f52;
+	cursor:pointer;
+}
+.slotMachineButton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff0000), color-stop(1, #ff3d3d) );
+	background:-moz-linear-gradient( center top, #ff0000 5%, #ff3d3d 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ff3d3d');
+	background-color:#ff3d3d;
+}.slotMachineButton:active {
+	position:relative;
+	top:1px;
+}
+
+
