@@ -1,40 +1,25 @@
-<style>
-    #endGame {
-        border: solid 1px black;
-        margin: auto;
-        padding: 10px;
-        width: 992px;
-    }
-
-    h1 {
-        text-transform: uppercase;
-    }
-
-    #newGame {
-        background-color: transparent;
-        border: solid 2px #E98321;
-        color: #E98321;
-        padding: 5px 8px 5px 8px;
-        cursor: pointer;
-        text-transform: uppercase;
-    }
-
-    #newGame:hover {
-        background-color: #E98321;
-        color: white;
-    }
-</style>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/endGame.css"/>
+</head>
 
 <div id="endGame">
-    <h1>End Game</h1>
+    <header>
+        <img src="img/ordinalogo.png"/>
+    </header>
 
-    <div>
-        <p>Congratulations, you'll receive your award in a minute!</p>
+    <div class="container">
+        <p>Congratulations, you won! You'll receive your award in a minute!</p>
+        <img src="img/cup.png"/>
     </div>
 
-    <div>
-        <p>Unfortunately, you didn't win... Better luck next time!</p>
+    <div class="container">
+        <p>Oops, looks like you didn't win... Better luck next time!</p>
+        <img src="img/smileysad.png"/>
     </div>
 
-    <button id="newGame"><strong>New Game</strong></button>
+    <div class="thanks">
+        <p>Thanks for visiting our booth, {{name}}!</p>
+    </div>
+
+    <button id="newGame" ng-click="newGame"><strong>New Game</strong></button>
 </div>
