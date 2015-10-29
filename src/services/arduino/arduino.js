@@ -1,6 +1,6 @@
 var ArduinoService = function() {
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUIN---");
-    var arduino         = require('duino');
+    var arduino         = require("johnny-five");
     var ws              = require("nodejs-websocket");
 
     //Private variables.
@@ -15,15 +15,13 @@ var ArduinoService = function() {
     this.setupArduino = function() {
         if(board !== null && socketServer !== null) {
             logger.INFO("Arduino and websocket already up and running.");
-            return;
         } else {
             //TODO: Stale checks and reinit if required!
 
             socketServer = ws.createServer(onConnection).listen(8081);
 
-            //TODO: Swap out for better arduino lib!
-            //board = new arduino.Board({debug: false});
-            //board.on('ready', onArduinoReady);
+            board = new arduino.Board();
+            board.on('ready', onArduinoReady);
         }
     };
 
@@ -33,17 +31,12 @@ var ArduinoService = function() {
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     function onArduinoReady() {
-        var led = new arduino.Led({
-            board: board,
-            pin: 12
-        });
+        var led = new arduino.Led(12);
 
-        var button = new arduino.Button(
-            {
-                board: board,
-                pin: 2
-            }
-        );
+        var button = new arduino.Button(2);
+        board.repl.inject({
+            button: button
+        });
 
         button.on('down', function(){
             logger.DEBUG('Button pressed');
@@ -59,6 +52,10 @@ var ArduinoService = function() {
             broadcastMessage({"status" : "false"});
         });
     }
+
+    /*
+    * Web socket functions
+     */
 
     function onConnection(connection) {
         logger.DEBUG("New connection");
