@@ -1,17 +1,17 @@
 
 <header>
-    <img src="img/ordinalogo.png">
+    <img style="padding-top:7%" src="img/ordinalogo.png">
 </header>
 
-<form name="registerForm" ng-controller="RegisterCtrl">
+<form name="registerForm" ng-controller="RegisterCtrl" style="padding-bottom: 7%">
     <md-content>
         <form name="userForm">
             <div layout="column" layout-wrap>
 
 
-                <md-input-container style="margin-left: 30%;padding-top: 2%;" flex="30">
+                <md-input-container style="margin-left: 18%;padding-top: 7%;" flex="80">
                     <label>Full name:</label>
-                    <input flex="50" ng-model="person.name" required md-minlenght="2" name="name">
+                    <input flex="80" ng-model="person.name" required md-minlenght="2" name="name">
 
                     <div ng-messages="registerForm.name.$error">
                         <div ng-message="required">This is required.</div>
@@ -19,9 +19,9 @@
                     </div>
                 </md-input-container>
 
-                <md-input-container style="margin-left: 30%;" flex="50">
+                <md-input-container style="margin-left: 18%;" flex="70">
                     <label>Email:</label>
-                    <input flex="50" ng-model="person.email" type="email" required name="email">
+                    <input flex="80" ng-model="person.email" type="email" required name="email">
 
                     <div ng-messages="registerForm.email.$error">
                         <div ng-message="required">This is required.</div>
