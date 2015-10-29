@@ -1,7 +1,40 @@
 <style>
+    #endGame {
+        border: solid 1px black;
+        margin: auto;
+        padding: 10px;
+        width: 992px;
+    }
 
+    h1 {
+        text-transform: uppercase;
+    }
+
+    #newGame {
+        background-color: transparent;
+        border: solid 2px #E98321;
+        color: #E98321;
+        padding: 5px 8px 5px 8px;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+    #newGame:hover {
+        background-color: #E98321;
+        color: white;
+    }
 </style>
 
-<div>
+<div id="endGame">
+    <h1>End Game</h1>
 
+    <div>
+        <p>Congratulations, you'll receive your award in a minute!</p>
+    </div>
+
+    <div>
+        <p>Unfortunately, you didn't win... Better luck next time!</p>
+    </div>
+
+    <button id="newGame"><strong>New Game</strong></button>
 </div>
