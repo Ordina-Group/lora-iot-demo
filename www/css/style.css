@@ -156,8 +156,8 @@ p.title{
  .containerslotmain {
 	text-align: center;
 	margin:0 auto;
-	width:1300px;
-	height:955px;
+	 position:absolute;
+	 left:-80px;
 }
 
 .machineDiv{
@@ -167,8 +167,6 @@ p.title{
 
 .slotsRelative{
 	margin:0 auto;
-	width:1300px;
-	height:955px;
 	position:relative;
 }
 
