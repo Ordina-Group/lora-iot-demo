@@ -32,7 +32,9 @@ $(document).mousedown(function(e) {
 });
 
 function launch() {
-  launchFrom(mousePos.x);
+  for (var i = 0; i < 5; i++) {
+    launchFrom(Math.random() * SCREEN_WIDTH * 2 / 3 + SCREEN_WIDTH / 6);
+  }
 }
 
 function launchFrom(x) {

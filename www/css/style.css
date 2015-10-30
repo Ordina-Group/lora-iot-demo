@@ -288,15 +288,15 @@ p.title{
 .slotMachineButtonContainer{
 	position:absolute;
 	width:1300px;
-	top:850px;
+	top:820px;
 	margin: 0 auto;
 	z-index:200;
 	text-align:center;
 }
 
 .slotMachineButton{
-	width:140px;
-	height: 140px;
+	width:200px;
+	height: 200px;
 	overflow: hidden;
 	display: inline-block;
 	text-align: center;
@@ -309,18 +309,18 @@ p.title{
 	background:-moz-linear-gradient( center top, #ff3d3d 5%, #ff0000 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3d3d', endColorstr='#ff0000');
 	background-color:#ff1212;
-	border-radius: 75px;
+	border-radius: 100px;
 	text-indent:0px;
 	border:6px solid #cc0000;
 	display:inline-block;
 	color:#ffffff;
-	font-size:40px;
+	font-size:45px;
 	font-weight:bold;
 	font-style:normal;
-	height:140px;
-	line-height:140px;
+	height:200px;
+	line-height:190px;
 	margin-top:10px;
-	width:140px;
+	width:200px;
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #cc9f52;

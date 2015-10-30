@@ -61,16 +61,25 @@
                 }
             }
 
+            var intervalLaunch;
+            var intervalLoop;
+
             function startFireworks(){
                 document.body.appendChild(canvas);
                 canvas.width = SCREEN_WIDTH;
                 canvas.height = SCREEN_HEIGHT;
-                setInterval(launch, 100);
-                setInterval(launch, 200);
-                setInterval(launch, 300);
-                setInterval(launch, 400);
-                setInterval(launch, 500);
-                setInterval(loop, 1000 / 60);
+                intervalLaunch = setInterval(launch, 500);
+                intervalLoop = setInterval(loop, 1000 / 60);
+            }
+
+            function stopFireworks(){
+                clearInterval(intervalLaunch);
+                clearInterval(intervalLoop);
+                context.fillStyle = "rgba(0, 0, 0, 1)";
+                context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+                document.body.removeChild(canvas);
+                particles = [];
+                rockets = [];
             }
 
             $("#slotMachineButton1").click(function () {
