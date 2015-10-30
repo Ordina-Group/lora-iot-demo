@@ -32,17 +32,17 @@
         $(document).ready(function () {
             var machine1 = $("#machine1").slotMachine({
                 active: 1,
-                delay: 500
+                delay: 300
             });
 
             var machine2 = $("#machine2").slotMachine({
                 active: 1,
-                delay: 500
+                delay: 300
             });
 
             var machine3 = $("#machine3").slotMachine({
                 active: 1,
-                delay: 500
+                delay: 300
             });
 
             function onComplete(active) {
@@ -68,8 +68,9 @@
                     parent: angular.element(document.body),
                     clickOutsideToClose: false
                 }).then(function (answer) {
-                }, function () {
+                    $scope.showAdvanced(this);
                     stopFireworks();
+                }, function () {
                 });
             }
 
@@ -89,7 +90,11 @@
                 clearInterval(intervalLoop);
                 context.fillStyle = "rgba(0, 0, 0, 1)";
                 context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-                document.body.removeChild(canvas);
+                try {
+                    document.body.removeChild(canvas);
+                }catch(e){
+
+                }
                 particles = [];
                 rockets = [];
             }
