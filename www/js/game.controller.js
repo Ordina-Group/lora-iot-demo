@@ -57,7 +57,7 @@
                         }
                         window.sessionStorage.setItem('winner', (winner? 1 : 0));
 
-                        showEndGame();
+                        setTimeout(showEndGame, 500);
                         break;
                 }
             }
@@ -87,15 +87,14 @@
             }
 
             function stopFireworks(){
+                document.getElementById('fireworks').pause();
                 clearInterval(intervalLaunch);
                 clearInterval(intervalLoop);
                 context.fillStyle = "rgba(0, 0, 0, 1)";
                 context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
                 try {
                     document.body.removeChild(canvas);
-                }catch(e){
-
-                }
+                }catch(e){}
                 particles = [];
                 rockets = [];
             }
