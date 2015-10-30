@@ -41,6 +41,8 @@
                 delay: 300
             });
 
+            var played = false;
+
             function onComplete(active) {
                 switch (this.element[0].id) {
                     case 'machine3':
@@ -50,8 +52,7 @@
                             winner = true;
                         }
                         window.sessionStorage.setItem('winner', (winner? 1 : 0));
-
-                        setTimeout(showEndGame, 500);
+                        setTimeout(showEndGame, 1500);
                         break;
                 }
             }
@@ -64,6 +65,7 @@
                 }).then(function (answer) {
                     $scope.showAdvanced(this);
                     stopFireworks();
+                    played = false;
                 }, function () {
                 });
             }
@@ -93,19 +95,22 @@
                 rockets = [];
             }
 
+
             $("#slotMachineButton1").click(function () {
-                document.getElementById('roller').play()
+                if(!played) {
+                    played = true;
 
-                machine1.shuffle(5, onComplete);
+                    document.getElementById('roller').play()
+                    machine1.shuffle(5, onComplete);
 
-                setTimeout(function () {
-                    machine2.shuffle(5, onComplete);
-                }, 500);
+                    setTimeout(function () {
+                        machine2.shuffle(5, onComplete);
+                    }, 500);
 
-                setTimeout(function () {
-                    machine3.shuffle(5, onComplete);
-                }, 1000);
-
+                    setTimeout(function () {
+                        machine3.shuffle(5, onComplete);
+                    }, 1000);
+                }
             })
         });
 
