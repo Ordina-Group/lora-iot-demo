@@ -7,6 +7,7 @@
     RegisterCtrl.$inject = ['$scope', '$mdToast', '$timeout', '$mdDialog', 'Restangular'];
 
     function RegisterCtrl($scope, $mdToast, $timeout, $mdDialog, Restangular) {
+        window.sessionStorage.clear();
 
         var last = {
             bottom: false,

@@ -25,10 +25,6 @@
                 });
         };
 
-        var index1 = 0;
-        var index2 = 0;
-        var index3 = 0;
-
         $(document).ready(function () {
             var machine1 = $("#machine1").slotMachine({
                 active: 1,
@@ -48,8 +44,6 @@
             function onComplete(active) {
                 switch (this.element[0].id) {
                     case 'machine3':
-                        index3 = this.active;
-
                         var winner = false;
                         if (machine1.active == machine2.active && machine2.active == machine3.active) {
                             setTimeout(startFireworks, 900);

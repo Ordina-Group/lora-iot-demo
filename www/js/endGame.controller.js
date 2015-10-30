@@ -15,7 +15,6 @@
 
         $scope.newGame = function() {
             $mdDialog.hide();
-            window.sessionStorage.clear();
             //$window.location.reload();
         }
     }
