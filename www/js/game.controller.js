@@ -48,7 +48,7 @@
                     case 'machine3':
                         var winner = false;
                         if (machine1.active == machine2.active && machine2.active == machine3.active) {
-                            setTimeout(startFireworks, 900);
+                            setTimeout(startFireworks, 1500);
                             winner = true;
                         }
                         window.sessionStorage.setItem('winner', (winner? 1 : 0));
@@ -86,8 +86,6 @@
                 document.getElementById('fireworks').pause();
                 clearInterval(intervalLaunch);
                 clearInterval(intervalLoop);
-                context.fillStyle = "rgba(0, 0, 0, 1)";
-                context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
                 try {
                     document.body.removeChild(canvas);
                 }catch(e){}
