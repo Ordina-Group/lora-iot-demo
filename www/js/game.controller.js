@@ -78,6 +78,7 @@
             var intervalLoop;
 
             function startFireworks(){
+                document.getElementById('fireworks').play()
                 document.body.appendChild(canvas);
                 canvas.width = SCREEN_WIDTH;
                 canvas.height = SCREEN_HEIGHT;
