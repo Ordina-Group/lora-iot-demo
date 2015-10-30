@@ -9,7 +9,9 @@
         console.log("EndGameCtrl loaded");
 
         $scope.name = window.sessionStorage.getItem('name');
-        $scope.winner = window.sessionStorage.getItem('winner');
+        $scope.winner = function (){
+            return window.sessionStorage.getItem('winner') == 1;
+        }
 
         $scope.newGame = function() {
             $location.path('/game');

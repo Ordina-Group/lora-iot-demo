@@ -1,12 +1,12 @@
 <md-dialog style="background: transparent;top:250px;">
     <div ng-controller="EndGameCtrl" id="endGame">
 
-    <div ng-show="winner" class="endGamecon">
+    <div id="divWinner" ng-if="winner()" class="endGamecon">
         <p>Congratulations, you won! You'll receive your award in a minute!</p>
         <img src="img/cup.png"/>
     </div>
 
-    <div ng-hide="winner" class="endGamecon">
+    <div id="divLoser" ng-if="!winner()" class="endGamecon">
         <p>Oops, looks like you didn't win...<br />Better luck next time!</p>
         <img src="img/smileysad.png"/>
     </div>
@@ -15,8 +15,7 @@
         <p>Thanks for visiting our booth, {{name}}!</p>
     </div>
 
-        <md-button style="padding: 2px 10px 2px 10px;background-color: #E68524;margin-bottom:25px;"
-        class="md-raised md-primary"
-        ng-click="validate(person)">New game</md-button>
+        <md-button id="newGame" ng-click="newGame" style="padding: 2px 10px 2px 10px;background-color: #E68524;margin-bottom:25px;"
+        class="md-raised md-primary" >New game</md-button>
 </div>
     </md-dialog>

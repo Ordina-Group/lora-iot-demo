@@ -35,19 +35,3 @@
 .thanks p {
     color: limegreen;
 }
-
-#newGame {
-    background-color: transparent;
-    border: solid 2px #E98321;
-    box-shadow: 0px 0px 3px #888888;
-    color: #E98321;
-    font-size: 20px;
-    padding: 5px 8px 5px 8px;
-    cursor: pointer;
-    text-transform: uppercase;
-}
-
-#newGame:hover {
-    background-color: #E98321;
-    color: white;
-}
