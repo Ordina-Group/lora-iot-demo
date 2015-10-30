@@ -21,12 +21,6 @@
                     templateUrl: 'game.html',
                     controller: 'GameCtrl'
                 })
-                .when('/endGame', {
-                    templateUrl: 'endGame.html',
-                    controller: 'endGameCtrl'
-                })
-
-
                 .otherwise({
                     redirectTo: '/'
                 });

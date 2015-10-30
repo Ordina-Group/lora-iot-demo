@@ -9,6 +9,7 @@
     function GameCtrl($scope, $location, $mdDialog) {
         $scope.status = '  ';
 
+        $scope.name = window.sessionStorage.getItem('name');
 
         $scope.showAdvanced = function (ev) {
             $mdDialog.show({
@@ -49,10 +50,14 @@
                     case 'machine3':
                         index3 = this.active;
 
+                        var winner = false;
                         if (machine1.active == machine2.active && machine2.active == machine3.active) {
                             setTimeout(startFireworks, 900);
+                            winner = true;
                         }
-                       showEndGame();
+                        window.sessionStorage.setItem('winner', (winner? 1 : 0));
+
+                        showEndGame();
                         break;
                 }
             }
