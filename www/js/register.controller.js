@@ -4,11 +4,10 @@
 
     angular.module('devoxx')
         .controller('RegisterCtrl', RegisterCtrl);
-    RegisterCtrl.$inject = ['$scope', '$location', '$mdToast', '$timeout', '$mdDialog'];
+    RegisterCtrl.$inject = ['$scope', '$mdToast', '$timeout', '$mdDialog', 'Restangular'];
 
-    function RegisterCtrl($scope, $location, $mdToast, $timeout, $mdDialog) {
+    function RegisterCtrl($scope, $mdToast, $timeout, $mdDialog, Restangular) {
 
-        console.log("gamectrl loaded");
         var last = {
             bottom: false,
             top: true,
@@ -32,7 +31,6 @@
             if (current.left && last.right) current.right = false;
             last = angular.extend({}, current);
         }
-
         $scope.hide = function () {
             $mdDialog.hide();
         };
@@ -47,12 +45,11 @@
             if ($scope.registerForm.$valid) {
                 window.sessionStorage.setItem('name', person.name);
                 window.sessionStorage.setItem('email', person.email);
+                //Restangular.all('register').post(person);
                 $scope.showActionToast();
                 $timeout(function () {
                     $mdDialog.cancel();
                 }, 1000);
-
-
             }
         };
         $scope.showActionToast = function () {
@@ -61,14 +58,5 @@
                 .position($scope.getToastPosition());
             $mdToast.show(toast);
         }
-
     }
-
-    angular.module('devoxx')
-        .controller('ToastCtrl', function ($scope, $mdToast) {
-            $scope.closeToast = function () {
-                $mdToast.hide();
-            };
-        });
-
 })();

@@ -90,6 +90,7 @@
             }
 
             $("#slotMachineButton1").click(function () {
+                document.getElementById('roller').play()
 
                 machine1.shuffle(5, onComplete);
 
