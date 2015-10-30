@@ -1,19 +1,13 @@
-<head>
-    <link rel="stylesheet" type="text/css" href="css/endGame.css"/>
-</head>
+<md-dialog style="background: transparent;top:250px;">
+    <div id="endGame">
 
-<div id="endGame">
-    <header>
-        <img src="img/ordinalogo.png"/>
-    </header>
-
-    <div class="container">
+    <div class="endGamecon">
         <p>Congratulations, you won! You'll receive your award in a minute!</p>
         <img src="img/cup.png"/>
     </div>
 
-    <div class="container">
-        <p>Oops, looks like you didn't win... Better luck next time!</p>
+    <div class="endGamecon" style="display:none">
+        <p>Oops, looks like you didn't win...<br />Better luck next time!</p>
         <img src="img/smileysad.png"/>
     </div>
 
@@ -21,5 +15,8 @@
         <p>Thanks for visiting our booth, {{name}}!</p>
     </div>
 
-    <button id="newGame" ng-click="newGame"><strong>New Game</strong></button>
+        <md-button style="padding: 2px 10px 2px 10px;background-color: #E68524;margin-bottom:25px;"
+        class="md-raised md-primary"
+        ng-click="validate(person)">New game</md-button>
 </div>
+    </md-dialog>

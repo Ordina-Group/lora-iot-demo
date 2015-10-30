@@ -31,34 +31,41 @@
         $(document).ready(function () {
             var machine1 = $("#machine1").slotMachine({
                 active: 1,
-                delay: 300
+                delay: 500
             });
 
             var machine2 = $("#machine2").slotMachine({
                 active: 1,
-                delay: 300
+                delay: 500
             });
 
             var machine3 = $("#machine3").slotMachine({
                 active: 1,
-                delay: 300
+                delay: 500
             });
 
             function onComplete(active) {
                 switch (this.element[0].id) {
-                    case 'machine1':
-                        index1 = this.active;
-                        break;
-                    case 'machine2':
-                        index2 = this.active;
-                        break;
                     case 'machine3':
                         index3 = this.active;
 
-                        if(index1 == index2 && index2 == index3)
-                            setTimeout(startFireworks, 500);
+                        if (machine1.active == machine2.active && machine2.active == machine3.active) {
+                            setTimeout(startFireworks, 900);
+                        }
+                       showEndGame();
                         break;
                 }
+            }
+
+            function showEndGame(){
+                $mdDialog.show({
+                    templateUrl: 'endGame.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: false
+                }).then(function (answer) {
+                }, function () {
+                    stopFireworks();
+                });
             }
 
             var intervalLaunch;
