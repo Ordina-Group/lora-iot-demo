@@ -1,6 +1,7 @@
 var ArduinoService = function() {
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
+    var pixel           = require("node-pixel");
     var ws              = require("nodejs-websocket");
 
     //Private variables.
@@ -38,18 +39,34 @@ var ArduinoService = function() {
             button: button
         });
 
-        button.on('down', function(){
-            logger.DEBUG('Button pressed');
-
-            led.on();
-            broadcastMessage({"status" : "true"});
+        var strip = new pixel.Strip({
+            data: 3,
+            length: 60,
+            board: board,
+            controller: "FIRMATA"
         });
 
-        button.on('up', function(){
-            logger.DEBUG('Button released');
+        strip.on("ready", function() {
+            strip.color("rgb(255, 0, 0)");
+            strip.show();
 
-            led.off();
-            broadcastMessage({"status" : "false"});
+            button.on('down', function(){
+                logger.DEBUG('Button pressed');
+
+                led.on();
+                strip.color("rgb(0, 0, 255)");
+                strip.show();
+                broadcastMessage({"status" : "true"});
+            });
+
+            button.on('up', function(){
+                logger.DEBUG('Button released');
+
+                led.off();
+                strip.color("rgb(255, 0, 0)");
+                strip.show();
+                broadcastMessage({"status" : "false"});
+            });
         });
     }
 
