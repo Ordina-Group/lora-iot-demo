@@ -25,10 +25,6 @@
                 });
         };
 
-        var index1 = 0;
-        var index2 = 0;
-        var index3 = 0;
-
         $(document).ready(function () {
             var machine1 = $("#machine1").slotMachine({
                 active: 1,
@@ -45,19 +41,18 @@
                 delay: 300
             });
 
+            var played = false;
+
             function onComplete(active) {
                 switch (this.element[0].id) {
                     case 'machine3':
-                        index3 = this.active;
-
                         var winner = false;
                         if (machine1.active == machine2.active && machine2.active == machine3.active) {
-                            setTimeout(startFireworks, 900);
+                            setTimeout(startFireworks, 1500);
                             winner = true;
                         }
                         window.sessionStorage.setItem('winner', (winner? 1 : 0));
-
-                        showEndGame();
+                        setTimeout(showEndGame, 1500);
                         break;
                 }
             }
@@ -70,6 +65,7 @@
                 }).then(function (answer) {
                     $scope.showAdvanced(this);
                     stopFireworks();
+                    played = false;
                 }, function () {
                 });
             }
@@ -78,6 +74,7 @@
             var intervalLoop;
 
             function startFireworks(){
+                document.getElementById('fireworks').play()
                 document.body.appendChild(canvas);
                 canvas.width = SCREEN_WIDTH;
                 canvas.height = SCREEN_HEIGHT;
@@ -86,32 +83,32 @@
             }
 
             function stopFireworks(){
+                document.getElementById('fireworks').pause();
                 clearInterval(intervalLaunch);
                 clearInterval(intervalLoop);
-                context.fillStyle = "rgba(0, 0, 0, 1)";
-                context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
                 try {
                     document.body.removeChild(canvas);
-                }catch(e){
-
-                }
+                }catch(e){}
                 particles = [];
                 rockets = [];
             }
 
+
             $("#slotMachineButton1").click(function () {
-                document.getElementById('roller').play()
+                if(!played) {
+                    played = true;
 
-                machine1.shuffle(5, onComplete);
+                    document.getElementById('roller').play()
+                    machine1.shuffle(5, onComplete);
 
-                setTimeout(function () {
-                    machine2.shuffle(5, onComplete);
-                }, 500);
+                    setTimeout(function () {
+                        machine2.shuffle(5, onComplete);
+                    }, 500);
 
-                setTimeout(function () {
-                    machine3.shuffle(5, onComplete);
-                }, 1000);
-
+                    setTimeout(function () {
+                        machine3.shuffle(5, onComplete);
+                    }, 1000);
+                }
             })
         });
 
