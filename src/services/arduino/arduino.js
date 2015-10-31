@@ -3,10 +3,16 @@ var ArduinoService = function() {
     var arduino         = require("johnny-five");
     var pixel           = require("node-pixel");
     var ws              = require("nodejs-websocket");
+    var LedStripUtils   = require("../arduino/ledstriputils");
 
     //Private variables.
     var socketServer    = null;
     var board           = null;
+    var ledStripUtils   = null;
+
+    var inputPin        = 8;
+    var outputPin       = 9;
+    var ledCount        = 60;
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
@@ -32,37 +38,41 @@ var ArduinoService = function() {
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     function onArduinoReady() {
-        var led = new arduino.Led(12);
-
-        var button = new arduino.Button(2);
+        var button = new arduino.Button(inputPin);
         board.repl.inject({
             button: button
         });
 
         var strip = new pixel.Strip({
-            data: 3,
-            length: 60,
+            data: outputPin,
+            length: ledCount,
             board: board,
             controller: "FIRMATA"
         });
 
         strip.on("ready", function() {
-            strip.color("rgb(255, 0, 0)");
+            ledStripUtils = new LedStripUtils(strip, ledCount);
+
+            strip.color("rgb(0, 0, 0)");
             strip.show();
+            //fadeToRed();
+            ledStripUtils.startCycleFade([
+                {"R": "255", "G": "0", "B": "0"},
+                {"R": "0", "G": "0", "B": "255"},
+                {"R": "255", "G": "255", "B": "255"}
+            ], 5000);
 
             button.on('down', function(){
-                logger.DEBUG('Button pressed');
+                logger.INFO('Button pressed');
 
-                led.on();
                 strip.color("rgb(0, 0, 255)");
                 strip.show();
                 broadcastMessage({"status" : "true"});
             });
 
             button.on('up', function(){
-                logger.DEBUG('Button released');
+                logger.INFO('Button released');
 
-                led.off();
                 strip.color("rgb(255, 0, 0)");
                 strip.show();
                 broadcastMessage({"status" : "false"});
