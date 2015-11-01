@@ -11,8 +11,8 @@ Available web services:
     - GET for more information
     - POST to submit data
 - Web socket at port 8081. This can be used to receive messages from the Arduino.
-    - When the button is pressed a JSON message is sent to all listeners: {"status": "true"}
-    - When the button is released a JSON message is sent to all listeners: {"status": "false"}
+    - When the button is pressed a JSON message is sent to all listeners: {"buttonPressed": "true"}
+    - When the button is released a JSON message is sent to all listeners: {"buttonPressed": "false"}
 
 
 INSTALLATION:

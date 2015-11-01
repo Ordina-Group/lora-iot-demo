@@ -53,9 +53,11 @@ var ArduinoService = function() {
         strip.on("ready", function() {
             ledStripUtils = new LedStripUtils(strip, ledCount);
 
+            //Turn off the LEDs as they could still be on from a previous run!
             strip.color("rgb(0, 0, 0)");
             strip.show();
-            //fadeToRed();
+
+            //Start the regular fade cycle.
             ledStripUtils.startCycleFade([
                 {"R": "255", "G": "0", "B": "0"},
                 {"R": "0", "G": "0", "B": "255"},
@@ -64,18 +66,12 @@ var ArduinoService = function() {
 
             button.on('down', function(){
                 logger.INFO('Button pressed');
-
-                strip.color("rgb(0, 0, 255)");
-                strip.show();
-                broadcastMessage({"status" : "true"});
+                broadcastMessage({buttonPressed : true});
             });
 
             button.on('up', function(){
                 logger.INFO('Button released');
-
-                strip.color("rgb(255, 0, 0)");
-                strip.show();
-                broadcastMessage({"status" : "false"});
+                broadcastMessage({buttonPressed : false});
             });
         });
     }
@@ -93,12 +89,42 @@ var ArduinoService = function() {
 
     function onMessageFromConnection(message) {
         logger.DEBUG("Message from connection: " + message);
+        var data = JSON.stringify(message);
+
+        //After registration message => A new user has been registered!
+        if(data.winner === undefined && data.registered === true) {
+            ledStripUtils.stopAnimation();
+            setTimeout(ledStripUtils.startScrollerAnimation(
+            [
+                {"R": "255", "G": "0", "B": "0"},
+                {"R": "0", "G": "0", "B": "255"},
+                {"R": "255", "G": "255", "B": "255"}
+            ]), 250);
+        }
+
+        //After game message => Check for winner of loser.
+        if(data.registered === undefined) {
+            if(data.winner === true) {
+                ledStripUtils.stopAnimation();
+                setTimeout(ledStripUtils.startOffsetAnimation, 250);
+            } else if(data.winner === false) {
+                ledStripUtils.stopAnimation();
+                setTimeout(ledStripUtils.startCycleFade(
+                    [
+                        {"R": "255", "G": "0", "B": "0"},
+                        {"R": "0", "G": "0", "B": "255"},
+                        {"R": "255", "G": "255", "B": "255"}
+                    ], 5000), 250);
+            }
+        }
+
+        //Ignore all other cases and messages!
     }
 
     function broadcastMessage(message) {
         socketServer.connections.forEach(
             function (connection) {
-                connection.sendText(message)
+                connection.sendText(JSON.stringify(message, null, 4))
             }
         );
     }

@@ -29,6 +29,10 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         cycleDuration: null
     };
 
+    var offsetVars = {
+        colors: ["rgb(255, 0, 0)","rgb(0, 0, 255)","rgb(255, 255, 255)"],
+        colorOffset: 0
+    };
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
@@ -45,10 +49,6 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         cycleVars.cycleDuration = singleFadeDuration;
 
         fadeCycle();
-    };
-
-    this.stopCycleFade = function() {
-        animationRunning = false;
     };
 
     /**
@@ -92,13 +92,16 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      *
      */
     this.startOffsetAnimation = function() {
+        animationRunning = true;
 
+        offsetCycle();
     };
 
-    /**
-     *
-     */
-    this.stopOffsetAnimation = function() {
+    this.startScrollerAnimation = function() {
+        //TODO: Implement!
+    };
+
+    this.stopAnimation = function() {
         animationRunning = false;
     };
 
@@ -112,7 +115,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
 
         //Hold the current color for one whole second.
         setTimeout(function() {
-            if(cycleVars.currentCycle == cycleVars.maxCycles) {
+            if(cycleVars.currentCycle === cycleVars.maxCycles) {
                 cycleVars.currentCycle = 0;
             }
             if(!animationRunning) {
@@ -153,7 +156,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         ledStrip.show();
 
         //Check to see if the animation needs to stop, or if this was the last step in the animation.
-        if(animationRunning && fadeVars.currentStep++ == fadeVars.steps - 1) {
+        if(animationRunning === false || fadeVars.currentStep++ == fadeVars.steps - 1) {
             logger.INFO("Fade completed!");
 
             //This last fade is required because the last is not the correct target color, this is because of float rounding errors!
@@ -162,9 +165,36 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
 
             //Clear the animation interval.
             clearInterval(fadeVars.fadeInterval);
-            //Call the callback function.
-            fadeVars.clbck();
+            //Call the callback function. (only when the animation is still running)
+            if(animationRunning) {
+                fadeVars.clbck();
+            }
         }
+    }
+
+    function offsetCycle() {
+        logger.DEBUG("Offset cycle step");
+
+        if(offsetVars.colorOffset === offsetVars.colors.length) {
+            offsetVars.colorOffset = 0;
+        }
+        if(!animationRunning) {
+            return;
+        }
+
+        for(var i = offsetVars.colorOffset; i < (ledCount + offsetVars.colorOffset); i+=3) {
+            var modI = i >= 60 ? i - 60 : i;
+            var modI1 = (i + 1) >= 60 ? (i + 1) - 60 : (i + 1);
+            var modI2 = (i + 2) >= 60 ? (i + 2) - 60 : (i + 2);
+            ledStrip.pixel(modI).color(offsetVars.colors[0]);
+            ledStrip.pixel(modI1).color(offsetVars.colors[1]);
+            ledStrip.pixel(modI2).color(offsetVars.colors[2]);
+        }
+        ledStrip.show();
+        offsetVars.colorOffset++;
+
+        //Start the next cycle after the given timeout (125ms => 8Hz, the maximum frame rate!)
+        setTimeout(offsetCycle, 125);
     }
 };
 
