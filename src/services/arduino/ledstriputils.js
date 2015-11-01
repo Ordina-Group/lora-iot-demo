@@ -6,7 +6,9 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
     const framerate       = 8;//Any value higher than 8 starts to give problems (some LEDs not working, massive delays...)
     const ledCount        = amountOfLeds;
 
-    var animationRunning  = false;
+    var fadeRunning       = false;
+    var scrollRunning     = false;
+    var offsetRunning     = false;
 
     //Private variables.
     var fadeVars = {
@@ -63,10 +65,10 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param callback Function to call when the fade has completed.
      */
     this.fade = function(targetColors, fadeDuration, callback) {
-        animationRunning = true;
+        fadeRunning = true;
 
         fadeVars.currentStep     = 0;
-        fadeVars.steps           = fadeDuration / (1000 / framerate);
+        fadeVars.steps           = Math.ceil(fadeDuration / (1000 / framerate));
         fadeVars.durationPerStep = fadeDuration / fadeVars.steps;
         fadeVars.newColors       = targetColors;
         fadeVars.clbck           = callback;
@@ -100,13 +102,13 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param callback
      */
     this.scroll = function(targetColors, scrollDuration, callback) {
-        animationRunning = true;
+        scrollRunning = true;
 
         //For smaller LED chunk updates the frame rate can be higher than 8, much higher!
         var framerateSmall          = 30;
 
         scrollVars.currentStep      = 0;
-        scrollVars.steps            = scrollDuration / (1000 / framerateSmall);
+        scrollVars.steps            = Math.ceil(scrollDuration / (1000 / framerateSmall));
         scrollVars.durationPerStep  = scrollDuration / scrollVars.steps;
         scrollVars.ledsPerStep      = Math.ceil(ledCount / scrollVars.steps);
         scrollVars.newColors        = targetColors;
@@ -125,7 +127,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param singleFadeDuration
      */
     this.startCycleFade = function(targetColorsArray, singleFadeDuration){
-        animationRunning = true;
+        fadeRunning = true;
 
         cycleVars.currentCycle  = 0;
         cycleVars.maxCycles     = targetColorsArray.length;
@@ -140,7 +142,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      *
      */
     this.startOffsetAnimation = function() {
-        animationRunning = true;
+        offsetRunning = true;
 
         offsetCycle();
     };
@@ -151,7 +153,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param singleScrollDuration
      */
     this.startScrollerAnimation = function(targetColorsArray, singleScrollDuration) {
-        animationRunning = true;
+        scrollRunning = true;
 
         cycleVars.currentCycle  = 0;
         cycleVars.maxCycles     = targetColorsArray.length;
@@ -170,7 +172,9 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * It is advised to wait 125 to 250ms after calling this function before starting any new animation!
      */
     this.stopAnimation = function() {
-        animationRunning = false;
+        fadeRunning     = false;
+        scrollRunning   = false;
+        offsetRunning   = false;
     };
 
     /*-------------------------------------------------------------------------------------------------
@@ -192,7 +196,8 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
             if(cycleVars.currentCycle === cycleVars.maxCycles) {
                 cycleVars.currentCycle = 0;
             }
-            if(!animationRunning) {
+            if(!fadeRunning) {
+                clearInterval(fadeVars.fadeInterval);
                 return;
             }
 
@@ -230,7 +235,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         ledStrip.show();
 
         //Check to see if the animation needs to stop, or if this was the last step in the animation.
-        if(animationRunning === false || fadeVars.currentStep++ == fadeVars.steps - 1) {
+        if(fadeRunning === false || fadeVars.currentStep++ == fadeVars.steps - 1) {
             logger.INFO("Fade completed!");
 
             //This last fade is required because the last is not the correct target color, this is because of float rounding errors!
@@ -241,7 +246,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
             //Clear the animation interval.
             clearInterval(fadeVars.fadeInterval);
             //Call the callback function. (only when the animation is still running)
-            if(animationRunning) {
+            if(fadeRunning) {
                 fadeVars.clbck();
             }
         }
@@ -259,7 +264,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         if(offsetVars.colorOffset === offsetVars.colors.length) {
             offsetVars.colorOffset = 0;
         }
-        if(!animationRunning) {
+        if(!offsetRunning) {
             return;
         }
 
@@ -292,7 +297,8 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
             if(cycleVars.currentCycle === cycleVars.maxCycles) {
                 cycleVars.currentCycle = 0;
             }
-            if(!animationRunning) {
+            if(!scrollRunning) {
+                clearInterval(scrollVars.scrollInterval);
                 return;
             }
 
@@ -339,7 +345,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         ledStrip.show();
 
         //Check to see if the animation needs to stop, or if this was the last step in the animation.
-        if(animationRunning === false || scrollVars.currentStep++ == scrollVars.steps - 1) {
+        if(scrollRunning === false || scrollVars.currentStep++ == (scrollVars.steps - 1)) {
             logger.INFO("Scroll completed!");
 
             //This last fade is required because the last is not the correct target color, this is because of float rounding errors!
@@ -350,7 +356,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
             //Clear the animation interval.
             clearInterval(scrollVars.scrollInterval);
             //Call the callback function. (only when the animation is still running)
-            if(animationRunning) {
+            if(scrollRunning) {
                 scrollVars.clbck();
             }
         }

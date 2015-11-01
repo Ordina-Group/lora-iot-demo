@@ -3,9 +3,9 @@
 
     angular .module('devoxx')
             .controller('GameCtrl', GameCtrl);
-    GameCtrl.$inject = ['$scope', '$location', '$mdDialog'];
+    GameCtrl.$inject = ['$scope', '$location', '$mdDialog', 'nodeSocketService'];
 
-    function GameCtrl($scope, $location, $mdDialog) {
+    function GameCtrl($scope, $location, $mdDialog, nodeSocketService) {
         $scope.status = '  ';
         $scope.name = window.sessionStorage.getItem('name');
 
@@ -23,7 +23,6 @@
                 $scope.status = 'You cancelled the dialog.';
             });
         };
-        //TODO: When the user has registered him/herself the nodeSocket should be sent a message =>  {registered: true}
 
         //When the page is loaded, set up our game components & state.
         $(document).ready(function () {
@@ -35,11 +34,19 @@
                 intervalLaunch: null,
                 intervalLoop: null,
 
-                nodeSocket: null,
                 slots: null
             };
 
-            connectToWebsocket(state);
+            nodeSocketService.registerCallback(function onMessageFromSocket(data) {
+                if(data.buttonPressed === true) {
+                    //Button pressed!
+                    if(state.played === false) {
+                        $("#slotMachineButton1").trigger('click');
+                    }
+                } else {
+                    //Button released!
+                }
+            });
             setupSlots(state);
 
             function onComplete() {
@@ -49,12 +56,12 @@
                         //See if the player has won the game.
                         if (state.slots[0].active === state.slots[1].active && state.slots[1].active === state.slots[2].active) {
                             state.winner = true;
-                            state.nodeSocket.send(JSON.stringify({"winner": true}));
+                            nodeSocketService.sendJSONMessage({winner: true});
 
                             setTimeout(startFireworks, 1500);
                         } else {
                             state.winner = false;
-                            state.nodeSocket.send(JSON.stringify({"winner": false}));
+                            nodeSocketService.sendJSONMessage({winner: false});
                         }
 
                         window.sessionStorage.setItem('winner', (state.winner ? 1 : 0));
@@ -114,27 +121,6 @@
                 }
             })
         });
-    }
-
-    function connectToWebsocket(state) {
-        var nodeSocket = new WebSocket("ws://localhost:8081");
-        state.nodeSocket = nodeSocket;
-
-        //Wait for the socket connection to be established before doing anything else socket related!
-        nodeSocket.onopen = function (event) {
-            nodeSocket.onmessage = function (event) {
-                var data = JSON.parse(event.data);
-
-                if(data.buttonPressed === true) {
-                    //Button pressed!
-                    if(state.played === false) {
-                        $("#slotMachineButton1").trigger('click');
-                    }
-                } else {
-                    //Button released!
-                }
-            }
-        };
     }
 
     function setupSlots(state) {

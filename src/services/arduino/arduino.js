@@ -89,11 +89,12 @@ var ArduinoService = function() {
 
     function onMessageFromConnection(message) {
         logger.DEBUG("Message from connection: " + message);
-        var data = JSON.stringify(message);
+        var data = JSON.parse(message);
 
         //After registration message => A new user has been registered!
         if(data.winner === undefined && data.registered === true) {
             ledStripUtils.stopAnimation();
+
             setTimeout(ledStripUtils.startScrollerAnimation(
             [
                 {"R": "255", "G": "0", "B": "0"},
@@ -109,6 +110,7 @@ var ArduinoService = function() {
                 setTimeout(ledStripUtils.startOffsetAnimation, 250);
             } else if(data.winner === false) {
                 ledStripUtils.stopAnimation();
+
                 setTimeout(ledStripUtils.startCycleFade(
                     [
                         {"R": "255", "G": "0", "B": "0"},

@@ -2,11 +2,11 @@
     'use strict';
 
 
-    angular.module('devoxx')
-        .controller('RegisterCtrl', RegisterCtrl);
-    RegisterCtrl.$inject = ['$scope', '$mdToast', '$timeout', '$mdDialog', 'Restangular'];
+    angular .module('devoxx')
+            .controller('RegisterCtrl', RegisterCtrl);
+    RegisterCtrl.$inject = ['$scope', '$mdToast', '$timeout', '$mdDialog', 'Restangular', 'nodeSocketService'];
 
-    function RegisterCtrl($scope, $mdToast, $timeout, $mdDialog, Restangular) {
+    function RegisterCtrl($scope, $mdToast, $timeout, $mdDialog, Restangular, nodeSocketService) {
         window.sessionStorage.clear();
 
         var last = {
@@ -46,7 +46,11 @@
             if ($scope.registerForm.$valid) {
                 window.sessionStorage.setItem('name', person.name);
                 window.sessionStorage.setItem('email', person.email);
+
+                //TODO: Activate call to register REST service!
+                nodeSocketService.sendJSONMessage({registered: true});
                 //Restangular.all('register').post(person);
+
                 $scope.showActionToast();
                 $timeout(function () {
                     $mdDialog.cancel();
