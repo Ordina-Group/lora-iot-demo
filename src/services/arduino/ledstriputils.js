@@ -34,23 +34,26 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         colorOffset: 0
     };
 
+    var scrollVars = {
+        steps: 0,
+        currentStep: 0,
+        durationPerStep: 0,
+        ledsPerStep: 0,
+        scrollInterval: null,
+
+        scrollUp: false,
+        newColors: null,
+        clbck: null
+    };
+
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.startCycleFade = function(targetColorsArray, singleFadeDuration){
-        animationRunning = true;
-
-        cycleVars.currentCycle  = 0;
-        cycleVars.maxCycles     = targetColorsArray.length;
-
-        cycleVars.cyclesColors  = targetColorsArray;
-        cycleVars.cycleDuration = singleFadeDuration;
-
-        fadeCycle();
-    };
-
+    //////////////////////////////////////////////////////////////////////
+    //BASIC ANIMATIONS:
+    //////////////////////////////////////////////////////////////////////
     /**
      * Fades the current colors of the led strip to the given color over the given time.
      * When the animation completes, the callback function is called.
@@ -60,6 +63,8 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param callback Function to call when the fade has completed.
      */
     this.fade = function(targetColors, fadeDuration, callback) {
+        animationRunning = true;
+
         fadeVars.currentStep     = 0;
         fadeVars.steps           = fadeDuration / 1000 * framerate;
         fadeVars.durationPerStep = 1000 / framerate;
@@ -90,6 +95,46 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
 
     /**
      *
+     * @param targetColors
+     * @param scrollDuration
+     * @param callback
+     */
+    this.scroll = function(targetColors, scrollDuration, callback) {
+        animationRunning = true;
+
+        scrollVars.currentStep      = 0;
+        scrollVars.steps            = scrollDuration / 1000 * framerate;
+        scrollVars.durationPerStep  = 1000 / framerate;
+        scrollVars.ledsPerStep      = Math.ceil(ledCount / scrollVars.steps);
+        scrollVars.newColors        = targetColors;
+        scrollVars.clbck            = callback;
+
+        scrollVars.scrollInterval = setInterval(scrollStep, scrollVars.durationPerStep);
+    };
+
+    //////////////////////////////////////////////////////////////////////
+    //COMPLEX ANIMATIONS:
+    //////////////////////////////////////////////////////////////////////
+
+    /**
+     *
+     * @param targetColorsArray
+     * @param singleFadeDuration
+     */
+    this.startCycleFade = function(targetColorsArray, singleFadeDuration){
+        animationRunning = true;
+
+        cycleVars.currentCycle  = 0;
+        cycleVars.maxCycles     = targetColorsArray.length;
+
+        cycleVars.cyclesColors  = targetColorsArray;
+        cycleVars.cycleDuration = singleFadeDuration;
+
+        fadeCycle();
+    };
+
+    /**
+     *
      */
     this.startOffsetAnimation = function() {
         animationRunning = true;
@@ -97,10 +142,30 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         offsetCycle();
     };
 
-    this.startScrollerAnimation = function() {
-        //TODO: Implement!
+    /**
+     *
+     * @param targetColorsArray
+     * @param singleScrollDuration
+     */
+    this.startScrollerAnimation = function(targetColorsArray, singleScrollDuration) {
+        animationRunning = true;
+
+        cycleVars.currentCycle  = 0;
+        cycleVars.maxCycles     = targetColorsArray.length;
+
+        cycleVars.cyclesColors  = targetColorsArray;
+        cycleVars.cycleDuration = singleScrollDuration;
+
+        ledStrip.color("rgb(0, 0, 0)");
+        ledStrip.show();
+
+        setTimeout(scrollCycle, 250);
     };
 
+    /**
+     * Stops the currently running animation.
+     * It is advised to wait 125 to 250ms after calling this function before starting any new animation!
+     */
     this.stopAnimation = function() {
         animationRunning = false;
     };
@@ -110,6 +175,12 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      *                                        Private functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
+    //////////////////////////////////////////////////////////////////////
+    //FADE ANIMATIONS:
+    //////////////////////////////////////////////////////////////////////
+    /**
+     *
+     */
     function fadeCycle() {
         logger.INFO("Fade cycle started!");
 
@@ -160,9 +231,10 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
             logger.INFO("Fade completed!");
 
             //This last fade is required because the last is not the correct target color, this is because of float rounding errors!
-            ledStrip.color("rgb(" + fadeVars.newColors.r + "," + fadeVars.newColors.g + "," + fadeVars.newColors.b+ ")");
+            ledStrip.color("rgb(" + fadeVars.newColors.r + "," + fadeVars.newColors.g + "," + fadeVars.newColors.b + ")");
             ledStrip.show();
 
+            fadeVars.currentStep = 0;
             //Clear the animation interval.
             clearInterval(fadeVars.fadeInterval);
             //Call the callback function. (only when the animation is still running)
@@ -172,6 +244,12 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         }
     }
 
+    //////////////////////////////////////////////////////////////////////
+    //OFFSET ANIMATIONS:
+    //////////////////////////////////////////////////////////////////////
+    /**
+     *
+     */
     function offsetCycle() {
         logger.DEBUG("Offset cycle step");
 
@@ -195,6 +273,84 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
 
         //Start the next cycle after the given timeout (125ms => 8Hz, the maximum frame rate!)
         setTimeout(offsetCycle, 125);
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    //SCROLL ANIMATIONS:
+    //////////////////////////////////////////////////////////////////////
+    /**
+     *
+     */
+    function scrollCycle() {
+        logger.INFO("Scroll cycle started!");
+
+        //Hold the current color for one whole second.
+        setTimeout(function() {
+            if(cycleVars.currentCycle === cycleVars.maxCycles) {
+                cycleVars.currentCycle = 0;
+            }
+            if(!animationRunning) {
+                return;
+            }
+
+            //Flip flop the scroll direction!
+            scrollVars.scrollUp = !scrollVars.scrollUp;
+
+            var targetColor = cycleVars.cyclesColors[cycleVars.currentCycle++];
+            self.scroll(targetColor, cycleVars.cycleDuration, scrollCycle);
+        }, 1000);
+    }
+
+    /**
+     *
+     */
+    function scrollStep() {
+        logger.DEBUG("Scroll step: " + scrollVars.currentStep);
+
+        if(scrollVars.scrollUp === true) {
+            //Scroll up:
+            for(var i = scrollVars.currentStep * scrollVars.ledsPerStep; i < (scrollVars.currentStep * scrollVars.ledsPerStep) + scrollVars.ledsPerStep; i++) {
+                //Abort when we have reached the last LED!
+                if(i >= ledCount) {
+                    break;
+                }
+                logger.DEBUG("Setting LED: " + i);
+
+                var led = ledStrip.pixel(i);
+                led.color("rgb(" + scrollVars.newColors.R + "," + scrollVars.newColors.G + "," + scrollVars.newColors.B + ")");
+            }
+        } else {
+            //Scroll down:
+            for(var j = (ledCount - 1) - (scrollVars.currentStep * scrollVars.ledsPerStep); j > (ledCount - (scrollVars.ledsPerStep * (scrollVars.currentStep + 1)) - 1); j--) {
+                //Abort when we have reached the first LED!
+                if(j < 0) {
+                    break;
+                }
+                logger.DEBUG("Setting LED: " + j);
+
+                var led = ledStrip.pixel(j);
+                led.color("rgb(" + scrollVars.newColors.R + "," + scrollVars.newColors.G + "," + scrollVars.newColors.B + ")");
+            }
+        }
+
+        ledStrip.show();
+
+        //Check to see if the animation needs to stop, or if this was the last step in the animation.
+        if(animationRunning === false || scrollVars.currentStep++ == scrollVars.steps - 1) {
+            logger.INFO("Scroll completed!");
+
+            //This last fade is required because the last is not the correct target color, this is because of float rounding errors!
+            ledStrip.color("rgb(" + scrollVars.newColors.R + "," + scrollVars.newColors.G + "," + scrollVars.newColors.B + ")");
+            ledStrip.show();
+
+            scrollVars.currentStep = 0;
+            //Clear the animation interval.
+            clearInterval(scrollVars.scrollInterval);
+            //Call the callback function. (only when the animation is still running)
+            if(animationRunning) {
+                scrollVars.clbck();
+            }
+        }
     }
 };
 
