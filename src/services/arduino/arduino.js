@@ -88,42 +88,49 @@ var ArduinoService = function() {
     }
 
     function onMessageFromConnection(message) {
-        logger.DEBUG("Message from connection: " + message);
-        var data = JSON.parse(message);
+        try {
+            logger.DEBUG("Message from connection: " + message);
+            var data = JSON.parse(message);
 
-        //After registration message => A new user has been registered!
-        if(data.winner === undefined && data.registered === true) {
-            ledStripUtils.stopAnimation();
-
-            setTimeout(ledStripUtils.startScrollerAnimation(
-            [
-                {"R": "255", "G": "0", "B": "0"},
-                {"R": "0", "G": "0", "B": "255"},
-                {"R": "255", "G": "255", "B": "255"}
-            ], 1000), 250);
-        }
-
-        //After game message => Check for winner of loser.
-        if(data.registered === undefined) {
-            if(data.winner === true) {
-                ledStripUtils.stopAnimation();
-                setTimeout(ledStripUtils.startOffsetAnimation, 250);
-            } else if(data.winner === false) {
+            //After registration message => A new user has been registered!
+            if(data.winner === undefined && data.registered === true) {
                 ledStripUtils.stopAnimation();
 
-                setTimeout(ledStripUtils.startCycleFade(
+                setTimeout(ledStripUtils.startScrollerAnimation(
                     [
                         {"R": "255", "G": "0", "B": "0"},
                         {"R": "0", "G": "0", "B": "255"},
                         {"R": "255", "G": "255", "B": "255"}
-                    ], 2500), 250);
+                    ], 1000), 250);
             }
-        }
 
-        //Ignore all other cases and messages!
+            //After game message => Check for winner of loser.
+            if(data.registered === undefined) {
+                if(data.winner === true) {
+                    ledStripUtils.stopAnimation();
+                    setTimeout(ledStripUtils.startOffsetAnimation, 250);
+                } else if(data.winner === false) {
+                    ledStripUtils.stopAnimation();
+
+                    setTimeout(ledStripUtils.startCycleFade(
+                        [
+                            {"R": "255", "G": "0", "B": "0"},
+                            {"R": "0", "G": "0", "B": "255"},
+                            {"R": "255", "G": "255", "B": "255"}
+                        ], 2500), 250);
+                }
+            }
+
+            //Ignore all other cases and messages!
+        } catch(error) {
+            logger.ERROR("An error occurred during web socket message handling...");
+            logger.ERROR("Continuing, not critical!");
+        }
     }
 
     function broadcastMessage(message) {
+        logger.DEBUG("Broadcasting message.");
+
         socketServer.connections.forEach(
             function (connection) {
                 connection.sendText(JSON.stringify(message, null, 4))

@@ -47,9 +47,9 @@
                 window.sessionStorage.setItem('name', person.name);
                 window.sessionStorage.setItem('email', person.email);
 
-                //TODO: Activate call to register REST service!
+                //Send information to the socket and call the /register endpoint.
                 nodeSocketService.sendJSONMessage({registered: true});
-                //Restangular.all('register').post(person);
+                Restangular.all('register').post(person);
 
                 $scope.showActionToast();
                 $timeout(function () {

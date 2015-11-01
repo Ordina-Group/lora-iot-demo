@@ -25,6 +25,7 @@ var Worker = function() {
             case "broker":
                 var broker = new DataBroker();
                 broker.setupDefaultCaches();
+                broker.setupFileStorage();
                 break;
             case "interval":
                 new IntervalWorker();

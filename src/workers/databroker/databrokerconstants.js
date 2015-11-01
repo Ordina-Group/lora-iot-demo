@@ -25,7 +25,8 @@ var DataBrokerConstants = (function() {
             FUNC_ADD_TO_CACHE         : "addToCache",
             FUNC_RETRIEVE_CACHE       : "retrieveCache",
             FUNC_REMOVE_FROM_CACHE    : "removeFromCache",
-            FUNC_CLEAR_CACHE          : "clearCache"
+            FUNC_CLEAR_CACHE          : "clearCache",
+            FUNC_APPEND_FILE          : "appendToFile"
         };
     }
 

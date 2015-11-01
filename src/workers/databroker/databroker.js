@@ -1,5 +1,6 @@
 var DataBroker = function () {
     var logger = require("../../logging/logger").makeLogger("DATABROKER-----");
+    var fs     = require("fs");
 
     //Private variables.
     var dataStore = null;
@@ -11,8 +12,28 @@ var DataBroker = function () {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.setupDefaultCaches = function() {
+    this.setupFileStorage = function() {
+        var folder      = "output/";
+        var today       = new Date().toISOString();
+        today           = today.split("T")[0];
+        var filename    = today + "_Registrations.csv";
 
+        var initialLine = "Time (GMT),Name (First + Last),Email\n";
+
+        fs.stat(folder + filename, function(err, stat) {
+            if(err == null) {
+                logger.INFO(filename + " already exists, skipping writing header line!");
+            } else if(err.code == 'ENOENT') {
+                logger.INFO("Writing header line to file, as the file does not yet exist!");
+                appendToFile({data: {folder: folder, filename: filename, value: initialLine}});
+            } else {
+                logger.ERROR("Unknow file error, no going to write to file!");
+            }
+        });
+    };
+
+    this.setupDefaultCaches = function() {
+        //createCache({data : {cacheName: "demoCache" , maxSize: 250}});
     };
 
     /*-------------------------------------------------------------------------------------------------
@@ -194,6 +215,31 @@ var DataBroker = function () {
      */
     function clearCache(msg) {
         dataStore[msg.data.cacheName].data = [];
+    }
+
+    /**
+     * Appends a given value to the given file.
+     * If the file does not exist, it will be created.
+     *
+     * @param msg The message that contains the filename and value.
+     */
+    function appendToFile(msg) {
+        //Create directory if required!
+        fs.mkdir(msg.data.folder, function onComplete(error) {
+
+            //Append to file when dir creation is complete.
+            fs.appendFile(
+                msg.data.folder + msg.data.filename,
+                msg.data.value,
+                function onComplete(err) {
+                    if(err) {
+                        logger.ERROR("Cannot append to file: " + err);
+                    }
+                    logger.DEBUG("Data was added to file!");
+                }
+            );
+
+        });
     }
 };
 
