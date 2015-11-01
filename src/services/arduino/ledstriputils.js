@@ -66,8 +66,8 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         animationRunning = true;
 
         fadeVars.currentStep     = 0;
-        fadeVars.steps           = fadeDuration / 1000 * framerate;
-        fadeVars.durationPerStep = 1000 / framerate;
+        fadeVars.steps           = fadeDuration / (1000 / framerate);
+        fadeVars.durationPerStep = fadeDuration / fadeVars.steps;
         fadeVars.newColors       = targetColors;
         fadeVars.clbck           = callback;
 
@@ -102,9 +102,12 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
     this.scroll = function(targetColors, scrollDuration, callback) {
         animationRunning = true;
 
+        //For smaller LED chunk updates the frame rate can be higher than 8, much higher!
+        var framerateSmall          = 30;
+
         scrollVars.currentStep      = 0;
-        scrollVars.steps            = scrollDuration / 1000 * framerate;
-        scrollVars.durationPerStep  = 1000 / framerate;
+        scrollVars.steps            = scrollDuration / (1000 / framerateSmall);
+        scrollVars.durationPerStep  = scrollDuration / scrollVars.steps;
         scrollVars.ledsPerStep      = Math.ceil(ledCount / scrollVars.steps);
         scrollVars.newColors        = targetColors;
         scrollVars.clbck            = callback;

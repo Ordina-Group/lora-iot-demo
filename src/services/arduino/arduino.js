@@ -58,18 +58,11 @@ var ArduinoService = function() {
             strip.show();
 
             //Start the regular fade cycle.
-            /*ledStripUtils.startCycleFade([
+            ledStripUtils.startCycleFade([
                 {"R": "255", "G": "0", "B": "0"},
                 {"R": "0", "G": "0", "B": "255"},
                 {"R": "255", "G": "255", "B": "255"}
-            ], 5000);*/
-
-            setTimeout(ledStripUtils.startScrollerAnimation(
-                [
-                    {"R": "255", "G": "0", "B": "0"},
-                    {"R": "0", "G": "0", "B": "255"},
-                    {"R": "255", "G": "255", "B": "255"}
-                ], 1000), 250);
+            ], 2500);
 
             button.on('down', function(){
                 logger.INFO('Button pressed');
@@ -121,7 +114,7 @@ var ArduinoService = function() {
                         {"R": "255", "G": "0", "B": "0"},
                         {"R": "0", "G": "0", "B": "255"},
                         {"R": "255", "G": "255", "B": "255"}
-                    ], 5000), 250);
+                    ], 2500), 250);
             }
         }
 
