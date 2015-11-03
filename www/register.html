@@ -30,16 +30,14 @@
 
                 <md-input-container style="margin-left: 18%;" flex="70">
                     <label>Company/school:</label>
-                    <input flex="80" required name="company">
+                    <input flex="80" ng-model="person.company" required name="company">
                 </md-input-container>
 
                 <md-input-container style="margin-left: 18%;" flex="70">
                     <md-checkbox
-                            ng-model="data.cb2"
-                            aria-label="Checkbox 2"
-                            ng-true-value="'yup'"
-                            ng-false-value="'nope'"
-                            class="md-warn md-align-top-left">
+                            ng-model="person.interested"
+                            aria-label="Interested"
+                            class="md-align-top-left">
                         Interested in a job<br/>
                         <br/>
                     </md-checkbox>
