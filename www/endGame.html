@@ -7,7 +7,8 @@
         </div>
 
         <div id="divLoser" ng-if="!winner()" class="endGamecon">
-            <p>Oops, looks like you didn't win...<br />Better luck next time!</p>
+            <p ng-if="closeButNoCigar()">Close, but no cigar...</p>
+            <p ng-if="!closeButNoCigar()">Oops, looks like you didn't win...<br />Better luck next time!</p>
             <img src="img/smileysad.png"/>
         </div>
 

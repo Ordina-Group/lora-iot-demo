@@ -33,6 +33,7 @@
                 winner: false,
                 intervalLaunch: null,
                 intervalLoop: null,
+                closeButNoCigar: false,
 
                 slots: null
             };
@@ -56,15 +57,26 @@
                         //See if the player has won the game.
                         if (state.slots[0].active === state.slots[1].active && state.slots[1].active === state.slots[2].active) {
                             state.winner = true;
+                            state.closeButNoCigar = false;
                             nodeSocketService.sendJSONMessage({winner: true});
 
                             setTimeout(startFireworks, 1500);
-                        } else {
+                        } else if (state.slots[0].active === state.slots[1].active ||
+                            state.slots[1].active === state.slots[2].active ||
+                            state.slots[0].active === state.slots[2].active) {
+
                             state.winner = false;
+                            state.closeButNoCigar = true;
+                            nodeSocketService.sendJSONMessage({winner: false});
+                        }
+                        else {
+                            state.winner = false;
+                            state.closeButNoCigar = false;
                             nodeSocketService.sendJSONMessage({winner: false});
                         }
 
                         window.sessionStorage.setItem('winner', (state.winner ? 1 : 0));
+                        window.sessionStorage.setItem('closeButNoCigar', (state.closeButNoCigar ? 1 : 0));
                         setTimeout(showEndGame, 1500);
                         break;
                 }

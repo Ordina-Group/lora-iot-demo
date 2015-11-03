@@ -11,7 +11,11 @@
         $scope.name = window.sessionStorage.getItem('name');
         $scope.winner = function (){
             return window.sessionStorage.getItem('winner') == 1;
-        }
+        };
+
+        $scope.closeButNoCigar = function() {
+            return window.sessionStorage.getItem('closeButNoCigar') == 1;
+        };
 
         $scope.newGame = function() {
             $mdDialog.hide();
