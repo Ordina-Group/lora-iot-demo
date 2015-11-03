@@ -28,6 +28,22 @@
                     </div>
                 </md-input-container>
 
+                <md-input-container style="margin-left: 18%;" flex="70">
+                    <label>Company/school:</label>
+                    <input flex="80" required name="company">
+                </md-input-container>
+
+                <md-input-container style="margin-left: 18%;" flex="70">
+                    <md-checkbox
+                            ng-model="data.cb2"
+                            aria-label="Checkbox 2"
+                            ng-true-value="'yup'"
+                            ng-false-value="'nope'"
+                            class="md-warn md-align-top-left">
+                        Interested in a job<br/>
+                        <br/>
+                    </md-checkbox>
+                </md-input-container>
             </div>
             <md-button style="margin-left: 43%;padding: 2px 10px 2px 10px;background-color: #E68524;"
                        class="md-raised md-primary"
