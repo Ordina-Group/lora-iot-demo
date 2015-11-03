@@ -4,6 +4,7 @@
     text-align: center;
     width: 650px;
     background-color: #F5F5F5;
+    overflow: hidden;
 }
 
 .endGamecon{
