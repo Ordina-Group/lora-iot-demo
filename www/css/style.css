@@ -324,13 +324,23 @@ p.title{
 }
 .slotMachineButton:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff0000), color-stop(1, #ff3d3d) );
-	background:-moz-linear-gradient( center top, #ff0000 5%, #ff3d3d 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ff3d3d');
 	background-color:#ff3d3d;
 }.slotMachineButton:active {
 	position:relative;
 	top:1px;
 }
+
+ md-checkbox.md-checked .md-ink-ripple {
+	 border-color: rgba(128, 128, 128, 0.87) !important;
+	 color: rgba(230, 133, 36, 0.87) !important;
+	 background-color: rgba(230, 133, 36, 0.87) !important;
+ }
+
+ md-checkbox.md-checked .md-icon {
+	 border-color: rgba(128, 128, 128, 0.87) !important;
+	 color: rgba(230, 133, 36, 0.87) !important;
+	 background-color: rgba(230, 133, 36, 0.87) !important;
+ }
 
 .coins {
 	background-color: transparent;
@@ -347,6 +357,24 @@ p.title{
 	top: 900px;
 }
 
- /*.containerslotmain {
-	 transform: scale(1.50);
- }*/
+ #formIndent {
+	 margin-top: 10px;
+	 margin-left: 120px;
+ }
+
+ #registerHeader {
+	 padding-top: 15px;
+ }
+
+ #register {
+	 margin-left: 38%;
+	 padding: 0.5% 7% 0.5% 7%;
+	 color: #E68524;
+	 background-color: #F5F5F5;
+ }
+
+ #registerFooter {
+	 background-color: #E68524;
+	 padding-bottom: 20px;
+	 padding-top: 20px;
+ }
