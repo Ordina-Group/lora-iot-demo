@@ -1,9 +1,21 @@
+<style>
+    @media only screen and (max-width: 1440px) {
+        .scaling {
+            transform: scale(0.65);
+            margin: auto;
+        }
+    }
 
+
+</style>
+
+
+<div class="scaling">
 <header>
     <img style="padding-top:7%" src="img/ordinalogo.png">
 </header>
 
-<form name="registerForm" ng-controller="RegisterCtrl" style="padding-bottom: 7%">
+    <form name="registerForm" ng-controller="RegisterCtrl" style="padding-bottom: 7%; ">
     <md-content>
         <form name="userForm">
             <div layout="column" layout-wrap>
@@ -52,3 +64,4 @@
         </form>
     </md-content>
 </form>
+</div>
