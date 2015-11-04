@@ -29,6 +29,13 @@
         //When the page is loaded, set up our game components & state.
         $(document).ready(function () {
 
+            //Setup viewport resizing
+            $(window).resize(function() {
+                var viewportHeight = window.innerHeight;
+
+                console.log(viewportHeight);
+            });
+
             //State machine variables
             var state = {
                 played: false,

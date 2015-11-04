@@ -180,16 +180,14 @@ p.title{
 
  .containerslotmain {
 	text-align: center;
-	margin:0 auto;
-	 /*position:absolute;*/
-	 left:-80px;
-	 margin-right: 106.75%;
-
  }
 
 .machineDiv{
 	position:absolute;
 	z-index:100;
+
+	left: 50%;
+	transform: translate(-50%, 0);
 }
 
 .slotsRelative{
@@ -203,9 +201,8 @@ p.title{
 	height: 240px;
 	position:absolute;
 	top:390px;
-	left:206px;
+	left:130px;
 	width:900px;
-
 }
 .slotMachine{
 	width: 250px;
@@ -215,8 +212,6 @@ p.title{
 	overflow: hidden;
 	display: inline-block;
 	text-align: center;
-	/*margin: 0px 5px;*/
-	/*border: 5px solid #000;*/
 	background-color: #fefefe;
 }
 .machineResult{
@@ -288,7 +283,7 @@ p.title{
 
 .slotMachineButtonContainer{
 	position:absolute;
-	width:1300px;
+	width:1135px;
 	top:820px;
 	margin: 0 auto;
 	z-index:200;
@@ -348,41 +343,10 @@ p.title{
 .coin {
 	display: inline-block;
 	width: 65px;
+	left: 795px;
+	top: 900px;
 }
 
-
-
- @media only screen and (max-width: 1920px) {
-	 .containerslotmain {
-		 transform: scale(0.85);
-		 margin-right: 81%;
-	 }
-
-	 .coins {
-		 left: 690px;
-		 top: 760px;
-	 }
- }
-
- @media only screen and (max-width: 1600px) {
-	 .containerslotmain {
-		 transform: scale(0.75);
-		 margin-right: 42%;
-	 }
-
-	 .coins {
-		 left: 670px;
-		 top: 670px;
-	 }
- }
-
- @media only screen and (max-width: 1440px) {
-	 .containerslotmain {
-		 transform: scale(0.65);
-		 margin-right: 25.5%;
-	 }
-
-	 .coins {
-		 top: 580px;
-	 }
- }
+ /*.containerslotmain {
+	 transform: scale(1.50);
+ }*/
