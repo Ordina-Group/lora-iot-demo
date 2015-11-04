@@ -30,6 +30,11 @@
     font-size: 20px;
 }
 
+#results > img {
+    display: inline-block;
+    width: 30%;
+}
+
 .thanks {
     margin: auto;
     font-size: 20px;
