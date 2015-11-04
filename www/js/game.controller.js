@@ -161,6 +161,16 @@
                         state.slots[2].shuffle(5, onComplete);
                     }, 1000);
                 }
+
+                if($scope.counter === 3) {
+                    $('#coin1').hide();
+                }
+                else if($scope.counter === 2) {
+                    $('#coin2').hide();
+                }
+                else if($scope.counter === 1) {
+                    $('#coin3').hide();
+                }
             })
         });
     }

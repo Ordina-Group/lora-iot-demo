@@ -41,6 +41,9 @@
         $scope.newGame = function() {
             $mdDialog.hide();
             //$window.location.reload();
+            $('#coin1').show();
+            $('#coin2').show();
+            $('#coin3').show();
         }
     }
 })();
