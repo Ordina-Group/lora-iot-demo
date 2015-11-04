@@ -73,6 +73,7 @@
                                 $timeout(function () {
                                     document.getElementById('loser').play();
                                 }, 1500);
+                                state.played=true;
                                 state.winner = false;
                                 state.closeButNoCigar = true;
                                 nodeSocketService.sendJSONMessage({winner: false});
@@ -88,6 +89,7 @@
                                 $timeout(function () {
                                     document.getElementById('loser').play();
                                 }, 1500);
+                                state.played=true;
                                 state.winner = false;
                                 state.closeButNoCigar = false;
                                 nodeSocketService.sendJSONMessage({winner: false});
