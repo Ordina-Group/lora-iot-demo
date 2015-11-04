@@ -337,12 +337,29 @@ p.title{
 	top:1px;
 }
 
+.coins {
+	background-color: transparent;
+	position: absolute;
+	right: 200px;
+	top: 900px;
+	z-index: 900;
+}
+
+.coin {
+	display: inline-block;
+	width: 65px;
+}
+
 
 
  @media only screen and (max-width: 1920px) {
 	 .containerslotmain {
 		 transform: scale(0.85);
 		 margin-right: 81%;
+	 }
+
+	 .coins {
+		 top: 760px;
 	 }
  }
 
@@ -351,11 +368,19 @@ p.title{
 		 transform: scale(0.75);
 		 margin-right: 42%;
 	 }
+
+	 .coins {
+		 top: 670px;
+	 }
  }
 
  @media only screen and (max-width: 1440px) {
 	 .containerslotmain {
 		 transform: scale(0.65);
 		 margin-right: 25.5%;
+	 }
+
+	 .coins {
+		 top: 580px;
 	 }
  }
