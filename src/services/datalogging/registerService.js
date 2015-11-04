@@ -23,7 +23,7 @@ var RegisterService = function() {
         switch (request.method) {
             case "GET":
                 response.writeHead(200, {'Content-Type': 'text/plain'});
-                response.write("To use this service, post JSON data to it.\n\n Example: \n" + JSON.stringify({"name": "John Doe", "email": "john.doe@example.com", "company": "Ordina", "interested": true}, null, 4));
+                response.write("To use this service, post JSON data to it.\n\n Example: \n" + JSON.stringify({"name": "John Doe", "email": "john.doe@example.com", "entity": "Ordina", "interested": true}, null, 4));
                 response.end();
                 break;
             case "POST":
@@ -53,7 +53,7 @@ var RegisterService = function() {
 
                 var time    = new Date().toISOString();
                 time        = time.split("T")[1].split(".")[0];
-                var line    = time + "," + data.name + "," + data.email + "," + data.company + "," + data.interested + "\n";
+                var line    = time + "," + data.name + "," + data.email + "," + data.entity + "," + data.interested + "\n";
 
                 messageFactory.sendSimpleMessage(messageFactory.TARGET_BROKER, "appendToFile", {folder: folder, filename: filename, value: line});
             } catch (error) {
