@@ -16,7 +16,8 @@
                 templateUrl: 'register.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
-                clickOutsideToClose: true
+                    clickOutsideToClose: true,
+                    escapeToClose: false
             })
             .then(function (answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
@@ -45,6 +46,7 @@
                     if(state.played === false) {
                         $("#slotMachineButton1").trigger('click');
                     }
+
                 } else {
                     //Button released!
                 }
@@ -112,7 +114,8 @@
                 $mdDialog.show({
                     templateUrl: 'endGame.html',
                     parent: angular.element(document.body),
-                    clickOutsideToClose: false
+                    clickOutsideToClose: false,
+                    escapeToClose: false
                 }).then(function (answer) {
                     $scope.counter = 3;
                     $scope.showAdvanced(this);
