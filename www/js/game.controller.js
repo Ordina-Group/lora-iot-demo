@@ -77,6 +77,10 @@
 
                         window.sessionStorage.setItem('winner', (state.winner ? 1 : 0));
                         window.sessionStorage.setItem('closeButNoCigar', (state.closeButNoCigar ? 1 : 0));
+                        window.sessionStorage.setItem('active1', state.slots[0].active);
+                        window.sessionStorage.setItem('active2', state.slots[1].active);
+                        window.sessionStorage.setItem('active3', state.slots[2].active);
+
                         setTimeout(showEndGame, 1500);
                         break;
                 }
