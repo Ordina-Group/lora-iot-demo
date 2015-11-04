@@ -30,11 +30,18 @@
         $(document).ready(function () {
 
             //Setup viewport resizing
+            resize();
             $(window).resize(function() {
+                resize();
+            });
+
+            function resize() {
                 var viewportHeight = window.innerHeight;
 
-                console.log(viewportHeight);
-            });
+                var hectoScale = viewportHeight * 0.095;
+                hectoScale = hectoScale / 100;
+                $(".containerslotmain").css('transform', 'scale(' + hectoScale + ')');
+            }
 
             //State machine variables
             var state = {
