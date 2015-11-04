@@ -62,6 +62,7 @@
                             nodeSocketService.sendJSONMessage({winner: true});
 
                             setTimeout(startFireworks, 1500);
+                            setTimeout(showEndGame, 1500);
                         } else if (state.slots[0].active === state.slots[1].active ||
                             state.slots[1].active === state.slots[2].active ||
                             state.slots[0].active === state.slots[2].active) {
@@ -76,6 +77,7 @@
                                 state.closeButNoCigar = true;
                                 nodeSocketService.sendJSONMessage({winner: false});
                                 setTimeout(showEndGame, 1500);
+
                             }
                         }
                         else {
@@ -110,6 +112,7 @@
                     parent: angular.element(document.body),
                     clickOutsideToClose: false
                 }).then(function (answer) {
+                    $scope.counter = 3;
                     $scope.showAdvanced(this);
                     stopFireworks();
                     state.played = false;
