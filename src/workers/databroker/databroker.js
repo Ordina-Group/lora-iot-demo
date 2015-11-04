@@ -18,7 +18,7 @@ var DataBroker = function () {
         today           = today.split("T")[0];
         var filename    = today + "_Registrations.csv";
 
-        var initialLine = "Time (GMT),Name (First + Last),Email\n";
+        var initialLine = "Time (GMT),Name (First + Last),Email,Company,Interested\n";
 
         fs.stat(folder + filename, function(err, stat) {
             if(err == null) {
