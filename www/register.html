@@ -1,54 +1,54 @@
 <div class="scaling">
-<header>
-    <img id="registerHeader" src="img/ordinalogo.png">
-</header>
+    <header>
+        <img id="registerHeader" src="img/ordinalogo.png">
+    </header>
 
     <form name="registerForm" ng-controller="RegisterCtrl">
-    <md-content>
-        <form name="userForm">
-            <div id="formIndent" layout="column" layout-wrap>
-                <md-input-container flex="80">
-                    <label>Full name:</label>
-                    <input flex="80" ng-model="person.name" required md-minlenght="2" name="name">
+        <md-content>
+            <form name="userForm">
+                <div id="formIndent" layout="column" layout-wrap>
+                    <md-input-container flex="80">
+                        <label>Full name:</label>
+                        <input flex="80" ng-model="person.name" required md-minlenght="2" name="name">
 
-                    <div ng-messages="registerForm.name.$error">
-                        <div ng-message="required">This is required.</div>
-                        <div ng-message="md-minlength">Name has to be minimum 2 characters long.</div>
-                    </div>
-                </md-input-container>
+                        <div ng-messages="registerForm.name.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="md-minlength">Name has to be minimum 2 characters long.</div>
+                        </div>
+                    </md-input-container>
 
-                <md-input-container flex="70">
-                    <label>Email:</label>
-                    <input flex="80" ng-model="person.email" type="email" required name="email">
+                    <md-input-container flex="70">
+                        <label>Email:</label>
+                        <input flex="80" ng-model="person.email" type="email" required name="email">
 
-                    <div ng-messages="registerForm.email.$error">
-                        <div ng-message="required">This is required.</div>
-                    </div>
-                </md-input-container>
+                        <div ng-messages="registerForm.email.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
 
-                <md-input-container flex="70">
-                    <label>Company/school:</label>
-                    <input flex="80" ng-model="person.entity" name="company">
-                </md-input-container>
+                    <md-input-container flex="70">
+                        <label>Company/school:</label>
+                        <input flex="80" ng-model="person.entity" name="company">
+                    </md-input-container>
 
-                <md-input-container flex="70">
-                    <md-checkbox
-                            ng-model="person.interested"
-                            aria-label="Interested"
-                            class="md-align-top-left">
-                        Interested in a job<br/>
-                        <br/>
-                    </md-checkbox>
-                </md-input-container>
-            </div>
+                    <md-input-container flex="70">
+                        <md-checkbox
+                                ng-model="person.interested"
+                                aria-label="Interested"
+                                class="md-align-top-left">
+                            Interested in a job<br/>
+                            <br/>
+                        </md-checkbox>
+                    </md-input-container>
+                </div>
 
-            <div id="registerFooter">
-                <md-button id="register"
-                           class="md-raised md-primary"
-                           ng-click="validate(person)">Start Game
-                </md-button>
-            </div>
-        </form>
-    </md-content>
-</form>
+                <div id="registerFooter">
+                    <md-button id="register"
+                               class="md-raised md-primary"
+                               ng-click="validate(person)">Start Game
+                    </md-button>
+                </div>
+            </form>
+        </md-content>
+    </form>
 </div>
