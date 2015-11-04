@@ -73,14 +73,14 @@
                                 $timeout(function () {
                                     document.getElementById('loser').play();
                                 }, 1500);
-                               state.winner = false;
+                                state.winner = false;
                                 state.closeButNoCigar = true;
                                 nodeSocketService.sendJSONMessage({winner: false});
                                 setTimeout(showEndGame, 1500);
                             }
                         }
                         else {
-                             state.played = false;
+                            state.played = false;
                             $scope.counter--;
                             console.log($scope.counter);
                             if ($scope.counter === 0) {
