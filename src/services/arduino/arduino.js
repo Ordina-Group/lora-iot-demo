@@ -83,8 +83,12 @@ var ArduinoService = function() {
     function onConnection(connection) {
         logger.DEBUG("New connection");
 
-        connection.on("text", onMessageFromConnection);
-        connection.on("close", onConnectionClosed);
+        try {
+            connection.on("text", onMessageFromConnection);
+            connection.on("close", onConnectionClosed);
+        } catch (error) {
+            logger.ERROR("Cannot handle new connection!");
+        }
     }
 
     function onMessageFromConnection(message) {
@@ -101,7 +105,7 @@ var ArduinoService = function() {
                         {"R": "255", "G": "0", "B": "0"},
                         {"R": "0", "G": "0", "B": "255"},
                         {"R": "255", "G": "255", "B": "255"}
-                    ], 1000), 250);
+                    ], 1000), 500);
             }
 
             //After game message => Check for winner of loser.
@@ -117,7 +121,7 @@ var ArduinoService = function() {
                             {"R": "255", "G": "0", "B": "0"},
                             {"R": "0", "G": "0", "B": "255"},
                             {"R": "255", "G": "255", "B": "255"}
-                        ], 2500), 250);
+                        ], 2500), 500);
                 }
             }
 

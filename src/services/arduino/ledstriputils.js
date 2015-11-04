@@ -65,7 +65,9 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param callback Function to call when the fade has completed.
      */
     this.fade = function(targetColors, fadeDuration, callback) {
-        fadeRunning = true;
+        fadeRunning       = true;
+        scrollRunning     = false;
+        offsetRunning     = false;
 
         fadeVars.currentStep     = 0;
         fadeVars.steps           = Math.ceil(fadeDuration / (1000 / framerate));
@@ -102,7 +104,9 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param callback
      */
     this.scroll = function(targetColors, scrollDuration, callback) {
-        scrollRunning = true;
+        fadeRunning       = false;
+        scrollRunning     = true;
+        offsetRunning     = false;
 
         //For smaller LED chunk updates the frame rate can be higher than 8, much higher!
         var framerateSmall          = 30;
@@ -127,7 +131,9 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param singleFadeDuration
      */
     this.startCycleFade = function(targetColorsArray, singleFadeDuration){
-        fadeRunning = true;
+        fadeRunning       = true;
+        scrollRunning     = false;
+        offsetRunning     = false;
 
         cycleVars.currentCycle  = 0;
         cycleVars.maxCycles     = targetColorsArray.length;
@@ -142,7 +148,9 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      *
      */
     this.startOffsetAnimation = function() {
-        offsetRunning = true;
+        fadeRunning       = false;
+        scrollRunning     = false;
+        offsetRunning     = true;
 
         offsetCycle();
     };
@@ -153,7 +161,9 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param singleScrollDuration
      */
     this.startScrollerAnimation = function(targetColorsArray, singleScrollDuration) {
-        scrollRunning = true;
+        fadeRunning       = false;
+        scrollRunning     = true;
+        offsetRunning     = false;
 
         cycleVars.currentCycle  = 0;
         cycleVars.maxCycles     = targetColorsArray.length;
