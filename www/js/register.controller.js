@@ -46,8 +46,14 @@
             if ($scope.registerForm.$valid) {
                 window.sessionStorage.setItem('name', person.name);
                 window.sessionStorage.setItem('email', person.email);
-                window.sessionStorage.setItem('company', person.company);
+                window.sessionStorage.setItem('company', person.entity);
                 window.sessionStorage.setItem('interested', person.interested);
+                if(person.interested === undefined){
+                    person.interested =false;
+                }
+                if(person.entity === undefined){
+                    person.entity="";
+                }
 
                 //Send information to the socket and call the /register endpoint.
                 nodeSocketService.sendJSONMessage({registered: true});
