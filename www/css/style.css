@@ -181,8 +181,9 @@ p.title{
  .containerslotmain {
 	text-align: center;
 	margin:0 auto;
-	 position:absolute;
+	 /*position:absolute;*/
 	 left:-80px;
+	 margin-right: 106.75%;
 
  }
 
@@ -337,3 +338,24 @@ p.title{
 }
 
 
+
+ @media only screen and (max-width: 1920px) {
+	 .containerslotmain {
+		 transform: scale(0.85);
+		 margin-right: 81%;
+	 }
+ }
+
+ @media only screen and (max-width: 1600px) {
+	 .containerslotmain {
+		 transform: scale(0.75);
+		 margin-right: 42%;
+	 }
+ }
+
+ @media only screen and (max-width: 1440px) {
+	 .containerslotmain {
+		 transform: scale(0.65);
+		 margin-right: 25.5%;
+	 }
+ }
