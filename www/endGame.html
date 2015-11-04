@@ -2,28 +2,29 @@
     <div ng-controller="EndGameCtrl" id="endGame">
 
         <div id="divWinner" ng-if="winner()" class="endGamecon">
-            <p>Congratulations, you won! You'll receive your award in a minute!</p>
-            <img src="img/cup.png"/>
+            <p>You won, ask for your reward!</p>
+            <img id="imgCup" src="img/cup.png"/>
         </div>
 
         <div id="divLoser" ng-if="!winner()" class="endGamecon">
             <p ng-if="closeButNoCigar()">Close, but no cigar...</p>
             <p ng-if="!closeButNoCigar()">Oops, looks like you didn't win...<br />Better luck next time!</p>
-            <img src="img/smileysad.png"/>
+            <img id="imgTroll" src="img/trollcigar.png"/>
         </div>
 
         <div id="results">
-            <p>Your results:</p>
+            <p>Your last result:</p>
             <img ng-src="{{active1()}}" alt="Active 1"/>
             <img ng-src="{{active2()}}" alt="Active 2"/>
             <img ng-src="{{active3()}}" alt="Active 3"/>
         </div>
 
-        <div class="thanks">
-            <p>Thanks for visiting our booth, {{name}}!</p>
-        </div>
+        <div id="newGameFooter">
+            <div class="thanks">
+                <p>Thanks for visiting our booth, {{name}}!</p>
+            </div>
 
-        <md-button id="newGame" ng-click="newGame()" style="padding: 2px 10px 2px 10px;background-color: #E68524;margin-bottom:25px;"
-        class="md-raised md-primary" >New game</md-button>
+            <md-button id="newGame" ng-click="newGame()" class="md-raised md-primary">New game</md-button>
+        </div>
     </div>
 </md-dialog>
