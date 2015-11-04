@@ -1,0 +1,34 @@
+#formIndent {
+    margin-top: 10px;
+    margin-left: 120px;
+}
+
+#registerHeader {
+    padding-top: 15px;
+}
+
+#register {
+    margin-left: 38%;
+    padding: 0.5% 7% 0.5% 7%;
+    color: #E68524;
+    background-color: #F5F5F5;
+}
+
+#registerFooter {
+    background-color: #E68524;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+/*Overriding the default ng-material checkbox colors*/
+md-checkbox.md-checked .md-ink-ripple {
+    border-color: rgba(128, 128, 128, 0.87) !important;
+    color: rgba(230, 133, 36, 0.87) !important;
+    background-color: rgba(230, 133, 36, 0.87) !important;
+}
+
+md-checkbox.md-checked .md-icon {
+    border-color: rgba(128, 128, 128, 0.87) !important;
+    color: rgba(230, 133, 36, 0.87) !important;
+    background-color: rgba(230, 133, 36, 0.87) !important;
+}

@@ -1,23 +1,23 @@
- @charset "utf-8";
-/* CSS Document */
-
 @import url(http://fonts.googleapis.com/css?family=Pathway+Gothic+One);
 
-body{
-	overflow:hidden;
+body {
+    overflow: hidden;
 }
 
-a{
-	color: #ccd500;
-	text-decoration: none;
+a {
+    color: #ccd500;
+    text-decoration: none;
 }
-a:hover{
-	text-decoration: underline;
-	color: #a9b119;
+
+a:hover {
+    text-decoration: underline;
+    color: #a9b119;
 }
+
 .clear {
     clear: both;
 }
+
 html {
     position: relative;
     min-height: 100%;
@@ -31,21 +31,22 @@ footer {
     width: 100%;
     background: black;
 }
-b{
-	font-weight: 600;
-}
 
+b {
+    font-weight: 600;
+}
 
 /* Titulos
 -------------------------------------------------------------------------*/
-h1{
-	width: 100%;
-	color: #000000;
-	font-size: 40px;
-	margin-bottom: 25px;
+h1 {
+    width: 100%;
+    color: #000000;
+    font-size: 40px;
+    margin-bottom: 25px;
 }
-h2{
-	color: #000000;
+
+h2 {
+    color: #000000;
     display: table-cell;
     float: left;
     font-size: 45px;
@@ -55,20 +56,23 @@ h2{
     width: 100%;
     font-weight: 300;
 }
-h2 span{
-	font-weight: 400;
+
+h2 span {
+    font-weight: 400;
 }
-h3{
-	float: left;
-	width: 100%;
-	margin: 0 0 20px 0;
-	color: white;
-	font-size:40px;
-	font-family: 'Lato', 'sans-serif';
-	font-weight: 300;
+
+h3 {
+    float: left;
+    width: 100%;
+    margin: 0 0 20px 0;
+    color: white;
+    font-size: 40px;
+    font-family: 'Lato', 'sans-serif';
+    font-weight: 300;
 }
-h4{
-	color: #ffffff;
+
+h4 {
+    color: #ffffff;
     display: table-cell;
     float: left;
     font-size: 35px;
@@ -79,8 +83,8 @@ h4{
     font-weight: 400;
 }
 
-p.title{
-	color: #000000;
+p.title {
+    color: #000000;
     display: table-cell;
     float: left;
     font-size: 45px;
@@ -91,32 +95,36 @@ p.title{
     font-weight: 300;
 }
 
-.grey {	color:#444;}
+.grey {
+    color: #444;
+}
 
 /* INICIO
 -------------------------------------------------------------------------*/
-#header{
-	margin: 0 auto 0;
-	width: 100%;
-	position: absolute;
-	text-align: center;
-	top: 0px;
-	background-color: #6C5726;
-	overflow: hidden;
-	position: relative;
-	padding: 50px 0px;
+#header {
+    margin: 0 auto 0;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    background-color: #6C5726;
+    overflow: hidden;
+    position: relative;
+    padding: 50px 0;
     border-top: 10px solid #A48E4E;
     border-bottom: 10px solid #A48E4E;
 }
-#header table, #footer table{
-	height: 100%;
-	width: 100%;
+
+#header table, #footer table {
+    height: 100%;
+    width: 100%;
 }
-#header table td, #footer table td{
-	vertical-align: middle;
+
+#header table td, #footer table td {
+    vertical-align: middle;
 }
-#header .content{
-	color: #FFFFFF;
+
+#header .content {
+    color: #FFFFFF;
     float: left;
     font-size: 50px;
     font-weight: 300;
@@ -125,9 +133,10 @@ p.title{
     text-align: center;
     width: 100%;
 }
-#header .content, #footer .content{
-	font-family: 'Pathway Gothic One';
-	color: #ffffff;
+
+#header .content, #footer .content {
+    font-family: 'Pathway Gothic One', sans-serif;
+    color: #ffffff;
     float: left;
     font-size: 70px;
     font-weight: 300;
@@ -136,245 +145,44 @@ p.title{
     margin-bottom: 20px;
     text-align: center;
     width: 100%;
-    padding: 30px 0px;
-}
-#header .content > div, #footer .content > div{
-	display: inline-block;
+    padding: 30px 0;
 }
 
-#footer{
-	width:100%;
-	background-color: #6C5726;
-	border-top: 20px dotted #A48E4E;
-	height: 200px;
+#header .content > div, #footer .content > div {
+    display: inline-block;
 }
 
-
-.line{
-	background-color: #DCD293;
-	padding: 50px 0px 25px 0px;
-	width:100%;
-	border-top: 20px dotted #A48E4E;
+#footer {
+    width: 100%;
+    background-color: #6C5726;
+    border-top: 20px dotted #A48E4E;
+    height: 200px;
 }
 
- .dialogdemoBasicUsage #popupContainer {
-	 position: relative;
- }
-
- .dialogdemoBasicUsage .debt-be-gone {
-	 font-weight: bold;
-	 color: blue;
-	 text-decoration: underline;
- }
-
- .dialogdemoBasicUsage .footer {
-	 width: 100%;
-	 text-align: center;
-	 margin-left: 20px;
- }
-
- .dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
-	 font-size: 0.8em;
-	 margin-top: 50px;
- }
-
- .containerslotmain {
-	text-align: center;
- }
-
-.machineDiv{
-	position:absolute;
-	z-index:100;
-
-	left: 50%;
-	transform: translate(-50%, 0);
+.line {
+    background-color: #DCD293;
+    padding: 50px 0 25px 0;
+    width: 100%;
+    border-top: 20px dotted #A48E4E;
 }
 
-.slotsRelative{
-	margin:0 auto;
-	position:relative;
+.dialogdemoBasicUsage #popupContainer {
+    position: relative;
 }
 
-.machineContainer{
-	padding: 5px 1px 5px 1px;
-	overflow: hidden;
-	height: 240px;
-	position:absolute;
-	top:390px;
-	left:130px;
-	width:900px;
-}
-.slotMachine{
-	width: 250px;
-	height: 240px;
-	padding: 0px;
-	margin-right:14px;
-	overflow: hidden;
-	display: inline-block;
-	text-align: center;
-	background-color: #fefefe;
-}
-.machineResult{
-	color:#fff;
-	text-align:center;
-	font-weight: 900;
-}
-.noBorder{
-	border:none !important;
-	background: transparent !important;
-}
-.slotMachine .slot{
-	height:240px;
-	background-position-x: 55%;
-	background-repeat: no-repeat;
-}
-.slot1{
-	background-image: url("../img/slot1.png");
-}
-.slot2{
-	background-image: url("../img/slot2.png");
-}
-.slot3{
-	background-image: url("../img/slot3.png");
-}
-.slot4{
-	background-image: url("../img/slot4.png");
-}
-.slot5{
-	background-image: url("../img/slot5.png");
-}
-.slot6{
-	background-image: url("../img/slot6.png");
+.dialogdemoBasicUsage .debt-be-gone {
+    font-weight: bold;
+    color: blue;
+    text-decoration: underline;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#textMachine, #textMachine2{
-	width:520px;
-	height: 67px;
-	overflow: hidden;
-	display: inline-block;
-	text-align: left;
-}
-#textMachine > *, #textMachine2 > *{
-	padding: 0px 0px;
+.dialogdemoBasicUsage .footer {
+    width: 100%;
+    text-align: center;
+    margin-left: 20px;
 }
 
-
-
-.slotMachineButtonContainer{
-	position:absolute;
-	width:1135px;
-	top:820px;
-	margin: 0 auto;
-	z-index:200;
-	text-align:center;
+.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+    font-size: 0.8em;
+    margin-top: 50px;
 }
-
-.slotMachineButton{
-	width:200px;
-	height: 200px;
-	overflow: hidden;
-	display: inline-block;
-	text-align: center;
-}
-.slotMachineButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #ff0000;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #ff0000;
-	box-shadow:inset 0px 1px 0px 0px #ff0000;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff3d3d), color-stop(1, #ff0000) );
-	background:-moz-linear-gradient( center top, #ff3d3d 5%, #ff0000 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3d3d', endColorstr='#ff0000');
-	background-color:#ff1212;
-	border-radius: 100px;
-	text-indent:0px;
-	border:6px solid #cc0000;
-	display:inline-block;
-	color:#ffffff;
-	font-size:45px;
-	font-weight:bold;
-	font-style:normal;
-	height:200px;
-	line-height:190px;
-	margin-top:10px;
-	width:200px;
-	text-decoration:none;
-	text-align:center;
-	text-shadow:1px 1px 0px #cc9f52;
-	cursor:pointer;
-}
-.slotMachineButton:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ff0000), color-stop(1, #ff3d3d) );
-	background-color:#ff3d3d;
-}.slotMachineButton:active {
-	position:relative;
-	top:1px;
-}
-
- md-checkbox.md-checked .md-ink-ripple {
-	 border-color: rgba(128, 128, 128, 0.87) !important;
-	 color: rgba(230, 133, 36, 0.87) !important;
-	 background-color: rgba(230, 133, 36, 0.87) !important;
- }
-
- md-checkbox.md-checked .md-icon {
-	 border-color: rgba(128, 128, 128, 0.87) !important;
-	 color: rgba(230, 133, 36, 0.87) !important;
-	 background-color: rgba(230, 133, 36, 0.87) !important;
- }
-
-.coins {
-	background-color: transparent;
-	position: absolute;
-	left: 750px;
-	top: 900px;
-	z-index: 900;
-}
-
-.coin {
-	display: inline-block;
-	width: 65px;
-	left: 795px;
-	top: 900px;
-}
-
- #formIndent {
-	 margin-top: 10px;
-	 margin-left: 120px;
- }
-
- #registerHeader {
-	 padding-top: 15px;
- }
-
- #register {
-	 margin-left: 38%;
-	 padding: 0.5% 7% 0.5% 7%;
-	 color: #E68524;
-	 background-color: #F5F5F5;
- }
-
- #registerFooter {
-	 background-color: #E68524;
-	 padding-bottom: 20px;
-	 padding-top: 20px;
- }

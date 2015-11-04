@@ -1,5 +1,5 @@
-<md-dialog style="background: transparent;">
-    <div ng-controller="EndGameCtrl" id="endGame">
+<md-dialog id="endGameDialog">
+    <div ng-controller="EndGameCtrl" id="endGameWrapper">
 
         <div id="divWinner" ng-if="winner()" class="endGamecon">
             <p>You won, ask for your reward!</p>

@@ -1,4 +1,8 @@
-#endGame {
+#endGameDialog {
+    background: transparent;
+}
+
+#endGameWrapper {
     font-family: Verdana, Helvetica, sans-serif;
     margin: auto;
     text-align: center;
@@ -55,7 +59,7 @@
     padding: 2px 10px 2px 10px;
     color: #E68524;
     background-color: #F5F5F5;
-    margin-bottom:25px;
+    margin-bottom: 25px;
 }
 
 #newGameFooter {
