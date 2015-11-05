@@ -22,13 +22,17 @@
 
 /*Overriding the default ng-material checkbox colors*/
 md-checkbox.md-checked .md-ink-ripple {
-    border-color: rgba(128, 128, 128, 0.87) !important;
     color: rgba(230, 133, 36, 0.87) !important;
     background-color: rgba(230, 133, 36, 0.87) !important;
 }
 
-md-checkbox.md-checked .md-icon {
-    border-color: rgba(128, 128, 128, 0.87) !important;
+md-checkbox {
     color: rgba(230, 133, 36, 0.87) !important;
+}
+md-checkbox.md-checked .md-icon {
     background-color: rgba(230, 133, 36, 0.87) !important;
+}
+
+md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+    border-color: rgba(230, 133, 36, 0.87) !important;
 }

@@ -19,10 +19,13 @@
 
                     <md-input-container flex="70">
                         <label>Email:</label>
-                        <input flex="80" ng-model="person.email" type="email" required name="email">
+                        <input flex="80" ng-model="person.email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                               type="email" required name="email">
 
                         <div ng-messages="registerForm.email.$error">
                             <div ng-message="required">This is required.</div>
+                            <div ng-message="pattern">Please enter a valid email address!</div>
+
                         </div>
                     </md-input-container>
 
