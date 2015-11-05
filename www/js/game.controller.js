@@ -76,7 +76,7 @@
                             state.winner = true;
                             state.closeButNoCigar = false;
                             nodeSocketService.sendJSONMessage({winner: true});
-
+                            document.getElementById('victory').play();
                             setTimeout(startFireworks, 1500);
                             setTimeout(showEndGame, 1500);
                         } else if (state.slots[0].active === state.slots[1].active ||
