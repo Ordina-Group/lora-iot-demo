@@ -42,7 +42,6 @@
             $mdDialog.hide(answer);
         };
         $scope.validate = function (person) {
-
             if ($scope.registerForm.$valid) {
                 window.sessionStorage.setItem('name', person.name);
                 window.sessionStorage.setItem('email', person.email);

@@ -9,6 +9,16 @@
         $scope.status = '  ';
         $scope.name = window.sessionStorage.getItem('name');
         $scope.counter = 3;
+        //State machine variables
+        var state = {
+            played: false,
+            winner: false,
+            intervalLaunch: null,
+            intervalLoop: null,
+            closeButNoCigar: false,
+
+            slots: null
+        };
 
         $scope.showAdvanced = function (ev) {
             $mdDialog
@@ -19,22 +29,15 @@
                     clickOutsideToClose: true,
                     escapeToClose: false
             })
-            .then(function (answer) {
-                $scope.status = 'You said the information was "' + answer + '".';
-            }, function () {
-                $scope.status = 'You cancelled the dialog.';
-            });
         };
 
         //When the page is loaded, set up our game components & state.
         $(document).ready(function () {
-
             //Setup viewport resizing
             resize();
             $(window).resize(function() {
                 resize();
             });
-
             function resize() {
                 var viewportHeight = window.innerHeight;
 
@@ -42,18 +45,6 @@
                 hectoScale = hectoScale / 100;
                 $(".containerslotmain").css('transform', 'scale(' + hectoScale + ')');
             }
-
-            //State machine variables
-            var state = {
-                played: false,
-                winner: false,
-                intervalLaunch: null,
-                intervalLoop: null,
-                closeButNoCigar: false,
-
-                slots: null
-            };
-
             nodeSocketService.registerCallback(function onMessageFromSocket(data) {
                 if(data.buttonPressed === true) {
                     //Button pressed!
@@ -94,7 +85,6 @@
                                 state.closeButNoCigar = true;
                                 nodeSocketService.sendJSONMessage({winner: false});
                                 setTimeout(showEndGame, 1500);
-
                             }
                         }
                         else {
@@ -112,14 +102,11 @@
                                 setTimeout(showEndGame, 1500);
                             }
                         }
-
                         window.sessionStorage.setItem('winner', (state.winner ? 1 : 0));
                         window.sessionStorage.setItem('closeButNoCigar', (state.closeButNoCigar ? 1 : 0));
                         window.sessionStorage.setItem('active1', state.slots[0].active);
                         window.sessionStorage.setItem('active2', state.slots[1].active);
                         window.sessionStorage.setItem('active3', state.slots[2].active);
-
-
                         break;
                 }
             }

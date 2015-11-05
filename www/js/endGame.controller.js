@@ -3,9 +3,9 @@
 
     angular.module('devoxx').controller('EndGameCtrl', EndGameCtrl);
 
-    EndGameCtrl.$inject =['$scope', '$location', '$mdDialog','$window'];
+    EndGameCtrl.$inject = ['$scope', '$mdDialog'];
 
-    function EndGameCtrl($scope, $location, $mdDialog,$window) {
+    function EndGameCtrl($scope, $mdDialog) {
         console.log("EndGameCtrl loaded");
 
         $scope.name = window.sessionStorage.getItem('name');
