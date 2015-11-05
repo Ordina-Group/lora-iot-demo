@@ -75,7 +75,6 @@
                             state.slots[0].active === state.slots[2].active) {
                             state.played = false;
                             $scope.counter--;
-                            console.log($scope.counter);
                             if ($scope.counter === 0) {
                                 $timeout(function () {
                                     document.getElementById('loser').play();
@@ -90,7 +89,6 @@
                         else {
                             state.played = false;
                             $scope.counter--;
-                            console.log($scope.counter);
                             if ($scope.counter === 0) {
                                 $timeout(function () {
                                     document.getElementById('loser').play();
@@ -151,6 +149,8 @@
                 if(!state.played) {
                     state.played = true;
 
+                    document.getElementById('roller').pause();
+                    document.getElementById('roller').currentTime = 0;
                     document.getElementById('roller').play();
                     state.slots[0].shuffle(5, onComplete);
 
