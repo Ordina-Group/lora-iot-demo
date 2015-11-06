@@ -8,6 +8,7 @@ var ArduinoService = function() {
     //Private variables.
     var socketServer    = null;
     var board           = null;
+    var ledStrip        = null;
     var ledStripUtils   = null;
 
     var inputPin        = 8;
@@ -43,19 +44,19 @@ var ArduinoService = function() {
             button: button
         });
 
-        var strip = new pixel.Strip({
+        ledStrip = new pixel.Strip({
             data: outputPin,
             length: ledCount,
             board: board,
             controller: "FIRMATA"
         });
 
-        strip.on("ready", function() {
-            ledStripUtils = new LedStripUtils(strip, ledCount);
+        ledStrip.on("ready", function() {
+            ledStripUtils = new LedStripUtils(ledStrip, ledCount);
 
             //Turn off the LEDs as they could still be on from a previous run!
-            strip.color("rgb(0, 0, 0)");
-            strip.show();
+            ledStrip.color("rgb(0, 0, 0)");
+            ledStrip.show();
 
             //Start the regular fade cycle.
             ledStripUtils.startCycleFade([
@@ -99,6 +100,7 @@ var ArduinoService = function() {
             //After registration message => A new user has been registered!
             if(data.registered === true) {
                 ledStripUtils.stopAnimation();
+                ledStripUtils = new LedStripUtils(ledStrip, ledCount);
                 setTimeout(ledStripUtils.startScrollerAnimation(
                     [
                         {"R": "255", "G": "0", "B": "0"},
@@ -110,9 +112,11 @@ var ArduinoService = function() {
             //After game message => Check for winner of loser.
             if(data.winner === true) {
                 ledStripUtils.stopAnimation();
+                ledStripUtils = new LedStripUtils(ledStrip, ledCount);
                 setTimeout(ledStripUtils.startOffsetAnimation, 250);
             } else if(data.winner === false) {
                 ledStripUtils.stopAnimation();
+                ledStripUtils = new LedStripUtils(ledStrip, ledCount);
                 setTimeout(ledStripUtils.startCycleFade(
                     [
                         {"R": "255", "G": "0", "B": "0"},
@@ -124,6 +128,7 @@ var ArduinoService = function() {
             //After reset message => reset LED effects
             if(data.reset === true) {
                 ledStripUtils.stopAnimation();
+                ledStripUtils = new LedStripUtils(ledStrip, ledCount);
                 setTimeout(ledStripUtils.startCycleFade(
                     [
                         {"R": "255", "G": "0", "B": "0"},
