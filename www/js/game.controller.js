@@ -125,7 +125,6 @@
                     $scope.counter = 3;
                     $scope.showAdvanced(this);
                     stopFireworks();
-                    state.played = false;
                 }, function () {
                 });
             }
