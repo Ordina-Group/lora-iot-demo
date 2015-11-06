@@ -3,10 +3,10 @@
 
     angular .module('devoxx')
             .controller('GameCtrl', GameCtrl);
-    GameCtrl.$inject = ['$scope', '$location', '$mdDialog', 'nodeSocketService', '$timeout'];
+    GameCtrl.$inject = ['$scope', '$mdDialog', 'nodeSocketService', '$timeout'];
 
-    function GameCtrl($scope, $location, $mdDialog, nodeSocketService, $timeout) {
-        $scope.status = '  ';
+    function GameCtrl($scope, $mdDialog, nodeSocketService, $timeout) {
+
         $scope.name = window.sessionStorage.getItem('name');
         $scope.counter = 3;
         //State machine variables
@@ -16,7 +16,6 @@
             intervalLaunch: null,
             intervalLoop: null,
             closeButNoCigar: false,
-
             slots: null
         };
 
@@ -51,7 +50,6 @@
                     if(state.played === false) {
                         $("#playButton").trigger('click');
                     }
-
                 } else {
                     //Button released!
                 }
@@ -61,31 +59,30 @@
             function onComplete() {
                 switch (this.element[0].id) {
                     case 'machine3':
-
                         //See if the player has won the game.
                         if (state.slots[0].active === state.slots[1].active && state.slots[1].active === state.slots[2].active) {
                             state.winner = true;
                             state.closeButNoCigar = false;
                             nodeSocketService.sendJSONMessage({winner: true});
-
+                            document.getElementById('victory').play();
                             setTimeout(startFireworks, 1500);
-                            setTimeout(showEndGame, 1500);
+
                         } else if (state.slots[0].active === state.slots[1].active ||
                             state.slots[1].active === state.slots[2].active ||
                             state.slots[0].active === state.slots[2].active) {
                             state.played = false;
                             $scope.counter--;
+
                             if ($scope.counter === 0) {
                                 $timeout(function () {
                                     document.getElementById('loser').play();
                                 }, 1500);
-                                state.played=true;
+                                state.played = true;
                                 state.winner = false;
                                 state.closeButNoCigar = true;
                                 nodeSocketService.sendJSONMessage({winner: false});
-                                setTimeout(showEndGame, 1500);
                             }
-                        }
+                            }
                         else {
                             state.played = false;
                             $scope.counter--;
@@ -93,18 +90,18 @@
                                 $timeout(function () {
                                     document.getElementById('loser').play();
                                 }, 1500);
-                                state.played=true;
+                                state.played = true;
                                 state.winner = false;
                                 state.closeButNoCigar = false;
                                 nodeSocketService.sendJSONMessage({winner: false});
-                                setTimeout(showEndGame, 1500);
                             }
-                        }
+                            }
                         window.sessionStorage.setItem('winner', (state.winner ? 1 : 0));
                         window.sessionStorage.setItem('closeButNoCigar', (state.closeButNoCigar ? 1 : 0));
                         window.sessionStorage.setItem('active1', state.slots[0].active);
                         window.sessionStorage.setItem('active2', state.slots[1].active);
                         window.sessionStorage.setItem('active3', state.slots[2].active);
+                        setTimeout(showEndGame, 1500);
                         break;
                 }
             }

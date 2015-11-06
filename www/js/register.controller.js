@@ -32,15 +32,6 @@
             if (current.left && last.right) current.right = false;
             last = angular.extend({}, current);
         }
-        $scope.hide = function () {
-            $mdDialog.hide();
-        };
-        $scope.cancel = function () {
-            $mdDialog.cancel();
-        };
-        $scope.answer = function (answer) {
-            $mdDialog.hide(answer);
-        };
         $scope.validate = function (person) {
             if ($scope.registerForm.$valid) {
                 window.sessionStorage.setItem('name', person.name);
@@ -53,11 +44,9 @@
                 if(person.entity === undefined){
                     person.entity="";
                 }
-
                 //Send information to the socket and call the /register endpoint.
                 nodeSocketService.sendJSONMessage({registered: true});
                 Restangular.all('register').post(person);
-
                 $scope.showActionToast();
                 $timeout(function () {
                     $mdDialog.cancel();
