@@ -25,7 +25,7 @@
                 templateUrl: 'register.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
-                    clickOutsideToClose: true,
+                    clickOutsideToClose: false,
                     escapeToClose: false
             })
         };
