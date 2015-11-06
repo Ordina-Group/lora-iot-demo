@@ -1,0 +1,188 @@
+@import url(http://fonts.googleapis.com/css?family=Pathway+Gothic+One);
+
+body {
+    overflow: hidden;
+}
+
+a {
+    color: #ccd500;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #a9b119;
+}
+
+.clear {
+    clear: both;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background: black;
+}
+
+b {
+    font-weight: 600;
+}
+
+/* Titulos
+-------------------------------------------------------------------------*/
+h1 {
+    width: 100%;
+    color: #000000;
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    color: #000000;
+    display: table-cell;
+    float: left;
+    font-size: 45px;
+    line-height: 40px;
+    margin: 0 0 50px;
+    text-align: center;
+    width: 100%;
+    font-weight: 300;
+}
+
+h2 span {
+    font-weight: 400;
+}
+
+h3 {
+    float: left;
+    width: 100%;
+    margin: 0 0 20px 0;
+    color: white;
+    font-size: 40px;
+    font-family: 'Lato', 'sans-serif';
+    font-weight: 300;
+}
+
+h4 {
+    color: #ffffff;
+    display: table-cell;
+    float: left;
+    font-size: 35px;
+    line-height: 31px;
+    margin: 0 0 0;
+    text-align: center;
+    width: 100%;
+    font-weight: 400;
+}
+
+p.title {
+    color: #000000;
+    display: table-cell;
+    float: left;
+    font-size: 45px;
+    line-height: 40px;
+    margin: 0 0 50px;
+    text-align: center;
+    width: 100%;
+    font-weight: 300;
+}
+
+.grey {
+    color: #444;
+}
+
+/* INICIO
+-------------------------------------------------------------------------*/
+#header {
+    margin: 0 auto 0;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    background-color: #6C5726;
+    overflow: hidden;
+    position: relative;
+    padding: 50px 0;
+    border-top: 10px solid #A48E4E;
+    border-bottom: 10px solid #A48E4E;
+}
+
+#header table, #footer table {
+    height: 100%;
+    width: 100%;
+}
+
+#header table td, #footer table td {
+    vertical-align: middle;
+}
+
+#header .content {
+    color: #FFFFFF;
+    float: left;
+    font-size: 50px;
+    font-weight: 300;
+    line-height: 42px;
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+#header .content, #footer .content {
+    font-family: 'Pathway Gothic One', sans-serif;
+    color: #ffffff;
+    float: left;
+    font-size: 70px;
+    font-weight: 300;
+    line-height: 80px;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    padding: 30px 0;
+}
+
+#header .content > div, #footer .content > div {
+    display: inline-block;
+}
+
+#footer {
+    width: 100%;
+    background-color: #6C5726;
+    border-top: 20px dotted #A48E4E;
+    height: 200px;
+}
+
+.line {
+    background-color: #DCD293;
+    padding: 50px 0 25px 0;
+    width: 100%;
+    border-top: 20px dotted #A48E4E;
+}
+
+.dialogdemoBasicUsage #popupContainer {
+    position: relative;
+}
+
+.dialogdemoBasicUsage .debt-be-gone {
+    font-weight: bold;
+    color: blue;
+    text-decoration: underline;
+}
+
+.dialogdemoBasicUsage .footer {
+    width: 100%;
+    text-align: center;
+    margin-left: 20px;
+}
+
+.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+    font-size: 0.8em;
+    margin-top: 50px;
+}
