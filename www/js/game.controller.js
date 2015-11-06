@@ -20,6 +20,7 @@
         };
 
         $scope.showAdvanced = function (ev) {
+            state.played = true;
             $mdDialog
             .show({
                 templateUrl: 'register.html',
@@ -27,7 +28,11 @@
                 targetEvent: ev,
                     clickOutsideToClose: false,
                     escapeToClose: false
-            })
+                }).then(function () {
+
+                }, function () {
+                    state.played = false;
+                })
         };
 
         //When the page is loaded, set up our game components & state.
