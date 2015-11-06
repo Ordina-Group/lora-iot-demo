@@ -43,13 +43,13 @@
 
                 var hectoScale = viewportHeight * 0.095;
                 hectoScale = hectoScale / 100;
-                $(".containerslotmain").css('transform', 'scale(' + hectoScale + ')');
+                $("#scalingWrapper").css('transform', 'scale(' + hectoScale + ')');
             }
             nodeSocketService.registerCallback(function onMessageFromSocket(data) {
                 if(data.buttonPressed === true) {
                     //Button pressed!
                     if(state.played === false) {
-                        $("#slotMachineButton1").trigger('click');
+                        $("#playButton").trigger('click');
                     }
 
                 } else {
@@ -145,7 +145,7 @@
             }
 
 
-            $("#slotMachineButton1").click(function () {
+            $("#playButton").click(function () {
                 if(!state.played) {
                     state.played = true;
 
