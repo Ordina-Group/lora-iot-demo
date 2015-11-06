@@ -59,6 +59,7 @@
             function onComplete() {
                 switch (this.element[0].id) {
                     case 'machine3':
+
                         //See if the player has won the game.
                         if (state.slots[0].active === state.slots[1].active && state.slots[1].active === state.slots[2].active) {
                             state.winner = true;
@@ -72,6 +73,7 @@
                             state.slots[0].active === state.slots[2].active) {
                             state.played = false;
                             $scope.counter--;
+                            setTimeout(showEndGame, 1500);
 
                             if ($scope.counter === 0) {
                                 $timeout(function () {
@@ -81,6 +83,7 @@
                                 state.winner = false;
                                 state.closeButNoCigar = true;
                                 nodeSocketService.sendJSONMessage({winner: false});
+                                setTimeout(showEndGame, 1500);
                             }
                             }
                         else {
@@ -94,6 +97,7 @@
                                 state.winner = false;
                                 state.closeButNoCigar = false;
                                 nodeSocketService.sendJSONMessage({winner: false});
+                                setTimeout(showEndGame, 1500);
                             }
                             }
                         window.sessionStorage.setItem('winner', (state.winner ? 1 : 0));
@@ -101,7 +105,7 @@
                         window.sessionStorage.setItem('active1', state.slots[0].active);
                         window.sessionStorage.setItem('active2', state.slots[1].active);
                         window.sessionStorage.setItem('active3', state.slots[2].active);
-                        setTimeout(showEndGame, 1500);
+
                         break;
                 }
             }
