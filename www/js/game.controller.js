@@ -67,13 +67,13 @@
                             nodeSocketService.sendJSONMessage({winner: true});
                             document.getElementById('victory').play();
                             setTimeout(startFireworks, 1500);
+                            setTimeout(showEndGame, 1500);
 
                         } else if (state.slots[0].active === state.slots[1].active ||
                             state.slots[1].active === state.slots[2].active ||
                             state.slots[0].active === state.slots[2].active) {
                             state.played = false;
                             $scope.counter--;
-                            setTimeout(showEndGame, 1500);
 
                             if ($scope.counter === 0) {
                                 $timeout(function () {
