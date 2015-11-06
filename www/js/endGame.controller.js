@@ -1,11 +1,11 @@
 (function() {
     'use strict';
 
-    angular.module('devoxx').controller('EndGameCtrl', EndGameCtrl);
+    angular .module('devoxx')
+            .controller('EndGameCtrl', EndGameCtrl);
+    EndGameCtrl.$inject = ['$scope', '$mdDialog', 'nodeSocketService'];
 
-    EndGameCtrl.$inject = ['$scope', '$mdDialog'];
-
-    function EndGameCtrl($scope, $mdDialog) {
+    function EndGameCtrl($scope, $mdDialog, nodeSocketService) {
         $scope.name = window.sessionStorage.getItem('name');
         $scope.winner = function (){
             return window.sessionStorage.getItem('winner') == 1;
@@ -38,6 +38,7 @@
             $('#coin1').show();
             $('#coin2').show();
             $('#coin3').show();
+            nodeSocketService.sendJSONMessage({reset: true});
         }
     }
 })();

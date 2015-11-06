@@ -97,9 +97,8 @@ var ArduinoService = function() {
             var data = JSON.parse(message);
 
             //After registration message => A new user has been registered!
-            if(data.winner === undefined && data.registered === true) {
+            if(data.registered === true) {
                 ledStripUtils.stopAnimation();
-
                 setTimeout(ledStripUtils.startScrollerAnimation(
                     [
                         {"R": "255", "G": "0", "B": "0"},
@@ -109,20 +108,28 @@ var ArduinoService = function() {
             }
 
             //After game message => Check for winner of loser.
-            if(data.registered === undefined) {
-                if(data.winner === true) {
-                    ledStripUtils.stopAnimation();
-                    setTimeout(ledStripUtils.startOffsetAnimation, 250);
-                } else if(data.winner === false) {
-                    ledStripUtils.stopAnimation();
+            if(data.winner === true) {
+                ledStripUtils.stopAnimation();
+                setTimeout(ledStripUtils.startOffsetAnimation, 250);
+            } else if(data.winner === false) {
+                ledStripUtils.stopAnimation();
+                setTimeout(ledStripUtils.startCycleFade(
+                    [
+                        {"R": "255", "G": "0", "B": "0"},
+                        {"R": "0", "G": "0", "B": "255"},
+                        {"R": "255", "G": "255", "B": "255"}
+                    ], 2500), 500);
+            }
 
-                    setTimeout(ledStripUtils.startCycleFade(
-                        [
-                            {"R": "255", "G": "0", "B": "0"},
-                            {"R": "0", "G": "0", "B": "255"},
-                            {"R": "255", "G": "255", "B": "255"}
-                        ], 2500), 500);
-                }
+            //After reset message => reset LED effects
+            if(data.reset === true) {
+                ledStripUtils.stopAnimation();
+                setTimeout(ledStripUtils.startCycleFade(
+                    [
+                        {"R": "255", "G": "0", "B": "0"},
+                        {"R": "0", "G": "0", "B": "255"},
+                        {"R": "255", "G": "255", "B": "255"}
+                    ], 2500), 500);
             }
 
             //Ignore all other cases and messages!
