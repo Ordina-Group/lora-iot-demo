@@ -3,8 +3,8 @@ var IntervalWorker = function() {
     var messageFactory  = require("../../util/messagefactory").getInstance();
 
     //Required private imports for functionality.
-    var Arduino         = require("../../services/arduino/arduino");
-    var arduino         = null;
+    var LoRa            = require("../../services/lora/lora");
+    var loRa            = null;
 
     init();
 
@@ -19,17 +19,17 @@ var IntervalWorker = function() {
      * Starts and interval and after the given interval both functions are executed again.
      */
     function init() {
-        arduino = new Arduino();
+        loRa = new LoRa();
 
         //Set up the arduino.
-        setupArduino();
+        setupLoRaStream();
 
         //Set up the interval to update the data regularly.
         setInterval(function() {
             logger.INFO("Refreshing data (8 minutes elapsed)");
 
             //In the off chance the websocket dies, it will be automatically restarted here!
-            setupArduino();
+            setupLoRaStream();
         }, 480000 );
 
         logger.INFO("Interval worker started!");
@@ -38,9 +38,9 @@ var IntervalWorker = function() {
     /**
      * Sets up the arduino so external applications can get realtime information of what happens with the arduino!
      */
-    function setupArduino() {
-        logger.INFO("Attempting to setup arduino logic...");
-        arduino.setupArduino();
+    function setupLoRaStream() {
+        logger.INFO("Attempting to setup LoRa stream...");
+        loRa.setupStream();
     }
 };
 
