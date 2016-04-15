@@ -17,8 +17,23 @@ var GenericEndpoints = function() {
      */
      this.index = function(request, response) {
         logger.INFO("Redirecting from '/' to '/index.html'!");
+         response.writeHead(200, {'Content-Type': 'text/plain'});
+         response.write("Please use /slotmachine for the slotmachina application, or /booze for the booze application!");
+         response.end();
+    };
+
+    this.slotmachine = function(request, response) {
+        logger.INFO("Redirecting from '/slotmachine' to '/slotmachine/index.html'!");
         response.writeHead(301, {
-            "Location" : "/index.html"
+            "Location" : "/slotmachine/index.html"
+        });
+        response.end();
+    };
+
+    this.booze = function(request, response) {
+        logger.INFO("Redirecting from '/booze' to '/booze/index.html'!");
+        response.writeHead(301, {
+            "Location" : "/booze/index.html"
         });
         response.end();
     };

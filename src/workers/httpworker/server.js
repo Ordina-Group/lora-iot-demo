@@ -47,7 +47,9 @@ var Server = function() {
         var genericEndpoints    = new GenericEndpoints();
         var registerService     = new RegisterService();
         return {
-            "/"                             : {execute : genericEndpoints.index,                       params: null},
+            "/"                             : {execute: genericEndpoints.index,                        params: null},
+            "/slotmachine"                  : {execute : genericEndpoints.slotmachine,                 params: null},
+            "/booze"                        : {execute : genericEndpoints.booze,                       params: null},
             "/register"                     : {execute : registerService.register,                     params: null},
             "/upload"                       : {execute : genericEndpoints.upload,                      params: null}
         };

@@ -18,17 +18,17 @@
 
                 $scope.active1 = function() {
                     var active = parseInt(window.sessionStorage.getItem('active1'));
-                    return '../img/slot' + (active + 1) + '.png';
+                    return 'img/slot' + (active + 1) + '.png';
                 };
 
                 $scope.active2 = function() {
                     var active = parseInt(window.sessionStorage.getItem('active2'));
-                    return '../img/slot' + (active + 1) + '.png';
+                    return 'img/slot' + (active + 1) + '.png';
                 };
 
                 $scope.active3 = function() {
                     var active = parseInt(window.sessionStorage.getItem('active3'));
-                    return '../img/slot' + (active + 1) + '.png';
+                    return 'img/slot' + (active + 1) + '.png';
                 };
 
                 $scope.newGame = function() {

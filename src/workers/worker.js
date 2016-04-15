@@ -48,12 +48,7 @@ var Worker = function() {
      * @param msg The message the master instance forwarded to this instance. Must be router to the handler object and function.
      */
     function onMessageFromMasterReceived(msg) {
-        //TODO: Closure?
-        var Arduino         = require("../services/arduino/arduino");
-        var arduino         = new Arduino();
-
         logger.DEBUG("Received message from master: routing to: " + msg.handler + "." + msg.handlerFunction + "MessageHandler(\"\")");
-        //TODO: NOT ALL THAT SAFE!
         eval(msg.handler)[msg.handlerFunction](msg);
     }
 };
