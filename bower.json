@@ -32,5 +32,8 @@
     "bootstrap": "~3.3.5",
     "angular-bootstrap": "~0.14.3",
     "angular-ui": "~0.4.0"
+  },
+  "resolutions": {
+    "angular": "1.5.3"
   }
 }

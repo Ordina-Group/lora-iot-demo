@@ -1,0 +1,27 @@
+#background {
+  background-size: cover;
+  background: url("../img/wood.jpg") center;
+  width: 100%;
+  height: 100%;
+
+  > div {
+    height: 100%;
+    width: 100%;
+
+    svg {
+      left: 30%;
+      width: 40%;
+      position: absolute;
+
+      #rect4384-5 {
+        fill: green;
+        display:inline;
+        fill-opacity:1;
+        transition-duration: 2s;
+      }
+
+    }
+
+  }
+
+}

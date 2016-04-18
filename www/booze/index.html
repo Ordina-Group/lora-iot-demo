@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css"/>
         <link rel="stylesheet" href="/bower_components/angular-material-icons/angular-material-icons.css"/>
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
+        <link rel="stylesheet" href="style/style.css"/>
 
         <meta charset="UTF-8">
         <meta name="viewport"
@@ -12,11 +13,12 @@
         <title>Booze</title>
     </head>
     <body ng-app="booze" style="background-color: #000000">
-    <div class="container">
-        <div ng-view="">TODO: content</div>
+    <div class="container" id="background">
+        <div ng-view=""></div>
     </div>
     </body>
 </html>
+
 
 <script src="/bower_components/angular/angular.js"></script>
 <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -33,3 +35,7 @@
 
 <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/bower_components/angular-aria/angular-aria.js"></script>
+
+<script src="/booze/app.js"></script>
+<script src="/booze/meter.controller.js"></script>
+<script src="/booze/socket.service.js"></script>

@@ -8,7 +8,8 @@ Slotmachine web application.
 
 Available web services:
 
-- [localhost:8080/register](http://localhost:8080/register)
+- [localhost:8080/register](http://localhost:8080
+/register)
     - GET for more information
     - POST to submit data
 
