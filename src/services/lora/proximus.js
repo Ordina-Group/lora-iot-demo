@@ -78,7 +78,7 @@ var Proximus = function() {
 
                 //Process the data.
                 var data = JSON.parse(fullBody);
-                logger.DEBUG(JSON.stringify(data));
+                logger.INFO(JSON.stringify(data));
 
             } catch (error) {
                 response.writeHead(500, {'Content-Type': 'text/plain'});
