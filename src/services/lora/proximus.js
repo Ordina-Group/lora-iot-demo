@@ -1,28 +1,17 @@
 var Proximus = function() {
     var https           = require("https");
-    var ws              = require("nodejs-websocket");
+    var messageFactory  = require("../../util/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-PROXIMUS--");
 
     //Private variables.
     var host            = 'api.enabling.be';
     var auth            = 'Bearer ' + '';
-    var socketServer    = null;
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.setupSocket = function() {
-        logger.INFO("Setting up socket...");
-
-        if(socketServer !== null) {
-            logger.INFO("Websocket already up and running.");
-        } else {
-            socketServer = ws.createServer(onConnection).listen(7081);
-        }
-    };
-
     this.devices = function(request, response) {
         logger.INFO("Listing registered LoRa devices.");
 
@@ -68,7 +57,7 @@ var Proximus = function() {
                 break;
             case "POST":
                 processData(request, response);
-                broadcastMessage({buttonPressed : true});
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {data: true});
                 break;
         }
     };
@@ -99,44 +88,6 @@ var Proximus = function() {
             }
             response.end();
         });
-    }
-
-    function onConnection(connection) {
-        logger.INFO("New socket connection");
-
-        try {
-            connection.on("text", onMessageFromConnection);
-            connection.on("close", onConnectionClosed);
-        } catch (error) {
-            logger.ERROR("Cannot handle new connection!");
-        }
-    }
-
-    function onMessageFromConnection(message) {
-        try {
-            logger.INFO("Message from socket connection: " + message);
-            var data = JSON.parse(message);
-
-            //We ignore any messages from the clients, but we log them just in case...
-            logger.DEBUG("Message received from websocket client: " + data);
-        } catch(error) {
-            logger.ERROR("An error occurred during web socket message handling...");
-            logger.ERROR("Continuing, not critical!");
-        }
-    }
-
-    function broadcastMessage(message) {
-        logger.INFO("Broadcasting message: " + message);
-
-        socketServer.connections.forEach(
-            function (connection) {
-                connection.sendText(JSON.stringify(message, null, 4))
-            }
-        );
-    }
-
-    function onConnectionClosed(code, reason) {
-        logger.DEBUG("Connection closed");
     }
 };
 

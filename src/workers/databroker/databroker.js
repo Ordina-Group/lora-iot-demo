@@ -61,7 +61,6 @@ var DataBroker = function () {
      */
     function messageReceived(msg) {
         logger.DEBUG("Broker received message from worker: " + msg.workerId);
-        //TODO: NOT ALL THAT SAFE!
         eval(msg.targetFunc)(msg);
     }
 
