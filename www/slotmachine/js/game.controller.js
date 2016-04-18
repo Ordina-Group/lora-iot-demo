@@ -107,7 +107,7 @@
                         if(state.played === false) {
                             play();
                         } else {
-                            document.getElementById('denied').play();
+                            //document.getElementById('denied').play();
                         }
                     } else {
                         //Button released!
