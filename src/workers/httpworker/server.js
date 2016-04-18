@@ -55,7 +55,8 @@ var Server = function() {
             "/register"                     : {execute : registerService.register,                     params: null},
             "/upload"                       : {execute : genericEndpoints.upload,                      params: null},
             "/pxm/devices"                  : {execute : proximus.devices,                             params: null},
-            "/pxm/buttonTrigger"            : {execute : proximus.buttonTrigger,                       params: null}
+            "/pxm/buttonTrigger"            : {execute : proximus.buttonTrigger,                       params: null},
+            "/pxm/buttonTrigger/*"          : {execute : proximus.buttonTrigger,                       params: null}
         };
     }
 
