@@ -19,20 +19,27 @@
                     slots: null
                 };
 
-                $scope.showAdvanced = function (ev) {
-                    state.played = true;
-                    $mdDialog
-                        .show({
-                            templateUrl: 'register.html',
-                            parent: angular.element(document.body),
-                            targetEvent: ev,
-                            clickOutsideToClose: false,
-                            escapeToClose: false
-                        }).then(function () {
+                var mustRegister = false;
 
-                        }, function () {
-                            state.played = false;
-                        })
+                $scope.showAdvanced = function (ev) {
+                    if(mustRegister) {
+                        state.played = true;
+
+                        $mdDialog
+                         .show({
+                         templateUrl: 'register.html',
+                         parent: angular.element(document.body),
+                         targetEvent: ev,
+                         clickOutsideToClose: false,
+                         escapeToClose: false
+                         }).then(function () {
+
+                         }, function () {
+                         state.played = false;
+                         })
+                    } else {
+                        state.played = false;
+                    }
                 };
 
                 //When the page is loaded, set up our game components & state.
@@ -100,7 +107,7 @@
                         if(state.played === false) {
                             play();
                         } else {
-                            document.getElementById('denied').play();
+                            //document.getElementById('denied').play();
                         }
                     } else {
                         //Button released!
@@ -212,6 +219,10 @@
                         stopFireworks();
                     }, function () {
                     });
+
+                    setTimeout(function () {
+                        $("#newGame").click();
+                    }, 5000);
                 }
 
                 /**

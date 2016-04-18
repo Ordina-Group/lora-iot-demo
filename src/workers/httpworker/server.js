@@ -28,7 +28,7 @@ var Server = function() {
         //Create a new router instance and pass it the mapped endpoints.
         router = new Router(mapRestEndpoints());
 
-        var port = 8080;
+        var port = 7080;
         //Create a http server that listens on the given port. the second param is for making the localhost loopback work.
         http.createServer(onRequest).listen(port, "0.0.0.0");
         logger.INFO("Server started => Listening at port: " + port);
@@ -43,15 +43,20 @@ var Server = function() {
     function mapRestEndpoints() {
         var GenericEndpoints    = require("./../../services/genericendpoints");
         var RegisterService     = require("./../../services/datalogging/registerService");
+        var Proximus            = require("./../../services/lora/proximus");
 
         var genericEndpoints    = new GenericEndpoints();
         var registerService     = new RegisterService();
+        var proximus            = new Proximus();
         return {
-            "/"                             : {execute: genericEndpoints.index,                        params: null},
+            "/"                             : {execute : genericEndpoints.index,                       params: null},
             "/slotmachine"                  : {execute : genericEndpoints.slotmachine,                 params: null},
             "/booze"                        : {execute : genericEndpoints.booze,                       params: null},
             "/register"                     : {execute : registerService.register,                     params: null},
-            "/upload"                       : {execute : genericEndpoints.upload,                      params: null}
+            "/upload"                       : {execute : genericEndpoints.upload,                      params: null},
+            "/pxm/devices"                  : {execute : proximus.devices,                             params: null},
+            "/pxm/buttonTrigger"            : {execute : proximus.buttonTrigger,                       params: null},
+            "/pxm/buttonTrigger/*"          : {execute : proximus.buttonTrigger,                       params: null}
         };
     }
 
