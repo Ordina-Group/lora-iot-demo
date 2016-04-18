@@ -20,7 +20,7 @@
         };
 
         function connectToWebsocket() {
-            nodeSocket = new WebSocket("ws://localhost:7081");
+            nodeSocket = new WebSocket("ws://sensorlabs-frontend-itt.cloudapp.net:7081");
 
             //Wait for the socket connection to be established before doing anything else socket related!
             nodeSocket.onopen = function (event) {
