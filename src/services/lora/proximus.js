@@ -57,7 +57,6 @@ var Proximus = function() {
                 break;
             case "POST":
                 processData(request, response);
-                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
                 break;
         }
     };
@@ -81,6 +80,12 @@ var Proximus = function() {
                 //Process the data.
                 var data = JSON.parse(fullBody);
                 logger.INFO(JSON.stringify(data));
+
+                if(data.payload === true || data.payload == 1) {
+                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
+                } else if(data.payload === false || data.payload == 0) {
+                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
+                }
 
             } catch (error) {
                 response.writeHead(500, {'Content-Type': 'text/plain'});
