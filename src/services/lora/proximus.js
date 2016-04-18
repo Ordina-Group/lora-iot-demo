@@ -57,7 +57,7 @@ var Proximus = function() {
                 break;
             case "POST":
                 processData(request, response);
-                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {data: true});
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
                 break;
         }
     };
