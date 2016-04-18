@@ -26,7 +26,7 @@ var ArduinoService = function() {
         } else {
             //TODO: Stale checks and reinit if required!
 
-            socketServer = ws.createServer(onConnection).listen(8081);
+            //socketServer = ws.createServer(onConnection).listen(8081);
 
             board = new arduino.Board();
             board.on('ready', onArduinoReady);

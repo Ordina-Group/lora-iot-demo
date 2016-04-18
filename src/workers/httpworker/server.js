@@ -28,7 +28,7 @@ var Server = function() {
         //Create a new router instance and pass it the mapped endpoints.
         router = new Router(mapRestEndpoints());
 
-        var port = 8080;
+        var port = 7080;
         //Create a http server that listens on the given port. the second param is for making the localhost loopback work.
         http.createServer(onRequest).listen(port, "0.0.0.0");
         logger.INFO("Server started => Listening at port: " + port);
