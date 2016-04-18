@@ -88,11 +88,11 @@ var IntervalWorker = function() {
     }
 
     function broadcastMessage(message) {
-        logger.INFO("Broadcasting message: " + message);
+        logger.INFO("Broadcasting message: " + message.data);
 
         socketServer.connections.forEach(
             function (connection) {
-                connection.sendText(JSON.stringify(message, null, 4))
+                connection.sendText(JSON.stringify(message.data, null, 4))
             }
         );
     }
