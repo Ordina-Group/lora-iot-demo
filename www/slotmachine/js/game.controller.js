@@ -19,20 +19,27 @@
                     slots: null
                 };
 
+                var mustRegister = false;
+
                 $scope.showAdvanced = function (ev) {
                     state.played = true;
-                    $mdDialog
-                        .show({
-                            templateUrl: 'register.html',
-                            parent: angular.element(document.body),
-                            targetEvent: ev,
-                            clickOutsideToClose: false,
-                            escapeToClose: false
-                        }).then(function () {
 
-                        }, function () {
-                            state.played = false;
-                        })
+                    if(mustRegister) {
+                        $mdDialog
+                         .show({
+                         templateUrl: 'register.html',
+                         parent: angular.element(document.body),
+                         targetEvent: ev,
+                         clickOutsideToClose: false,
+                         escapeToClose: false
+                         }).then(function () {
+
+                         }, function () {
+                         state.played = false;
+                         })
+                    } else {
+                        state.played = false;
+                    }
                 };
 
                 //When the page is loaded, set up our game components & state.
