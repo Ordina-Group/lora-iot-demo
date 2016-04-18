@@ -18,7 +18,7 @@ var GenericEndpoints = function() {
      this.index = function(request, response) {
         logger.INFO("Redirecting from '/' to '/index.html'!");
          response.writeHead(200, {'Content-Type': 'text/plain'});
-         response.write("Please use /slotmachine for the slotmachina application, or /booze for the booze application!");
+         response.write("Please use /slotmachine for the slotmachine application, or /booze for the booze application!");
          response.end();
     };
 

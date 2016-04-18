@@ -1,6 +1,6 @@
 var LoRaService = function() {
     var logger          = require("../../logging/logger").makeLogger("SERV-LORA------");
-    //var ws              = require("nodejs-websocket");
+    var ws              = require("nodejs-websocket");
 
     //Private variables.
     var socketServer    = null;
@@ -12,7 +12,9 @@ var LoRaService = function() {
      ------------------------------------------------------------------------------------------------*/
     this.setupStream = function() {
         logger.INFO("Setting up LoRa stream...");
-        //socketServer = ws.createServer(onConnection).listen(8081);
+        socketServer = ws.createServer(onConnection).listen(8081);
+
+        //TODO: Consume stream with LoRa data, and broadcast messages to all connected websocket clients when needed.
     };
 
     /*-------------------------------------------------------------------------------------------------
