@@ -1,5 +1,6 @@
 var Proximus = function() {
-    var https   = require("https");
+    var https           = require("https");
+    var logger          = require("../../logging/logger").makeLogger("SERV-PROXIMUS--");
 
     //Private variables.
     var host    = 'api.enabling.be';
@@ -11,6 +12,7 @@ var Proximus = function() {
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     this.devices = function(request, response) {
+        logger.INFO("Listing registered LoRa devices.");
 
         var options = {
             host: host,
@@ -44,6 +46,8 @@ var Proximus = function() {
     };
 
     this.buttonTrigger = function(request, response) {
+        logger.INFO("Request received for buttonTrigger...");
+
         switch (request.method) {
             case "GET":
                 response.writeHead(200, {'Content-Type': 'text/plain'});
@@ -74,6 +78,7 @@ var Proximus = function() {
 
                 //Process the data.
                 var data = JSON.parse(fullBody);
+                logger.DEBUG(JSON.stringify(data));
 
             } catch (error) {
                 response.writeHead(500, {'Content-Type': 'text/plain'});
