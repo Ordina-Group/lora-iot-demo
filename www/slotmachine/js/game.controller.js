@@ -219,6 +219,10 @@
                         stopFireworks();
                     }, function () {
                     });
+
+                    setTimeout(function () {
+                        $("#newGame").click();
+                    }, 5000);
                 }
 
                 /**
