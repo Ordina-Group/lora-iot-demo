@@ -3,11 +3,11 @@
 
     angular
         .module('booze')
-        .service("nodeSocketService", nodeSocketService);
+        .service("socketService", socketService);
 
-    nodeSocketService.$inject = ['$interval'];
+    socketService.$inject = ['$interval'];
 
-    function nodeSocketService($interval) {
+    function socketService($interval) {
 
         //Internal variables.
         var nodeSocket = null;

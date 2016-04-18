@@ -4,14 +4,14 @@
     angular.module('booze')
         .controller('MeterCtrl', MeterCtrl);
 
-    MeterCtrl.$inject = ['$scope', 'nodeSocketService'];
+    MeterCtrl.$inject = ['$scope', 'socketService'];
 
-    function MeterCtrl($scope, nodeSocketService) {
+    function MeterCtrl($scope, socketService) {
 
         var meter = this;
         var startHeight = 585;
 
-        nodeSocketService.registerCallback(messageReceived);
+        socketService.registerCallback(messageReceived);
 
         function messageReceived(data) {
             $('#rect4384-5')[0].setAttribute('d',composePath((data * 5.58)));
