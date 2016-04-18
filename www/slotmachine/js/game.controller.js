@@ -22,9 +22,9 @@
                 var mustRegister = false;
 
                 $scope.showAdvanced = function (ev) {
-                    state.played = true;
-
                     if(mustRegister) {
+                        state.played = true;
+
                         $mdDialog
                          .show({
                          templateUrl: 'register.html',
