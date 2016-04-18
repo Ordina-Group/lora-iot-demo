@@ -26,10 +26,10 @@ var IntervalWorker = function() {
 
         //Set up the interval to update the data regularly.
         setInterval(function() {
-            //logger.INFO("Refreshing data (8 minutes elapsed)");
+            logger.INFO("Refreshing data (8 minutes elapsed)");
 
             //In the off chance the websocket dies, it will be automatically restarted here!
-            //setupWebsocket();
+            setupWebsocket();
         }, 480000 );
 
         logger.INFO("Interval worker started!");

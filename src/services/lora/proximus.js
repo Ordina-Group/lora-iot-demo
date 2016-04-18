@@ -15,7 +15,12 @@ var Proximus = function() {
      ------------------------------------------------------------------------------------------------*/
     this.setupSocket = function() {
         logger.INFO("Setting up socket...");
-        socketServer = ws.createServer(onConnection).listen(7081);
+
+        if(socketServer !== null) {
+            logger.INFO("Websocket already up and running.");
+        } else {
+            socketServer = ws.createServer(onConnection).listen(7081);
+        }
     };
 
     this.devices = function(request, response) {
@@ -97,7 +102,7 @@ var Proximus = function() {
     }
 
     function onConnection(connection) {
-        logger.DEBUG("New connection");
+        logger.INFO("New socket connection");
 
         try {
             connection.on("text", onMessageFromConnection);
@@ -109,7 +114,7 @@ var Proximus = function() {
 
     function onMessageFromConnection(message) {
         try {
-            logger.DEBUG("Message from connection: " + message);
+            logger.INFO("Message from socket connection: " + message);
             var data = JSON.parse(message);
 
             //We ignore any messages from the clients, but we log them just in case...
@@ -121,7 +126,7 @@ var Proximus = function() {
     }
 
     function broadcastMessage(message) {
-        logger.DEBUG("Broadcasting message.");
+        logger.INFO("Broadcasting message: " + message);
 
         socketServer.connections.forEach(
             function (connection) {
