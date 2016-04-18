@@ -81,9 +81,9 @@ var Proximus = function() {
                 var data = JSON.parse(fullBody);
                 logger.INFO(JSON.stringify(data));
 
-                if(data.payload === true || data.payload == 1) {
+                if(data.payload == true || data.payload == "true" || data.payload == 1) {
                     messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
-                } else if(data.payload === false || data.payload == 0) {
+                } else if(data.payload == false || data.payload == "false" || data.payload == 0) {
                     messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
                 }
 
