@@ -4,12 +4,22 @@
     angular.module('booze')
         .controller('MeterCtrl', MeterCtrl);
 
-    MeterCtrl.$inject = ['$scope', 'socketService'];
+    MeterCtrl.$inject = ['$scope', 'socketService', '$window'];
 
-    function MeterCtrl($scope, socketService) {
+    function MeterCtrl($scope, socketService, $window) {
+
+
 
         var meter = this;
         var startHeight = 585;
+
+        meter.orientation = {};
+
+        //window.addEventListener("deviceorientation",function(val) {
+        //    console.log(val);
+        //    meter.orientation = val;
+        //});
+
 
         socketService.registerCallback(messageReceived);
 
