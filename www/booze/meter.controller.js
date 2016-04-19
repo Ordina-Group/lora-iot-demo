@@ -15,10 +15,10 @@
 
         meter.orientation = {};
 
-        //window.addEventListener("deviceorientation",function(val) {
-        //    console.log(val);
-        //    meter.orientation = val;
-        //});
+        window.addEventListener("deviceorientation",function(val) {
+            console.log(val);
+            meter.orientation = val;
+        });
 
 
         socketService.registerCallback(messageReceived);
