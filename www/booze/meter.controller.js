@@ -9,7 +9,8 @@
     function MeterCtrl($scope, socketService, $window) {
 
 
-        var meter = this;
+        var meter = this,
+            fullHeight = 558;
         //meter.orientation = [0, 0, 0];
         //
         //window.addEventListener("deviceorientation", function (val) {
@@ -41,7 +42,7 @@
         socketService.registerCallback(messageReceived);
 
         function messageReceived(data) {
-            $('#rect4384-5')[0].setAttribute('d', composePath((data * 5.58)));
+            $('#rect4384-5')[0].setAttribute('d', composePath((data * (558/100))));
         }
 
         function composePath(data) {
