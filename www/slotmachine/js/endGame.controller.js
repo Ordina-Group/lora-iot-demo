@@ -1,43 +1,30 @@
-(function() {
+(function () {
     'use strict';
 
-    angular .module('devoxx')
-            .controller('EndGameCtrl', ['$scope', '$mdDialog', 'nodeSocketService',
+    angular.module('devoxx')
+        .controller('EndGameCtrl', EndGameCtrl);
 
-            function($scope, $mdDialog, nodeSocketService) {
+    EndGameCtrl.$inject = ['$scope', 'nodeSocketService' ,'$mdDialog', 'gameState'];
 
-                $scope.name = window.sessionStorage.getItem('name');
+    function EndGameCtrl($scope, nodeSocketService, $mdDialog, gameState) {
 
-                $scope.winner = function (){
-                    return window.sessionStorage.getItem('winner') == 1;
-                };
+        $scope.name = gameState.name;
+        $scope.winner = gameState.winner;
+        $scope.closeButNoCigar = gameState.closeButNoCigar;
+        $scope.active1 = getImg(gameState.slots[0]);
+        $scope.active2 = getImg(gameState.slots[1]);
+        $scope.active3 = getImg(gameState.slots[2]);
 
-                $scope.closeButNoCigar = function() {
-                    return window.sessionStorage.getItem('closeButNoCigar') == 1;
-                };
+        function getImg(slot){
+            return 'img/slot' + (slot.active+1) + '.png';
+        }
 
-                $scope.active1 = function() {
-                    var active = parseInt(window.sessionStorage.getItem('active1'));
-                    return 'img/slot' + (active + 1) + '.png';
-                };
-
-                $scope.active2 = function() {
-                    var active = parseInt(window.sessionStorage.getItem('active2'));
-                    return 'img/slot' + (active + 1) + '.png';
-                };
-
-                $scope.active3 = function() {
-                    var active = parseInt(window.sessionStorage.getItem('active3'));
-                    return 'img/slot' + (active + 1) + '.png';
-                };
-
-                $scope.newGame = function() {
-                    $mdDialog.hide();
-                    $('#coin1').show();
-                    $('#coin2').show();
-                    $('#coin3').show();
-                    nodeSocketService.sendJSONMessage({reset: true});
-                }
-            }
-        ]);
+        $scope.newGame = function () {
+            $mdDialog.hide();
+            $('#coin1').show();
+            $('#coin2').show();
+            $('#coin3').show();
+            nodeSocketService.sendJSONMessage({reset: true});
+        }
+    }
 })();

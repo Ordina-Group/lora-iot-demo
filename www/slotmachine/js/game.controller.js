@@ -8,7 +8,6 @@
 
     function GameCtrl($scope, $mdDialog, nodeSocketService, $timeout) {
 
-        $scope.name = window.sessionStorage.getItem('name');
         $scope.counter = 3;
 
         var state = {
@@ -20,7 +19,7 @@
             slots: null
         };
 
-        var mustRegister = false;
+        var mustRegister = true;
 
         $scope.showAdvanced = function () {
             if (mustRegister) {
@@ -161,7 +160,6 @@
                         }, 1500);
                     }
                 }
-                updateSessionStorage();
             }
         }
 
@@ -176,14 +174,6 @@
             state.slots[0].active === state.slots[2].active);
         }
 
-        function updateSessionStorage() {
-            window.sessionStorage.setItem('winner', (state.winner ? 1 : 0));
-            window.sessionStorage.setItem('closeButNoCigar', (state.closeButNoCigar ? 1 : 0));
-            window.sessionStorage.setItem('active1', state.slots[0].active);
-            window.sessionStorage.setItem('active2', state.slots[1].active);
-            window.sessionStorage.setItem('active3', state.slots[2].active);
-        }
-
         /**
          * Shows the endgame sub page.
          */
@@ -192,8 +182,12 @@
                 templateUrl: 'endGame.html',
                 parent: angular.element(document.body),
                 clickOutsideToClose: false,
-                escapeToClose: false
-            }).then(function (answer) {
+                escapeToClose: false,
+                controller: 'EndGameCtrl',
+                locals: {
+                    gameState:state
+                }
+            }).then(function () {
                 $scope.counter = 3;
                 $scope.showAdvanced(this);
                 stopFireworks();
@@ -212,13 +206,14 @@
             $mdDialog.show({
                 templateUrl: 'register.html',
                 parent: angular.element(document.body),
-                targetEvent: ev,
                 clickOutsideToClose: false,
-                escapeToClose: false
-            }).then(function () {
-
-            }, function () {
+                escapeToClose: false,
+                controller: 'RegisterCtrl'
+            }).then(function (test) {
+                $scope.name = test.name;
                 state.played = false;
+            }, function () {
+                state.played = true;
             });
         }
 
