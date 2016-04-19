@@ -19,7 +19,7 @@
             slots: null
         };
 
-        var mustRegister = true;
+        var mustRegister = false;
 
         $scope.showAdvanced = function () {
             if (mustRegister) {
