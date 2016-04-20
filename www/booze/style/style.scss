@@ -21,7 +21,8 @@ body{
           fill: #FFAA00;
           display:inline;
           fill-opacity:1;
-          transition-duration: 2s;
+          transition-duration: 6s;
+          transition-timing-function: linear;
         }
 
         #layer8 {
