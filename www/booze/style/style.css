@@ -66,21 +66,25 @@ body {
     clip-path: inset(0px 0px 0px 0px); } }
 @keyframes raise {
   0% {
-    -webkit-clip-path: inset(50px 0px 0px 0px);
+    -webkit-clip-path: polygon(5px 100%, 76px 100%, 73px 105%, 7px 105%);
+    clip-path: polygon(5px 100%, 76px 100%, 73px 105%, 7px 105%);
     transform: translate(0px, 150px);
     opacity: 0; }
   15% {
-    -webkit-clip-path: inset(40px 0px 0px 0px);
+    -webkit-clip-path: polygon(5px 100%, 76px 100%, 73px 105%, 7px 105%);
+    clip-path: polygon(5px 100%, 76px 100%, 73px 105%, 7px 105%);
     transform: translate(0px, 150px); }
   20% {
     opacity: 0; }
   30% {
     opacity: 1; }
   70% {
-    -webkit-clip-path: inset(0px 0px 0px 0px);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 105%, 0% 105%);
+    clip-path: polygon(0 0, 100% 0, 100% 105%, 0% 105%);
     transform: translate(0px, 0px); }
   85% {
-    -webkit-clip-path: inset(0px 0px 0px 0px);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 105%, 0% 105%);
+    clip-path: polygon(0 0, 100% 0, 100% 105%, 0% 105%);
     transform: translate(0px, 0px); } }
 @keyframes flow {
   0% {
