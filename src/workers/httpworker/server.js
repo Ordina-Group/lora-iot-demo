@@ -56,13 +56,15 @@ var Server = function() {
             "/upload"                       : {execute : genericEndpoints.upload,                      params: null},
             "/pxm/devices"                  : {execute : proximus.devices,                             params: null},
             "/pxm/buttonTrigger"            : {execute : proximus.buttonTrigger,                       params: null},
-            "/pxm/buttonTrigger/*"          : {execute : proximus.buttonTrigger,                       params: null}
+            "/pxm/buttonTrigger/*"          : {execute : proximus.buttonTrigger,                       params: null},
+            "/pxm/levelTrigger"             : {execute : proximus.levelTrigger,                        params: null},
+            "/pxm/levelTrigger/*"           : {execute : proximus.levelTrigger,                        params: null}
         };
     }
 
     /**
      * Handles any incoming requests.
-     * Any request recieved will be passed on to the router.
+     * Any request recieved will be passed on to the router.x
      *
      * @param request The request that was received.
      * @param response The response to send back.

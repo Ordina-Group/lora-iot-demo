@@ -56,7 +56,31 @@ var Proximus = function() {
                 response.end();
                 break;
             case "POST":
-                processData(request, response);
+                var data = processData(request, response);
+                if(data.payload == true || data.payload == "true" || data.payload == 1) {
+                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
+                } else if(data.payload == false || data.payload == "false" || data.payload == 0) {
+                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
+                }
+                break;
+        }
+    };
+
+    this.levelTrigger = function (request, response) {
+        logger.INFO("Request received for levelTrigger...");
+
+        switch (request.method) {
+            case "GET":
+                response.writeHead(200, {'Content-Type': 'text/plain'});
+                response.write("To use this service, post JSON data to it!", null, 4);
+                response.end();
+                break;
+            case "POST":
+                var data = processData(request, response);
+
+                //TODO: Depending on the mac address and data value send the correct message to the websocket clients:
+                //{level: "HIGH"} or {level: "MEDIUM"} or {level: "LOW"}
+
                 break;
         }
     };
@@ -68,7 +92,9 @@ var Proximus = function() {
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     function processData(request, response) {
+        var data = null;
         var fullBody = "";
+
         request.on('data', function(chunk) {
             fullBody += chunk.toString();
         });
@@ -76,22 +102,15 @@ var Proximus = function() {
         request.on('end', function() {
             try {
                 response.writeHead(200, {'Content-Type': 'text/plain'});
+                data = JSON.parse(fullBody);
 
-                //Process the data.
-                var data = JSON.parse(fullBody);
                 logger.INFO(JSON.stringify(data));
-
-                if(data.payload == true || data.payload == "true" || data.payload == 1) {
-                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
-                } else if(data.payload == false || data.payload == "false" || data.payload == 0) {
-                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
-                }
-
             } catch (error) {
                 response.writeHead(500, {'Content-Type': 'text/plain'});
                 response.write("Cannot parse request body! Make sure that it is proper JSON!");
             }
             response.end();
+            return data;
         });
     }
 };
