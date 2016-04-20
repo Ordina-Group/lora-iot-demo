@@ -44,7 +44,7 @@
             var height = 100;
 
             $interval(function(){
-                height!==0? height -= 10 : height = 100;
+                height!==0? height -= 25 : height = 100;
 
                 callbacks.forEach(function(cb){
                     cb(height)

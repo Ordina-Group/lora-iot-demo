@@ -99,5 +99,8 @@ body {
     opacity: 0; }
   100% {
     opacity: 0; } }
+        body #background > div svg #tspan5194, body #background > div svg #tspan5198, body #background > div svg #tspan5202, body #background > div svg #path5135, body #background > div svg #rect5140, body #background > div svg #path5154 {
+          fill: #FFFFFF;
+          fill-opacity: 0.5; }
 
 /*# sourceMappingURL=style.css.map */
