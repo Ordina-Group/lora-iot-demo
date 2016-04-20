@@ -24,6 +24,67 @@ body{
           transition-duration: 2s;
         }
 
+        #layer8 {
+          //bierglass
+          animation-name: hide;
+          animation-duration: 10s;
+          animation-iteration-count: infinite;
+        }
+
+        #path4455 {
+          //bier
+          animation-name: fill;
+          animation-duration: 10s;
+          animation-iteration-count: infinite;
+        }
+
+        #path4449 {
+          //shuim
+          animation-name: raise;
+          animation-duration: 10s;
+          animation-iteration-count: infinite;
+        }
+
+        #rect4466 {
+          //stroom
+          animation-name: flow;
+          animation-duration: 10s;
+          animation-iteration-count: infinite;
+        }
+
+        @keyframes hide {
+          0% {opacity: 0;transform: translate(100px,-20px)}
+          15% {opacity: 1;transform: translate(0px,0px)}
+          70% {opacity: 1;transform: translate(0px,0px);}
+          85% {opacity: 0;transform: translate(-100px,-20px)}
+          100% {opacity: 0;transform: translate(100px,-20px)}
+        }
+
+        @keyframes fill {
+          0% {-webkit-clip-path: inset(150px 0px 0px 0px);clip-path: inset(150px 0px 0px 0px)}
+          15% {-webkit-clip-path: inset(150px 0px 0px 0px);clip-path: inset(150px 0px 0px 0px)}
+          70% {-webkit-clip-path: inset(0px 0px 0px 0px);clip-path: inset(0px 0px 0px 0px)}
+          85% {-webkit-clip-path: inset(0px 0px 0px 0px);clip-path: inset(0px 0px 0px 0px)}
+        }
+
+        @keyframes raise {
+          0% {-webkit-clip-path: inset(50px 0px 0px 0px); transform: translate(0px,150px); opacity: 0}
+          15% {-webkit-clip-path: inset(40px 0px 0px 0px); transform: translate(0px,150px)}
+          20% {opacity: 0}
+          30% {opacity: 1}
+          70% {-webkit-clip-path: inset(0px 0px 0px 0px); transform: translate(0px,0px)}
+          85% {-webkit-clip-path: inset(0px 0px 0px 0px); transform: translate(0px,0px)}
+        }
+
+        @keyframes flow {
+          0% {opacity: 0}
+          15% {opacity: 0}
+          20% {opacity: 1}
+          60% {opacity: 1}
+          70% {opacity: 0}
+          100% {opacity: 0}
+        }
+
       }
 
     }
