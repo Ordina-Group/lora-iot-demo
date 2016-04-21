@@ -85,6 +85,27 @@ var Proximus = function() {
         }
     };
 
+    this.levelHigh = function (request, response) {
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "HIGH"});
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write("Level set to HIGH", null, 4);
+        response.end();
+    };
+
+    this.levelMedium = function (request, response) {
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "MEDIUM"});
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write("Level set to MEDIUM", null, 4);
+        response.end();
+    };
+
+    this.levelLow = function (request, response) {
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "LOW"});
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write("Level set to LOW", null, 4);
+        response.end();
+    };
+
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
