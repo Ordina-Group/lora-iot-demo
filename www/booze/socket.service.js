@@ -37,6 +37,9 @@
 
                     for(var i = 0; i < callbacks.length; i++) {
                         switch(data.level){
+                            case 'FULL' :
+                                callbacks[i](100);
+                                break;
                             case 'HIGH' :
                                 callbacks[i](75);
                             break;
@@ -45,6 +48,9 @@
                             break;
                             case 'LOW' :
                                 callbacks[i](25);
+                                break;
+                            case 'EMPTY' :
+                                callbacks[i](0);
                                 break;
                             default :
                         }
