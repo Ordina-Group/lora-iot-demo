@@ -137,7 +137,6 @@ var Proximus = function() {
             }
             response.end();
 
-            logger.INFO(data);
             callback(data);
         });
     }
@@ -151,8 +150,24 @@ var Proximus = function() {
     }
 
     function handleLevelTrigger(data) {
-        //TODO: Depending on the mac address and data value send the correct message to the websocket clients:
-        //{level: "HIGH"} or {level: "MEDIUM"} or {level: "LOW"}
+        //TODO: Code to prevent levels from switching rapidly?
+        switch (data.macaddress) {
+            case "020000FFFF00B0B6":
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "FULL"});
+                break;
+            case "020000FFFF00B0B8":
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "HIGH"});
+                break;
+            case "020000FFFF00B0C9":
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "MEDIUM"});
+                break;
+            case "020000FFFF00B0AC":
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "LOW"});
+                break;
+            default:
+                logger.ERROR("Unknown hardware id for sensor! Cannot map to level value!");
+                break;
+        }
     }
 };
 
