@@ -59,9 +59,11 @@ var Server = function() {
             "/pxm/buttonTrigger/*"          : {execute : proximus.buttonTrigger,                       params: null},
             "/pxm/levelTrigger"             : {execute : proximus.levelTrigger,                        params: null},
             "/pxm/levelTrigger/*"           : {execute : proximus.levelTrigger,                        params: null},
+            "/booze/levelFull"              : {execute : proximus.levelFull,                           params: null},
             "/booze/levelHigh"              : {execute : proximus.levelHigh,                           params: null},
             "/booze/levelMedium"            : {execute : proximus.levelMedium,                         params: null},
-            "/booze/levelLow"               : {execute : proximus.levelLow,                            params: null}
+            "/booze/levelLow"               : {execute : proximus.levelLow,                            params: null},
+            "/booze/levelEmpty"             : {execute : proximus.levelEmpty,                          params: null}
         };
     }
 

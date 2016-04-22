@@ -85,6 +85,13 @@ var Proximus = function() {
         }
     };
 
+    this.levelFull = function (request, response) {
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "FULL"});
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write("Level set to FULL", null, 4);
+        response.end();
+    };
+
     this.levelHigh = function (request, response) {
         messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "HIGH"});
         response.writeHead(200, {'Content-Type': 'text/plain'});
@@ -103,6 +110,13 @@ var Proximus = function() {
         messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "LOW"});
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.write("Level set to LOW", null, 4);
+        response.end();
+    };
+
+    this.levelEmpty = function (request, response) {
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "EMPTY"});
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write("Level set to EMPTY", null, 4);
         response.end();
     };
 
