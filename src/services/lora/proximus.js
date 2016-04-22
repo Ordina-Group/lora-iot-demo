@@ -56,12 +56,7 @@ var Proximus = function() {
                 response.end();
                 break;
             case "POST":
-                var data = processData(request, response);
-                if(data.payload == true || data.payload == "true" || data.payload == 1) {
-                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
-                } else if(data.payload == false || data.payload == "false" || data.payload == 0) {
-                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
-                }
+                processData(request, response, handleButtonTrigger);
                 break;
         }
     };
@@ -76,11 +71,7 @@ var Proximus = function() {
                 response.end();
                 break;
             case "POST":
-                var data = processData(request, response);
-
-                //TODO: Depending on the mac address and data value send the correct message to the websocket clients:
-                //{level: "HIGH"} or {level: "MEDIUM"} or {level: "LOW"}
-
+                processData(request, response, handleLevelTrigger);
                 break;
         }
     };
@@ -126,7 +117,7 @@ var Proximus = function() {
      *                                        Private functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    function processData(request, response) {
+    function processData(request, response, callback) {
         var data = null;
         var fullBody = "";
 
@@ -145,8 +136,23 @@ var Proximus = function() {
                 response.write("Cannot parse request body! Make sure that it is proper JSON!");
             }
             response.end();
-            return data;
+
+            logger.INFO(data);
+            callback(data);
         });
+    }
+
+    function handleButtonTrigger(data) {
+        if(data.payload == true || data.payload == "true" || data.payload == 1) {
+            messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
+        } else if(data.payload == false || data.payload == "false" || data.payload == 0) {
+            messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
+        }
+    }
+
+    function handleLevelTrigger(data) {
+        //TODO: Depending on the mac address and data value send the correct message to the websocket clients:
+        //{level: "HIGH"} or {level: "MEDIUM"} or {level: "LOW"}
     }
 };
 
