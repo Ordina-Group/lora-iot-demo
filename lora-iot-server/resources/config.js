@@ -7,7 +7,7 @@ var Config = function() {
 
             localFilefolderPrefix: "lora-iot-server/www",
 
-            enableArduinoFunctionality: true
+            enableArduinoFunctionality: false
         }
     }
 };
