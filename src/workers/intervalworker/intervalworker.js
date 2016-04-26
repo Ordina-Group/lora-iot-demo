@@ -1,12 +1,13 @@
 var IntervalWorker = function() {
     var cluster         = require("cluster");
     var logger          = require("../../logging/logger").makeLogger("INTERVALWORKER-");
-    var messageFactory  = require("../../util/messagefactory").getInstance();
     var ws              = require("nodejs-websocket");
 
     //Required private imports for functionality.
     var Proximus        = require("../../services/lora/proximus");
     var proximus        = null;
+    var Arduino         = require("../../services/arduino/arduino");
+    var arduino         = null;
     var socketServer    = null;
 
     init();
@@ -22,18 +23,19 @@ var IntervalWorker = function() {
      * Starts and interval and after the given interval both functions are executed again.
      */
     function init() {
-        proximus = new Proximus();
+        proximus    = new Proximus();
+        arduino     = new Arduino();
         cluster.worker.on("message", messageReceived);
 
-        //Set up the arduino.
-        setupWebsocket();
+        //Set up the web socket & arduino
+        setup();
 
         //Set up the interval to update the data regularly.
         setInterval(function() {
             logger.INFO("Refreshing data (8 minutes elapsed)");
 
-            //In the off chance the websocket dies, it will be automatically restarted here!
-            setupWebsocket();
+            //In the off chance the websocket or arduino logic die, it will be automatically restarted here!
+            setup();
         }, 480000 );
 
         logger.INFO("Interval worker started!");
@@ -53,8 +55,10 @@ var IntervalWorker = function() {
     /**
      * Sets up the arduino so external applications can get realtime information of what happens with the arduino!
      */
-    function setupWebsocket() {
+    function setup() {
         logger.INFO("Setting up socket...");
+
+        arduino.setupArduino();
 
         if(socketServer !== null) {
             logger.INFO("Websocket already up and running.");
@@ -79,8 +83,9 @@ var IntervalWorker = function() {
             logger.INFO("Message from socket connection: " + message);
             var data = JSON.parse(message);
 
-            //We ignore any messages from the clients, but we log them just in case...
+            //Pass messages from the client to the arduino logic
             logger.DEBUG("Message received from websocket client: " + data);
+            arduino.onMessage(message);
         } catch(error) {
             logger.ERROR("An error occurred during web socket message handling...");
             logger.ERROR("Continuing, not critical!");

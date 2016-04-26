@@ -1,12 +1,11 @@
 var ArduinoService = function() {
+    var messageFactory  = require("../../util/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
     var pixel           = require("node-pixel");
-    var ws              = require("nodejs-websocket");
     var LedStripUtils   = require("../arduino/ledstriputils");
 
     //Private variables.
-    var socketServer    = null;
     var board           = null;
     var ledStrip        = null;
     var ledStripUtils   = null;
@@ -21,16 +20,16 @@ var ArduinoService = function() {
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     this.setupArduino = function() {
-        if(board !== null && socketServer !== null) {
-            logger.INFO("Arduino and websocket already up and running.");
+        if(board !== null) {
+            logger.INFO("Arduino already up and running.");
         } else {
-            //TODO: Stale checks and reinit if required!
-
-            //socketServer = ws.createServer(onConnection).listen(8081);
-
             board = new arduino.Board();
             board.on('ready', onArduinoReady);
         }
+    };
+
+    this.onMessage = function(message) {
+        processMessage(message);
     };
 
     /*-------------------------------------------------------------------------------------------------
@@ -67,32 +66,17 @@ var ArduinoService = function() {
 
             button.on('down', function(){
                 logger.INFO('Button pressed');
-                broadcastMessage({buttonPressed : true});
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
             });
 
             button.on('up', function(){
                 logger.INFO('Button released');
-                broadcastMessage({buttonPressed : false});
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
             });
         });
     }
 
-    /*
-    * Web socket functions
-     */
-
-    function onConnection(connection) {
-        logger.DEBUG("New connection");
-
-        try {
-            connection.on("text", onMessageFromConnection);
-            connection.on("close", onConnectionClosed);
-        } catch (error) {
-            logger.ERROR("Cannot handle new connection!");
-        }
-    }
-
-    function onMessageFromConnection(message) {
+    function processMessage(message) {
         try {
             logger.DEBUG("Message from connection: " + message);
             var data = JSON.parse(message);
@@ -142,20 +126,6 @@ var ArduinoService = function() {
             logger.ERROR("An error occurred during web socket message handling...");
             logger.ERROR("Continuing, not critical!");
         }
-    }
-
-    function broadcastMessage(message) {
-        logger.DEBUG("Broadcasting message.");
-
-        socketServer.connections.forEach(
-            function (connection) {
-                connection.sendText(JSON.stringify(message, null, 4))
-            }
-        );
-    }
-
-    function onConnectionClosed(code, reason) {
-        logger.DEBUG("Connection closed");
     }
 };
 

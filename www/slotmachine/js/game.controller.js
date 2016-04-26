@@ -19,7 +19,8 @@
             slots: null
         };
 
-        var mustRegister = false;
+        var mustRegister    = false;
+        var ledsRunning     = false;
 
         $scope.showAdvanced = function () {
             if (mustRegister) {
@@ -103,6 +104,12 @@
          */
         function play() {
             if (!state.played) {
+
+                if(!mustRegister && !ledsRunning) {
+                    ledsRunning = true;
+                    nodeSocketService.sendJSONMessage({registered: true});
+                }
+
                 state.played = true;
 
                 document.getElementById('roller').pause();
@@ -178,6 +185,8 @@
          * Shows the endgame sub page.
          */
         function showEndGame() {
+            ledsRunning = false;
+
             $mdDialog.show({
                 templateUrl: 'endGame.html',
                 parent: angular.element(document.body),

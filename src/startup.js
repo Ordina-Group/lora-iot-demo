@@ -119,33 +119,41 @@ var WeatherGenie = function(runInDebug) {
             /**
              * Handler for messages received from the HTTP worker(s).
              * The message will be forwarded to the target. (for now almost always the data broker)
-             * TODO: Implement further.
              *
              * @param msg
              */
             onServerWorkerMessageReceived : function(msg) {
                 logger.DEBUG("Message received from server worker: " + msg);
 
-                if(msg.target === "broker") {
-                    broker.send(msg);
-                } else {
-                    intWorker.send(msg);
+                switch (msg.target){
+                    case "broker":
+                        broker.send(msg);
+                        break;
+                    case "intworker":
+                        intWorker.send(msg);
+                        break;
+                    default:
+                        cluster.workers[msg.workerId].send({data: msg.data});
                 }
             },
             /**
              * Handler for messages received from the interval worker.
              * The message will be forwarded to the target. (for now almost always the data broker)
-             * TODO: Implement further.
              *
              * @param msg The message sent by the interval worker that needs to be forwarded to the correct target.
              */
             onIntervalWorkerMessageReceived : function(msg) {
                 logger.DEBUG("Message received from interval worker: " + msg);
 
-                if(msg.target === "broker") {
-                    broker.send(msg);
-                } else {
-                    cluster.workers[msg.workerId].send({data: msg.data});
+                switch (msg.target){
+                    case "broker":
+                        broker.send(msg);
+                        break;
+                    case "intworker":
+                        intWorker.send(msg);
+                        break;
+                    default:
+                        cluster.workers[msg.workerId].send({data: msg.data});
                 }
             },
             /**
