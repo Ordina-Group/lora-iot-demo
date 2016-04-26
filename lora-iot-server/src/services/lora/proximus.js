@@ -3,9 +3,13 @@ var Proximus = function() {
     var messageFactory  = require("../../util/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-PROXIMUS--");
 
+    //Configuration.
+    var Config  = require("../../../resources/config");
+    var config  = new Config();
+
     //Private variables.
-    var host            = 'api.enabling.be';
-    var auth            = 'Bearer ' + '';
+    var host            = "api.enabling.be";
+    var auth            = "Bearer " + config.keys.proximusBearerToken;
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
@@ -17,11 +21,11 @@ var Proximus = function() {
 
         var options = {
             host: host,
-            path: '/seaas/0.0.1/device/list?owner=kevin.vandenabeele@ordina.be',
-            method: 'GET',
+            path: "/seaas/0.0.1/device/list?owner=" + config.keys.proximusOwner,
+            method: "GET",
             headers: {
                 'Authorization' :   auth,
-                'content-type'  :   'application/json'
+                'content-type'  :   "application/json"
             }
         };
 

@@ -10,6 +10,7 @@ var ArduinoClient = function() {
     //Private variables.
     var arduino         = new Arduino();
     var socketClient    = null;
+    var connection      = null;
 
     init();
 
@@ -19,32 +20,50 @@ var ArduinoClient = function() {
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     function init() {
+        arduino.setupArduino(sendMessage);
+
+        connectToSocket();
+    }
+
+    function connectToSocket() {
         socketClient = new WebSocketClient();
 
-        socketClient.on('connectFailed', function(error) {
-            logger.INFO('Connect Error: ' + error.toString());
-        });
-
-        socketClient.on('connect', function(connection) {
+        socketClient.on('connect', function(conn) {
             logger.INFO('WebSocket Client Connected');
 
-            connection.on('message', function(message) {
-                var data = JSON.parse(message.utf8Data);
-                logger.INFO(JSON.stringify(data, null, 4));
+            connection = conn;
+            connection.on('message', onMessage);
+            connection.on('close', onConnectionClosed);
+        });
 
-                if(data.registered !== undefined && data.registered !== null) {
-                    arduino.onMessage(message.utf8Data);
-                } else if(data.winner !== undefined && data.winner !== null) {
-                    arduino.onMessage(message.utf8Data);
-                } else if(data.reset !== undefined && data.reset !== null) {
-                    arduino.onMessage(message.utf8Data);
-                }
-            });
-
-            arduino.setupArduino(connection);
+        socketClient.on('connectFailed', function(error) {
+            setTimeout(connectToSocket, 1000);
         });
 
         socketClient.connect(config.settings.socketUrl + ":" + config.settings.socketPort + "/");
+    }
+
+    function onMessage(message) {
+        var data = JSON.parse(message.utf8Data);
+        logger.INFO(JSON.stringify(data, null, 4));
+
+        if(data.registered !== undefined && data.registered !== null) {
+            arduino.onMessage(message.utf8Data);
+        } else if(data.winner !== undefined && data.winner !== null) {
+            arduino.onMessage(message.utf8Data);
+        } else if(data.reset !== undefined && data.reset !== null) {
+            arduino.onMessage(message.utf8Data);
+        }
+    }
+
+    function onConnectionClosed() {
+        connectToSocket();
+    }
+
+    function sendMessage(data) {
+        if(connection !== null && connection !== undefined) {
+            connection.send(JSON.stringify(data));
+        }
     }
 };
 

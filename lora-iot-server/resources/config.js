@@ -8,6 +8,11 @@ var Config = function() {
             localFilefolderPrefix: "lora-iot-server/www",
 
             enableArduinoFunctionality: false
+        },
+
+        keys: {
+            proximusOwner: "",
+            proximusBearerToken: ""
         }
     }
 };

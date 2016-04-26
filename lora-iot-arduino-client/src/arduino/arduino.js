@@ -13,15 +13,15 @@ var ArduinoService = function() {
     var outputPin       = 9;
     var ledCount        = 60;
 
-    var connection      = null;
+    var sendMessageCallback = null;
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.setupArduino = function(webSocketConnection) {
-        connection = webSocketConnection;
+    this.setupArduino = function(sendMessageFunction) {
+        sendMessageCallback = sendMessageFunction;
 
         if(board !== null) {
             logger.INFO("Arduino already up and running.");
@@ -69,12 +69,12 @@ var ArduinoService = function() {
 
             button.on('down', function(){
                 logger.INFO('Button pressed');
-                connection.send(JSON.stringify({buttonPressed: true}));
+                sendMessageCallback({buttonPressed: true});
             });
 
             button.on('up', function(){
                 logger.INFO('Button released');
-                connection.send(JSON.stringify({buttonPressed: false}));
+                sendMessageCallback({buttonPressed: false});
             });
         });
     }
