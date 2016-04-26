@@ -2,3 +2,5 @@ node_modules
 www/bower_components
 output
 .idea
+lora-iot-registration-parser/input
+lora-iot-registration-parser/out
