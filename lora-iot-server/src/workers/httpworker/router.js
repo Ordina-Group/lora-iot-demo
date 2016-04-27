@@ -8,7 +8,9 @@ var Router = function(mappedEndpoints) {
     var config  = new Config();
 
     //Private variables.
-    var handles = mappedEndpoints;
+    var handles     = mappedEndpoints;
+    var pathParts   = process.argv[1].split("/");
+    var rootFolder  = pathParts[pathParts.length - 3];
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
@@ -26,12 +28,11 @@ var Router = function(mappedEndpoints) {
     this.route = function(pathName, request, response) {
         if(isFile(pathName)) {
             //All files on the static file server should be located in the www folder!
-            var fullPath = config.settings.localFilefolderPrefix + pathName;
+
+            var fullPath = rootFolder + "/" + config.settings.webContentFolder + pathName;
             tryAndServeFile(response, fullPath);
         } else {
             if(pathName.length > 1 && pathName.substring(pathName.length - 1) === "/") {
-                //Handle folder access.
-                //TODO: Implement ability to list folder content based on env/config setting?
                 displayError(response, 403, "Folder access is forbidden!", pathName);
             } else {
                 //Handle REST endpoint access.

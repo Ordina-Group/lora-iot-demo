@@ -1,6 +1,6 @@
 LoRa-IoT-Demo application
 =========================
-This is out LoRa/IoT demo application. 
+This is our LoRa/IoT demo application. 
 It contains two different web application to showcase some of the technologies concerning LoRa/IoT
 
 STRUCTURE:

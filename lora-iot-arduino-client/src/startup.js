@@ -1,7 +1,7 @@
 var ArduinoClient = function() {
-    var logger          = require("./logging/logger").makeLogger("MAIN-APPLICATION---");
+    var logger          = require("./logging/logger").makeLogger("MAIN-APPLIC----");
     var Arduino         = require("./arduino/arduino");
-    var WebSocketClient = require("websocket").client;
+    var ws              = require("nodejs-websocket");
 
     //Configuration.
     var Config  = require("../resources/config");
@@ -9,7 +9,6 @@ var ArduinoClient = function() {
 
     //Private variables.
     var arduino         = new Arduino();
-    var socketClient    = null;
     var connection      = null;
 
     init();
@@ -26,43 +25,37 @@ var ArduinoClient = function() {
     }
 
     function connectToSocket() {
-        socketClient = new WebSocketClient();
+        connection = ws.connect(config.settings.socketUrl + ":" + config.settings.socketPort, {}, function () {
+            console.log("Connected to web socket host!");
 
-        socketClient.on('connect', function(conn) {
-            logger.INFO('WebSocket Client Connected');
-
-            connection = conn;
-            connection.on('message', onMessage);
-            connection.on('close', onConnectionClosed);
+            this.on("text", onMessage);
+            this.on("close", onConnectionClosed);
         });
-
-        socketClient.on('connectFailed', function(error) {
-            setTimeout(connectToSocket, 1000);
-        });
-
-        socketClient.connect(config.settings.socketUrl + ":" + config.settings.socketPort + "/");
     }
 
     function onMessage(message) {
-        var data = JSON.parse(message.utf8Data);
+        var data = JSON.parse(message);
         logger.INFO(JSON.stringify(data, null, 4));
 
         if(data.registered !== undefined && data.registered !== null) {
-            arduino.onMessage(message.utf8Data);
+            arduino.onMessage(message);
         } else if(data.winner !== undefined && data.winner !== null) {
-            arduino.onMessage(message.utf8Data);
+            arduino.onMessage(message);
         } else if(data.reset !== undefined && data.reset !== null) {
-            arduino.onMessage(message.utf8Data);
+            arduino.onMessage(message);
         }
     }
 
     function onConnectionClosed() {
-        connectToSocket();
+        connection = null;
+        setTimeout(connectToSocket, 500);
     }
 
     function sendMessage(data) {
         if(connection !== null && connection !== undefined) {
-            connection.send(JSON.stringify(data));
+            connection.sendText(JSON.stringify(data));
+        } else {
+            logger.INFO("Connection no longer available...");
         }
     }
 };

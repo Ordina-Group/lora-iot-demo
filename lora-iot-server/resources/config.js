@@ -5,7 +5,7 @@ var Config = function() {
             httpPort: 7080,
             socketPort: 7081,
 
-            localFilefolderPrefix: "lora-iot-server/www",
+            webContentFolder: "www",
 
             enableArduinoFunctionality: false
         },

@@ -126,7 +126,7 @@ var ArduinoService = function() {
 
             //Ignore all other cases and messages!
         } catch(error) {
-            logger.ERROR("An error occurred during message handling...");
+            logger.ERROR("An error occurred during message handling: " + JSON.stringify(error, null, 4));
             logger.ERROR("Continuing, not critical!");
         }
     }

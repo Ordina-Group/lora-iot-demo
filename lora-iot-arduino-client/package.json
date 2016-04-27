@@ -23,7 +23,7 @@
     "postdeploy": "==============================================="
   },
   "dependencies": {
-    "websocket": "1.0.22",
+    "nodejs-websocket": "1.4.0",
     "johnny-five": "0.9.44",
     "node-pixel": "0.6.0"
   },
