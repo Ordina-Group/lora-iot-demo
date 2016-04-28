@@ -62,6 +62,7 @@ var ArduinoClient = function() {
 
     function onError(error) {
         logger.ERROR("An error occurred with the socket: " +  JSON.stringify(error, null, 4));
+        periodic();
     }
 
     function sendMessage(data) {
