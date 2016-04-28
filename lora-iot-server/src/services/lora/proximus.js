@@ -146,10 +146,18 @@ var Proximus = function() {
     }
 
     function handleButtonTrigger(data) {
-        if(data.payload == true || data.payload == "true" || data.payload == 1) {
-            messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
-        } else if(data.payload == false || data.payload == "false" || data.payload == 0) {
-            messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
+
+        switch (data.macaddress) {
+            case "1C8779C00000003E":
+            case "1C8779C00000003F":
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
+                break;
+            default:
+                if(data.payload == true || data.payload == "true" || data.payload == 1) {
+                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
+                } else if(data.payload == false || data.payload == "false" || data.payload == 0) {
+                    messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
+                }
         }
     }
 
