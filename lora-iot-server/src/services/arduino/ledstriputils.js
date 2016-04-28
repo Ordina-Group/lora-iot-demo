@@ -32,7 +32,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
     };
 
     var offsetVars = {
-        colors: ["rgb(255, 0, 0)","rgb(0, 0, 255)","rgb(255, 255, 255)"],
+        colors: ["rgb(255, 0, 0)","rgb(255, 255, 0)","rgb(0, 0, 255)"],
         colorOffset: 0
     };
 

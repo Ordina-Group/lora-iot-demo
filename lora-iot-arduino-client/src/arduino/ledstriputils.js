@@ -32,7 +32,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
     };
 
     var offsetVars = {
-        colors: ["rgb(255, 0, 0)","rgb(0, 0, 255)","rgb(255, 255, 255)"],
+        colors: ["rgb(255, 0, 0)","rgb(255, 255, 0)","rgb(0, 0, 255)"],
         colorOffset: 0
     };
 
@@ -208,7 +208,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      *
      */
     function fadeCycle() {
-        logger.INFO("Fade cycle started!");
+        logger.DEBUG("Fade cycle started!");
 
         //Hold the current color for one whole second.
         setTimeout(function() {
@@ -256,7 +256,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         if(fadeRunning === false || fadeVars.currentStep++ == fadeVars.steps - 1) {
             //Call the callback function. (only when the animation is still running)
             if(fadeRunning === true) {
-                logger.INFO("Fade completed!");
+                logger.DEBUG("Fade completed!");
 
                 fadeVars.currentStep = 0;
                 //Clear the animation interval.
@@ -268,7 +268,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
 
                 fadeVars.clbck();
             } else {
-                logger.INFO("Fade aborted!");
+                logger.DEBUG("Fade aborted!");
 
                 fadeVars.currentStep = 0;
                 //Clear the animation interval.
@@ -315,7 +315,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      *
      */
     function scrollCycle() {
-        logger.INFO("Scroll cycle started!");
+        logger.DEBUG("Scroll cycle started!");
 
         //Hold the current color for one whole second.
         setTimeout(function() {
@@ -372,7 +372,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
         if(scrollRunning === false || scrollVars.currentStep++ == (scrollVars.steps - 1)) {
             //Call the callback function. (only when the animation is still running)
             if(scrollRunning === true) {
-                logger.INFO("Scroll completed!");
+                logger.DEBUG("Scroll completed!");
 
                 scrollVars.currentStep = 0;
                 //Clear the animation interval.
@@ -384,7 +384,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
 
                 scrollVars.clbck();
             } else {
-                logger.INFO("Scroll aborted!");
+                logger.DEBUG("Scroll aborted!");
 
                 scrollVars.currentStep = 0;
                 //Clear the animation interval.

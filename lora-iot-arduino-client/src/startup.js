@@ -30,6 +30,7 @@ var ArduinoClient = function() {
 
             this.on("text", onMessage);
             this.on("close", onConnectionClosed);
+            this.on("error", onError);
         });
     }
 
@@ -49,6 +50,10 @@ var ArduinoClient = function() {
     function onConnectionClosed() {
         connection = null;
         setTimeout(connectToSocket, 500);
+    }
+
+    function onError(error) {
+        logger.INFO("An error occurred with the socket: " +  JSON.stringify(error, null, 4));
     }
 
     function sendMessage(data) {
