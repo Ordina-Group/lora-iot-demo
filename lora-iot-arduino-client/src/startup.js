@@ -21,12 +21,21 @@ var ArduinoClient = function() {
     function init() {
         arduino.setupArduino(sendMessage);
 
+        periodic();
+        setInterval(periodic, 120000);
+    }
+
+    function periodic() {
+        logger.INFO("Refreshing socket connection...");
+        if(connection !== null) {
+            connection.close();
+        }
         connectToSocket();
     }
 
     function connectToSocket() {
         connection = ws.connect(config.settings.socketUrl + ":" + config.settings.socketPort, {}, function () {
-            console.log("Connected to web socket host!");
+            logger.INFO("Connected to web socket host!");
 
             this.on("text", onMessage);
             this.on("close", onConnectionClosed);
@@ -48,12 +57,11 @@ var ArduinoClient = function() {
     }
 
     function onConnectionClosed() {
-        connection = null;
-        setTimeout(connectToSocket, 500);
+        logger.INFO("Connection to socket was closed!");
     }
 
     function onError(error) {
-        logger.INFO("An error occurred with the socket: " +  JSON.stringify(error, null, 4));
+        logger.ERROR("An error occurred with the socket: " +  JSON.stringify(error, null, 4));
     }
 
     function sendMessage(data) {

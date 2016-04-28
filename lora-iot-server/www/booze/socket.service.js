@@ -17,7 +17,11 @@
         connectToWebsocket();
 
         this.sendJSONMessage = function (jsonMessage) {
-            nodeSocket.send(JSON.stringify(jsonMessage));
+            if(nodeSocket !== null) {
+                nodeSocket.send(JSON.stringify(jsonMessage));
+            } else {
+                console.log("No web socket connection is present!");
+            }
         };
 
         this.registerCallback = function (callback) {
@@ -56,6 +60,13 @@
                         }
                     }
                 }
+            };
+
+            nodeSocket.onerror = function(error) {
+                console.log("Websocket error: " + JSON.stringify(error, null, 4));
+                nodeSocket = null;
+
+                connectToWebsocket();
             };
 
             //var height = 100;

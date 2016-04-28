@@ -81,6 +81,7 @@ var IntervalWorker = function() {
         try {
             connection.on("text", onMessageFromConnection);
             connection.on("close", onConnectionClosed);
+            connection.on("error", onError);
         } catch (error) {
             logger.ERROR("Cannot handle new connection!");
         }
@@ -106,6 +107,14 @@ var IntervalWorker = function() {
         }
     }
 
+    function onConnectionClosed(code, reason) {
+        logger.DEBUG("Connection closed");
+    }
+
+    function onError(error) {
+        logger.ERROR("An error occurred with the socket: " +  JSON.stringify(error, null, 4));
+    }
+
     function broadcastMessage(message) {
         logger.INFO("Broadcasting message: " + JSON.stringify(message.data, null, 4));
 
@@ -114,10 +123,6 @@ var IntervalWorker = function() {
                 connection.sendText(JSON.stringify(message.data, null, 4))
             }
         );
-    }
-
-    function onConnectionClosed(code, reason) {
-        logger.DEBUG("Connection closed");
     }
 };
 
