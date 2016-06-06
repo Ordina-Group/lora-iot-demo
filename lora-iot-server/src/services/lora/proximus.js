@@ -176,6 +176,16 @@ var Proximus = function() {
             case "020000FFFF00B0AC":
                 messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "LOW"});
                 break;
+            case "1C8779C00000003E":
+            case "1C8779C00000003F":
+                var level = "LOW";
+                if(data.payload > 2) {
+                    level = "MEDIUM"
+                } else if(data.payload > 20) {
+                    level = "HIGH"
+                }
+                messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: level});
+                break;
             default:
                 logger.ERROR("Unknown hardware id for sensor! Cannot map to level value!");
                 break;
