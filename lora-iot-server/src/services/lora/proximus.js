@@ -181,7 +181,8 @@ var Proximus = function() {
                 var level = "LOW";
                 if(data.payload > 2) {
                     level = "MEDIUM"
-                } else if(data.payload > 20) {
+                }
+                if(data.payload > 20) {
                     level = "HIGH"
                 }
                 messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: level});
