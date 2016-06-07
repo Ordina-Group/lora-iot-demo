@@ -61,7 +61,7 @@ TODO!
 
 CODE:
 -----
-The code used is derived from the Weathergenie application, this application can be found here: https://github.com/beele/WeatherGenie
+The code used is derived from the WeatherGenie application, this application can be found here: https://github.com/beele/WeatherGenie
 
 DISCLAIMER:
 -----------

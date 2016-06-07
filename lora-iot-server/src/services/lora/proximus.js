@@ -146,7 +146,6 @@ var Proximus = function() {
     }
 
     function handleButtonTrigger(data) {
-
         switch (data.macaddress) {
             case "1C8779C00000003E":
             case "1C8779C00000003F":
@@ -162,7 +161,6 @@ var Proximus = function() {
     }
 
     function handleLevelTrigger(data) {
-        //TODO: Code to prevent levels from switching rapidly?
         switch (data.macaddress) {
             case "020000FFFF00B0B6":
                 messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "FULL"});
@@ -179,6 +177,8 @@ var Proximus = function() {
             case "1C8779C00000003E":
             case "1C8779C00000003F":
                 var level = "LOW";
+                //Since it are floats we are comparing (001/011/111) are the only numbers we should receive.
+                //Low is below 2, medium is greater than 2, high is greater than 20.
                 if(data.payload > 2) {
                     level = "MEDIUM"
                 }
