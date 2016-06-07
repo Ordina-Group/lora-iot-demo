@@ -15,6 +15,14 @@
     {
       "name": "Kevin Van Houtte",
       "email": "kevin.vanhoutte@ordina.be"
+    },
+    {
+      "name": "Karen Broes",
+      "email": "karen.broes@ordina.be"
+    },
+    {
+      "name": "Nils Devos",
+      "email": "nils.devos@ordina.be"
     }
   ],
   "readme": "LoRa/IoT demo application, see the README.md file for more information.",
