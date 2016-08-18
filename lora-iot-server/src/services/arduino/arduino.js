@@ -3,6 +3,9 @@ var ArduinoService = function() {
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
 
+    var ArduinoSlotMachine  = require("../arduino/arduinoslotmachine");
+    var ArduinoJaxLondon    = require("../arduino/arduinojaxlondon");
+
     //Configuration.
     var Config  = require("../../../resources/config");
     var config  = new Config();
@@ -46,7 +49,7 @@ var ArduinoService = function() {
                 logger.ERROR("Arduino implementation: " + config.arduino.activeImplementation + " not found!");
         }
         if(implementation !== null) {
-            implementation.init();
+            implementation.init(board);
         }
     }
 
