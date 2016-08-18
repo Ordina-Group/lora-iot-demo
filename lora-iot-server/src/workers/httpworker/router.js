@@ -2,6 +2,7 @@ var Router = function(mappedEndpoints) {
     var logger  = require("./../../logging/logger").makeLogger("ROUTER---------");
     var fs      = require("fs");
     var mime    = require("mime");
+    var path    = require('path');
 
     //Configuration.
     var Config  = require("../../../resources/config");
@@ -9,8 +10,8 @@ var Router = function(mappedEndpoints) {
 
     //Private variables.
     var handles     = mappedEndpoints;
-    var pathParts   = process.argv[1].split("/");
-    var rootFolder  = pathParts[pathParts.length - 3];
+    var pathParts   = process.argv[1].split(/([/\\])/);
+    var rootFolder  = pathParts.splice(0, (pathParts.length - 3)).join("");
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
@@ -28,8 +29,7 @@ var Router = function(mappedEndpoints) {
     this.route = function(pathName, request, response) {
         if(isFile(pathName)) {
             //All files on the static file server should be located in the www folder!
-
-            var fullPath = rootFolder + "/" + config.settings.webContentFolder + pathName;
+            var fullPath = path.normalize(rootFolder + "/" + config.settings.webContentFolder + pathName);
             tryAndServeFile(response, fullPath);
         } else {
             if(pathName.length > 1 && pathName.substring(pathName.length - 1) === "/") {

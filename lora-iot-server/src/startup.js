@@ -28,7 +28,7 @@ var WeatherGenie = function(runInDebug) {
         if (cluster.isMaster) {
             logger.INIT("--------------------------------------------------------------------------");
             logger.INIT("--------------------------------------------------------------------------");
-            logger.INIT("                       WELCOME TO DEVOXX BOOTH RC1                        ");
+            logger.INIT("                    WELCOME TO THE LORA IOT DEMO APP V1                   ");
             logger.INIT("--------------------------------------------------------------------------");
             logger.INIT("--------------------------------------------------------------------------");
 
