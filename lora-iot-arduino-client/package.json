@@ -12,12 +12,10 @@
   "readme": "LoRa/IoT arduino client application, see the README.md file for more information.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ordina-oraj/Devoxx-Booth"
+    "url": "https://github.com/ordina-jworks/lora-iot-demo"
   },
 
   "scripts": {
-    "postinstall": "npm install bower",
-    "prestart": "bower install",
     "start": "node src/startup.js",
     "predeploy": "=============== LORA/IOT CLIENT ===============",
     "postdeploy": "==============================================="

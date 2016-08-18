@@ -12,7 +12,7 @@ var ArduinoJaxLondon = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.init = function(board) {
+    this.init = function(board, sendMessageCallback) {
         _self.board = board;
 
         logger.ERROR("Not implemented yet!");

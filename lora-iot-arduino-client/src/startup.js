@@ -1,5 +1,5 @@
 var ArduinoClient = function() {
-    var logger          = require("./logging/logger").makeLogger("MAIN-APPLIC----");
+    var logger          = require("../../lora-iot-server/src/logging/logger").makeLogger("MAIN-APPLIC----");
     var Arduino         = require("./arduino/arduino");
     var ws              = require("nodejs-websocket");
 

@@ -49,7 +49,7 @@ var ArduinoService = function() {
                 logger.ERROR("Arduino implementation: " + config.arduino.activeImplementation + " not found!");
         }
         if(implementation !== null) {
-            implementation.init(board);
+            implementation.init(board, null);
         }
     }
 
