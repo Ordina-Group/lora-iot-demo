@@ -1,0 +1,33 @@
+{
+  "name": "lora-iot-arduino-client",
+  "version": "1.0.0",
+  "description": "LoRa/IoT client application.",
+  "author": "Kevin Van den Abeele <kevin.vandenabeele@ordina.be>",
+  "contributors": [
+    {
+      "name": "Kevin Van den Abeele",
+      "email": "kevin.vandenabeele@ordina.be"
+    }
+  ],
+  "readme": "LoRa/IoT arduino client application, see the README.md file for more information.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ordina-oraj/Devoxx-Booth"
+  },
+
+  "scripts": {
+    "postinstall": "npm install bower",
+    "prestart": "bower install",
+    "start": "node src/startup.js",
+    "predeploy": "=============== LORA/IOT CLIENT ===============",
+    "postdeploy": "==============================================="
+  },
+  "dependencies": {
+    "nodejs-websocket": "1.4.0",
+    "johnny-five": "0.9.44",
+    "node-pixel": "0.6.0"
+  },
+  "engines" : { "node" : ">=4.2.1" },
+
+  "license": "MIT"
+}
