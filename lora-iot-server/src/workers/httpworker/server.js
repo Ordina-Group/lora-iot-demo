@@ -48,16 +48,20 @@ var Server = function() {
         var GenericEndpoints    = require("./../../services/genericendpoints");
         var RegisterService     = require("./../../services/datalogging/registerService");
         var Proximus            = require("./../../services/lora/proximus");
+        var Jax                 = require("./../../services/lora/jax");
 
         var genericEndpoints    = new GenericEndpoints();
         var registerService     = new RegisterService();
         var proximus            = new Proximus();
+        var jax                 = new Jax();
         return {
             "/"                             : {execute : genericEndpoints.index,                       params: null},
             "/slotmachine"                  : {execute : genericEndpoints.slotmachine,                 params: null},
             "/booze"                        : {execute : genericEndpoints.booze,                       params: null},
-            "/register"                     : {execute : registerService.register,                     params: null},
             "/upload"                       : {execute : genericEndpoints.upload,                      params: null},
+
+            "/register"                     : {execute : registerService.register,                     params: null},
+
             "/pxm/devices"                  : {execute : proximus.devices,                             params: null},
             "/pxm/buttonTrigger"            : {execute : proximus.buttonTrigger,                       params: null},
             "/pxm/buttonTrigger/*"          : {execute : proximus.buttonTrigger,                       params: null},
@@ -67,7 +71,9 @@ var Server = function() {
             "/booze/levelHigh"              : {execute : proximus.levelHigh,                           params: null},
             "/booze/levelMedium"            : {execute : proximus.levelMedium,                         params: null},
             "/booze/levelLow"               : {execute : proximus.levelLow,                            params: null},
-            "/booze/levelEmpty"             : {execute : proximus.levelEmpty,                          params: null}
+            "/booze/levelEmpty"             : {execute : proximus.levelEmpty,                          params: null},
+
+            "/jax/endpoint"                 : {execute : jax.endpoint,                                 params: null}
         };
     }
 

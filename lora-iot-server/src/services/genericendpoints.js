@@ -1,6 +1,6 @@
 var GenericEndpoints = function() {
     var logger      = require("../logging/logger").makeLogger("SERV-GENERICRST");
-    var util         = require("util");
+    var util        = require("util");
     var fs          = require("fs-extra");
     var formidable  = require('formidable');
 
@@ -22,6 +22,12 @@ var GenericEndpoints = function() {
          response.end();
     };
 
+    /**
+     * Redirects the user to the slotmachine web application.
+     *
+     * @param request The request to handle.
+     * @param response The response to write to.
+     */
     this.slotmachine = function(request, response) {
         logger.INFO("Redirecting from '/slotmachine' to '/slotmachine/index.html'!");
         response.writeHead(301, {
@@ -30,6 +36,12 @@ var GenericEndpoints = function() {
         response.end();
     };
 
+    /**
+     * Redirects the user to the booze web application.
+     *
+     * @param request The request to handle.
+     * @param response The response to write to.
+     */
     this.booze = function(request, response) {
         logger.INFO("Redirecting from '/booze' to '/booze/index.html'!");
         response.writeHead(301, {

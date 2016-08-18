@@ -23,7 +23,7 @@ var IntervalWorker = function() {
      ------------------------------------------------------------------------------------------------*/
     /**
      * Sets up the interval worker.
-     * Sets up the arduino connection.
+     * Sets up the Arduino connection.
      * Starts and interval and after the given interval both functions are executed again.
      */
     function init() {
@@ -38,7 +38,7 @@ var IntervalWorker = function() {
         setInterval(function() {
             logger.INFO("Refreshing data (8 minutes elapsed)");
 
-            //In the off chance the websocket or arduino logic die, it will be automatically restarted here!
+            //In the off chance the websocket or Arduino logic die, it will be automatically restarted here!
             setup();
         }, 480000 );
 
@@ -57,12 +57,12 @@ var IntervalWorker = function() {
     }
 
     /**
-     * Sets up the arduino so external applications can get realtime information of what happens with the arduino!
+     * Sets up the Arduino so external applications can get real-time information of what happens with the Arduino!
      */
     function setup() {
         logger.INFO("Setting up socket...");
 
-        if(config.settings.enableArduinoFunctionality) {
+        if(config.arduino.enableArduinoFunctionality) {
             arduino.setupArduino();
         } else {
             logger.INFO("Arduino functionality disabled, messages will be sent over the socket!")
@@ -95,7 +95,7 @@ var IntervalWorker = function() {
             //Pass messages from the client to the arduino logic
             logger.DEBUG("Message received from websocket client: " + data);
 
-            if(config.settings.enableArduinoFunctionality) {
+            if(config.settings.arduino.enableArduinoFunctionality) {
                 arduino.onMessage(message);
             } else {
                 broadcastMessage({data : data});

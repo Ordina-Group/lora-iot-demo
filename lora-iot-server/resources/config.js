@@ -1,20 +1,31 @@
 var Config = function() {
 
+    function arduinoImplementations() {
+        return {
+            slotMachine:                    "ArduinoSlotMachine",
+            jaxLondon:                      "ArduinoJaxLondon"
+        }
+    }
+
     return {
         settings: {
-            httpPort: 7080,
-            socketPort: 7081,
+            httpPort:                       7080,
+            socketPort:                     7081,
 
-            webContentFolder: "www",
-
-            enableArduinoFunctionality: false
+            webContentFolder:               "www"
         },
 
         keys: {
-            proximusOwner: "",
-            proximusBearerToken: ""
+            proximusOwner:                  "",
+            proximusBearerToken:            ""
+        },
+
+        arduino: {
+            enableArduinoFunctionality:     false,
+            activeImplementation:           arduinoImplementations().slotMachine,
+            implementations:                arduinoImplementations()
         }
-    }
+    };
 };
 
 module.exports = Config;
