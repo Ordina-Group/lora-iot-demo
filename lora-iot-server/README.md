@@ -45,12 +45,12 @@ INSTALLATION:
 Make sure you have at least Node.js V4 installed on your system.
 
 - Make sure you are in the application subfolder (cd lora-iot-server)
-- npm install
-- npm install forever -g (this can be skipped if already installed)
+- Execute the following command: npm install
 - Check the /lora-iot-server/resources/config.js file and make changes if required.
-- Make sure you are in the root of the project (not the application subfolder, cd ..)
-- execute the following command: forever start lora-iot-server/src/startup.js
-    - If you do this in the wrong folder no http content can be served (this issue is being looked into)
+- Make sure you are in this submodule's folder with the command prompt!
+- Execute the following command: npm start
+    - This will start several node instances with forever, which will reboot them if they crash.
+    - To close the application, simply execute the following command: forever stopall
 
 This will install anything the app needs and start it up.
 You can then browse to the app at [localhost:7080/](http://localhost:7080/)
