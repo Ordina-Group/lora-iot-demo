@@ -7,6 +7,9 @@ var ArduinoJaxLondon = function() {
     var _self           = this;
     var board           = null;
 
+    var inputSingle     = 8;
+    var inputFlipFlop   = 9;
+
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
      *                                        Public functions
@@ -15,7 +18,35 @@ var ArduinoJaxLondon = function() {
     this.init = function(board, sendMessageCallback) {
         _self.board = board;
 
-        logger.ERROR("Not implemented yet!");
+        var buttonSingle = new arduino.Button(inputSingle);
+        board.repl.inject({
+            button: buttonSingle
+        });
+
+        buttonSingle.on('down', function(){
+            logger.INFO('Button single pressed');
+
+        });
+
+        buttonSingle.on('up', function(){
+            logger.INFO('Button single released');
+
+        });
+
+        var buttonFlipFlop = new arduino.Button(inputFlipFlop);
+        board.repl.inject({
+            button: buttonFlipFlop
+        });
+
+        buttonFlipFlop.on('down', function(){
+            logger.INFO('Button flipflop pressed');
+
+        });
+
+        buttonFlipFlop.on('up', function(){
+            logger.INFO('Button flipflop released');
+
+        });
     };
 
     this.handleMessage = function(data) {

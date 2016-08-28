@@ -2,6 +2,9 @@ var Worker = function() {
     var logger          = require("../logging/logger").makeLogger("WORKERFACTORY--");
     var cluster         = require("cluster");
 
+    //Private variables
+    var jax             = null;
+
     createWorker();
 
     /*-------------------------------------------------------------------------------------------------
@@ -31,6 +34,7 @@ var Worker = function() {
                 new IntervalWorker();
                 break;
             case "http":
+                jax = new (require("./../services/lora/jax"));
                 cluster.worker.on("message", onMessageFromMasterReceived);
                 new Server();
                 break;

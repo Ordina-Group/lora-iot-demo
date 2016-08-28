@@ -33,7 +33,7 @@ var DataBroker = function () {
     };
 
     this.setupDefaultCaches = function() {
-        //createCache({data : {cacheName: "demoCache" , maxSize: 250}});
+        createCache({data : {cacheName: "endpointCache" , maxSize: 100}});
     };
 
     /*-------------------------------------------------------------------------------------------------

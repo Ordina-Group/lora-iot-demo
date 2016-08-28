@@ -1,5 +1,5 @@
 var DataBrokerConstants = (function() {
-    var logger = require("../logging/logger").makeLogger("CONSTANTS------");
+    var logger = require("../../logging/logger").makeLogger("CONSTANTS------");
 
     //Private variables.
     var instance;

@@ -73,7 +73,8 @@ var Server = function() {
             "/booze/levelLow"               : {execute : proximus.levelLow,                            params: null},
             "/booze/levelEmpty"             : {execute : proximus.levelEmpty,                          params: null},
 
-            "/jax/endpoint"                 : {execute : jax.endpoint,                                 params: null}
+            "/jax/showCache"                : {execute : jax.showCache,                                params: null},
+            "/jax/test"                     : {execute : jax.testFire,                                 params: null}
         };
     }
 
