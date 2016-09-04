@@ -21,8 +21,8 @@ var Config = function() {
         },
 
         arduino: {
-            enableArduinoFunctionality:     false,
-            activeImplementation:           arduinoImplementations().slotMachine,
+            enableArduinoFunctionality:     true,
+            activeImplementation:           arduinoImplementations().jaxLondon,
             implementations:                arduinoImplementations()
         }
     };

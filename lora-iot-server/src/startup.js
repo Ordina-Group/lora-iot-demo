@@ -1,5 +1,7 @@
-var WeatherGenie = function(runInDebug) {
+var DemoApplication = function(runInDebug) {
     var logger          = require("./logging/logger").makeLogger("STARTUP--------");
+    var messageFactory  = require("./util/messagefactory").getInstance();
+
     var cluster         = require("cluster");
     var Worker          = require("./workers/worker");
 
@@ -87,6 +89,7 @@ var WeatherGenie = function(runInDebug) {
      * @param signal The exit signal.
      */
     function reviveDeadWorker(worker, code, signal) {
+        //CHARGING...
         logger.DEBUG("worker " + worker.id + " died! (details => code: " + code + " signal: " + signal);
 
         //CLEAR!
@@ -126,14 +129,14 @@ var WeatherGenie = function(runInDebug) {
                 logger.DEBUG("Message received from server worker: " + msg);
 
                 switch (msg.target){
-                    case "broker":
+                    case messageFactory.TARGET_BROKER:
                         broker.send(msg);
                         break;
-                    case "intworker":
+                    case messageFactory.TARGET_INTERVAL_WORKER:
                         intWorker.send(msg);
                         break;
                     default:
-                        cluster.workers[msg.workerId].send({data: msg.data});
+                        cluster.workers[msg.workerId].send({data: msg});
                 }
             },
             /**
@@ -146,14 +149,14 @@ var WeatherGenie = function(runInDebug) {
                 logger.DEBUG("Message received from interval worker: " + msg);
 
                 switch (msg.target){
-                    case "broker":
+                    case messageFactory.TARGET_BROKER:
                         broker.send(msg);
                         break;
-                    case "intworker":
+                    case messageFactory.TARGET_INTERVAL_WORKER:
                         intWorker.send(msg);
                         break;
                     default:
-                        cluster.workers[msg.workerId].send({data: msg.data});
+                        cluster.workers[msg.workerId].send({data: msg});
                 }
             },
             /**
@@ -171,4 +174,4 @@ var WeatherGenie = function(runInDebug) {
 };
 
 //Start the application.
-var wg = new WeatherGenie();
+var demo = new DemoApplication();

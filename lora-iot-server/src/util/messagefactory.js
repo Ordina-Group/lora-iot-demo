@@ -17,12 +17,13 @@ var MessageFactory = (function() {
         return {
             TARGET_BROKER           : "broker",
             TARGET_INTERVAL_WORKER  : "intworker",
+            TARGET_HTTP_WORKER      : "http",
 
             /**
              * Sends a simple message to the master instance.
              *
              * @param target The target should be one of the items defined in this class.
-             * @param targetFunction The target function on the broker of intworker. These classes/objects should define these values as constants.
+             * @param targetFunction The target function.
              * @param data The data to send, represented as a JSON object.
              */
             sendSimpleMessage : function(target, targetFunction, data) {

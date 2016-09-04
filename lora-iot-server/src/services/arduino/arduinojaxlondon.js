@@ -10,12 +10,17 @@ var ArduinoJaxLondon = function() {
     var inputSingle     = 8;
     var inputFlipFlop   = 9;
 
+    var sendPeriodic    = false;
+
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     this.init = function(board, sendMessageCallback) {
+
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_HTTP_WORKER, "sendData", {"temp": "42"});
+
         _self.board = board;
 
         var buttonSingle = new arduino.Button(inputSingle);
@@ -25,12 +30,12 @@ var ArduinoJaxLondon = function() {
 
         buttonSingle.on('down', function(){
             logger.INFO('Button single pressed');
-
         });
 
         buttonSingle.on('up', function(){
             logger.INFO('Button single released');
-
+            //TODO: Send current temperature via Jax service to serverless endpoint!
+            messageFactory.sendSimpleMessage(messageFactory.TARGET_HTTP_WORKER, "sendData", {"temp": "42"});
         });
 
         var buttonFlipFlop = new arduino.Button(inputFlipFlop);
@@ -40,12 +45,16 @@ var ArduinoJaxLondon = function() {
 
         buttonFlipFlop.on('down', function(){
             logger.INFO('Button flipflop pressed');
-
         });
 
         buttonFlipFlop.on('up', function(){
             logger.INFO('Button flipflop released');
-
+            sendPeriodic = !sendPeriodic;
+            if(sendPeriodic) {
+                //TODO: Add interval to periodically send the temperature via Jax service to serverless endpoint!
+            } else {
+                //TODO: Remove interval!
+            }
         });
     };
 
