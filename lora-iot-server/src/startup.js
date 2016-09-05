@@ -9,6 +9,7 @@ var DemoApplication = function(runInDebug) {
     var debug           = runInDebug === undefined ? false : runInDebug;
     var broker          = null;
     var intWorker       = null;
+    var httpWorkers     = [];
     var messageHandlers = null;
 
     init();
@@ -68,6 +69,7 @@ var DemoApplication = function(runInDebug) {
 
             var worker = cluster.fork({name: "http", debug: debug});
             worker.on("message", messageHandlers.onServerWorkerMessageReceived);
+            httpWorkers.push(worker);
         }
 
         //Revive workers if they die!
@@ -121,43 +123,23 @@ var DemoApplication = function(runInDebug) {
         return {
             /**
              * Handler for messages received from the HTTP worker(s).
-             * The message will be forwarded to the target. (for now almost always the data broker)
+             * The message will be forwarded to the target.
              *
              * @param msg
              */
             onServerWorkerMessageReceived : function(msg) {
                 logger.DEBUG("Message received from server worker: " + msg);
-
-                switch (msg.target){
-                    case messageFactory.TARGET_BROKER:
-                        broker.send(msg);
-                        break;
-                    case messageFactory.TARGET_INTERVAL_WORKER:
-                        intWorker.send(msg);
-                        break;
-                    default:
-                        cluster.workers[msg.workerId].send({data: msg});
-                }
+                targetHandler(msg);
             },
             /**
              * Handler for messages received from the interval worker.
-             * The message will be forwarded to the target. (for now almost always the data broker)
+             * The message will be forwarded to the target.
              *
              * @param msg The message sent by the interval worker that needs to be forwarded to the correct target.
              */
             onIntervalWorkerMessageReceived : function(msg) {
                 logger.DEBUG("Message received from interval worker: " + msg);
-
-                switch (msg.target){
-                    case messageFactory.TARGET_BROKER:
-                        broker.send(msg);
-                        break;
-                    case messageFactory.TARGET_INTERVAL_WORKER:
-                        intWorker.send(msg);
-                        break;
-                    default:
-                        cluster.workers[msg.workerId].send({data: msg});
-                }
+                targetHandler(msg);
             },
             /**
              * Handler for messages received from the data broker.
@@ -168,6 +150,30 @@ var DemoApplication = function(runInDebug) {
             onDataBrokerMessageReceived : function(msg) {
                 logger.DEBUG("Message received from data broker: " + msg);
                 cluster.workers[msg.workerId].send(msg);
+                //TODO: Support the case where the Data broker actually sends a message by itself (and not responds to an earlier message from a worker!)
+            }
+        };
+
+        /**
+         * Actual handler for messages.
+         * The message will be forwarded to the target.
+         *
+         * @param msg The message that contains all the details. This includes the target which is used to route te message!
+         */
+        function targetHandler(msg) {
+            switch (msg.target){
+                case messageFactory.TARGET_BROKER:
+                    broker.send(msg);
+                    break;
+                case messageFactory.TARGET_INTERVAL_WORKER:
+                    intWorker.send(msg);
+                    break;
+                case messageFactory.TARGET_HTTP_WORKER:
+                    httpWorkers[Math.round(Math.random() * httpWorkers.length) - 1].send(msg);
+                    break;
+                default:
+                    //cluster.workers[msg.workerId].send({data: msg});
+                    logger.ERROR("Cannot find message target: " + msg.target);
             }
         }
     }

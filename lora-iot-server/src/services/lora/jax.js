@@ -56,18 +56,8 @@ var Jax = function() {
         });
     };
 
-    this.sendData = function sendData(data) {
-        callServerLessEndpoint(data, function(serverlessResponse, serverlessResponseBody) {
-            var data = {
-                dateTime:           new Date(),
-                statusCode:         serverlessResponse.statusCode,
-                status:             serverlessResponse.statusMessage,
-                responseHeaders:    serverlessResponse.headers,
-                responseBody:       serverlessResponseBody
-            };
-
-            messageFactory.sendSimpleMessage(messageFactory.TARGET_BROKER, brokerconstants.FUNC_ADD_TO_CACHE, {cacheName: "endpointCache", value: data});
-        });
+    this.handleJaxCall = function handleJaxCall(msg) {
+      sendData(msg.handlerParams);
     };
 
     /*-------------------------------------------------------------------------------------------------
@@ -82,6 +72,22 @@ var Jax = function() {
             "jax", "retrieveCacheMessageHandler", {callbackId: id}
         );
     }
+
+    function sendData(data) {
+        logger.INFO("Sending data to JAX endpoint: " + JSON.stringify(data, null, 4));
+
+        callServerLessEndpoint(data, function(serverlessResponse, serverlessResponseBody) {
+            var data = {
+                dateTime:           new Date(),
+                statusCode:         serverlessResponse.statusCode,
+                status:             serverlessResponse.statusMessage,
+                responseHeaders:    serverlessResponse.headers,
+                responseBody:       serverlessResponseBody
+            };
+
+            messageFactory.sendSimpleMessage(messageFactory.TARGET_BROKER, brokerconstants.FUNC_ADD_TO_CACHE, {cacheName: "endpointCache", value: data});
+        });
+    };
 
     function callServerLessEndpoint(postData, callback) {
         var options = {
