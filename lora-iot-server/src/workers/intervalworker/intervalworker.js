@@ -8,9 +8,6 @@ var IntervalWorker = function() {
     var config  = new Config();
 
     //Required private imports for functionality.
-    var Proximus        = require("../../services/lora/proximus");
-    var proximus        = null;
-    var Arduino         = require("../../services/arduino/arduino");
     var arduino         = null;
     var socketServer    = null;
 
@@ -27,8 +24,6 @@ var IntervalWorker = function() {
      * Starts and interval and after the given interval both functions are executed again.
      */
     function init() {
-        proximus    = new Proximus();
-        arduino     = new Arduino();
         cluster.worker.on("message", messageReceived);
 
         //Set up the web socket & arduino
@@ -63,7 +58,16 @@ var IntervalWorker = function() {
         logger.INFO("Setting up socket...");
 
         if(config.arduino.enableArduinoFunctionality) {
+
+            var Arduino = null;
+            if(config.arduino.enableNativeArduinoSerial) {
+                Arduino = require("../../services/arduino/arduinoserial");
+            } else {
+                Arduino = require("../../services/arduino/arduino");
+            }
+            arduino = new Arduino();
             arduino.setupArduino();
+
         } else {
             logger.INFO("Arduino functionality disabled, messages will be sent over the socket!")
         }

@@ -22,6 +22,10 @@ var Config = function() {
 
         arduino: {
             enableArduinoFunctionality:     true,
+
+            enableNativeArduinoSerial:      true,
+            nativeArduinoPortName:          "ch341",
+
             activeImplementation:           arduinoImplementations().jaxLondon,
             implementations:                arduinoImplementations()
         }
