@@ -22,13 +22,13 @@ var ArduinoSerialService = function() {
 
             for(var i = 0; i < ports.length; i++) {
                 var p = ports[i];
-                if(p.comName.indexOf("ch341") !== -1) {
+                if(p.comName.indexOf(config.arduino.nativeArduinoPortName) !== -1) {
                     logger.INFO("Port chosen: " + p.comName);
                     portName = p.comName;
                 }
             }
 
-            port = new SerialPort(portName);
+            port = new SerialPort(portName, {baudRate: 57600,  parser: SerialPort.parsers.raw});
             port.on('open', onCommOpen);
             port.on('error', onCommError);
             port.on('data', onData);
@@ -61,7 +61,7 @@ var ArduinoSerialService = function() {
         logger.INFO("Data : " + data);
 
         //TODO: Detect which button was pressed, or what action that should be taken!
-        //messageFactory.sendMessageWithHandler(messageFactory.TARGET_HTTP_WORKER, null, null, 'jax', 'handleJaxCall', {"temp": "42"});
+        messageFactory.sendMessageWithHandler(messageFactory.TARGET_HTTP_WORKER, null, null, 'jax', 'handleJaxCall', {"temp": data + ""});
     }
 
 };
