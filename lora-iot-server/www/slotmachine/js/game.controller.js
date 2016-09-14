@@ -118,11 +118,11 @@
                 state.slots[0].shuffle(5, onSlotAnimationComplete);
 
                 setTimeout(function () {
-                    state.slots[1].shuffle(5, onSlotAnimationComplete);
+                    state.slots[1].shuffle(3, onSlotAnimationComplete);
                 }, 500);
 
                 setTimeout(function () {
-                    state.slots[2].shuffle(5, onSlotAnimationComplete);
+                    state.slots[2].shuffle(3, onSlotAnimationComplete);
                 }, 1000);
             }
 
