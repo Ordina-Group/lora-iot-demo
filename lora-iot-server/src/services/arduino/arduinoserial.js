@@ -16,7 +16,7 @@ var ArduinoSerialService = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.setupArduino = function() {
+    this.setupArduino = function setupArduino() {
         SerialPort.list(function (err, ports) {
             logger.INFO("Enumerating serial ports...");
 
@@ -35,8 +35,14 @@ var ArduinoSerialService = function() {
         });
     };
 
-    this.onMessage = function(message) {
-        //Not needed for now!
+    this.onMessage = function onMessage(message) {
+        logger.ERROR("Not implemented yet!");
+    };
+
+    this.sendMessage = function sendMessage(message) {
+        if(port !== null && port !== undefined) {
+            port.write(message, onCommError);
+        }
     };
 
     /*-------------------------------------------------------------------------------------------------
@@ -45,12 +51,7 @@ var ArduinoSerialService = function() {
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     function onCommOpen() {
-        port.write('main screen turn on', function(err) {
-            if (err) {
-                return logger.ERROR('Error on write: ', err.message);
-            }
-            logger.INFO('message written');
-        });
+        logger.INFO("COMM port open!");
     }
 
     function onCommError(error) {
@@ -60,7 +61,6 @@ var ArduinoSerialService = function() {
     function onData(data) {
         logger.INFO("Data : " + data);
 
-        //TODO: Detect which button was pressed, or what action that should be taken!
         messageFactory.sendMessageWithHandler(messageFactory.TARGET_HTTP_WORKER, null, null, 'jax', 'handleJaxCall', {"temp": data + ""});
     }
 
