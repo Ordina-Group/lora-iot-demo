@@ -15,7 +15,8 @@
         return {
             numberOfRounds: 3,
             shouldCheat: true,
-            gamesToWin: [1, 3]
+            gamesToWin: [1, 3], // null to always win, [] to always lose
+            loopAfterLastWonGame: false 
         }
     }
 })();

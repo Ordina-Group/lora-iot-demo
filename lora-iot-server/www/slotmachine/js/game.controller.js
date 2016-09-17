@@ -10,8 +10,9 @@
 
         var settings = settingsService.getSettings(),
             NUMBER_OF_ROUNDS = settings.numberOfRounds,
-            GAMES_TO_WIN = settings.gamesToWin,
-            SHOULD_CHEAT = settings.shouldCheat;
+            GAMES_TO_WIN = settings.gamesToWin.sort(function(a,b){return a>b}),
+            SHOULD_CHEAT = settings.shouldCheat,
+            LOOP = settings.loopAfterLastWonGame;
 
         $scope.roundCounter = NUMBER_OF_ROUNDS;
         $localForage.bind($scope, {
@@ -271,9 +272,16 @@
         }
 
         function raiseGameCounter() {
-            $scope.gameCounter++;
+            if (LOOP && isLastWinningGame()) {
+                $scope.gameCounter = 1;
+            } else {
+                $scope.gameCounter++;
+            }
         }
 
+        function isLastWinningGame() {
+            return GAMES_TO_WIN.indexOf($scope.gameCounter) === GAMES_TO_WIN.length -1;
+        }
         /**
          * Shows the endgame sub page.
          */
