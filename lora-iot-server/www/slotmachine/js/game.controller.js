@@ -11,7 +11,7 @@
         $scope.roundCounter = NUMBER_OF_ROUNDS;
         $localForage.bind($scope, {
             key: 'gameCounter', // required
-            defaultValue: 1, // a default value (needed if it is not already in the database)
+            defaultValue: 1 // a default value (needed if it is not already in the database)
         });
         $scope.gameCounter = 1;
         var SHOULD_CHEAT = (GAMES_TO_WIN.length !== 0);
