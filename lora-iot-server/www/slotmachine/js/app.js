@@ -10,7 +10,8 @@
             'ngMaterial',
             'ngMdIcons',
             'ngAnimate',
-            'ngAria'
+            'ngAria',
+            'LocalForageModule'
         ])
         .config(function ($routeProvider) {
             $routeProvider

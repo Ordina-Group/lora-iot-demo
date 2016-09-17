@@ -4,9 +4,9 @@
     angular.module('devoxx')
         .controller('GameCtrl', GameCtrl);
 
-    GameCtrl.$inject = ['$scope', '$mdDialog', 'nodeSocketService', '$timeout', '$localForage', 'NUMBER_OF_ROUNDS', 'GAMES_TO_WIN'];
+    GameCtrl.$inject = ['$scope', '$mdDialog', 'nodeSocketService', '$timeout', '$localForage', 'NUMBER_OF_ROUNDS', 'GAMES_TO_WIN', 'SHOULD_CHEAT'];
 
-    function GameCtrl($scope, $mdDialog, nodeSocketService, $timeout, $localForage, NUMBER_OF_ROUNDS, GAMES_TO_WIN) {
+    function GameCtrl($scope, $mdDialog, nodeSocketService, $timeout, $localForage, NUMBER_OF_ROUNDS, GAMES_TO_WIN, SHOULD_CHEAT) {
 
         $scope.roundCounter = NUMBER_OF_ROUNDS;
         $localForage.bind($scope, {
@@ -14,7 +14,6 @@
             defaultValue: 1 // a default value (needed if it is not already in the database)
         });
         $scope.gameCounter = 1;
-        var SHOULD_CHEAT = (GAMES_TO_WIN.length !== 0);
 
         var state = {
             played: false,
@@ -46,8 +45,6 @@
 
         var clearCounter = 0;
         $scope.clearLocalStorage = function() {
-            console.log(clearCounter);
-
             if(clearCounter === 2) {
                 $localForage.clear('gameCounter');
             }else{
@@ -192,24 +189,29 @@
         }
 
         function cheatToLose() {
-            var indexes = [rndm(), rndm(), rndm()];
-            if (indexes[0] === indexes[1] && indexes[1] === indexes[2]) {
-                var index = Math.round(Math.random() * 2);
-                indexes[index] = (indexes[index] + 1) % 3;
-            }
+            var indexes = get3DifferentImgIndexes();
             state.slots.forEach(function (slot, i) {
                 slot.setRandomize(function () {
                     return indexes[i];
                 });
             });
+        }
 
-            function rndm() {
-                return Math.round(Math.random() * 2);
+        function get3DifferentImgIndexes(){
+            var indexes = [randomImgPosition(), randomImgPosition(), randomImgPosition()];
+            if (indexes[0] === indexes[1] && indexes[1] === indexes[2]) {
+                var index = randomImgPosition();
+                indexes[index] = (indexes[index] + 1) % 3;
             }
+            return indexes;
+        }
+
+        function randomImgPosition() {
+            return Math.round(Math.random() * 2);
         }
 
         function cheatToWin() {
-            var i = Math.round(Math.random() * 2);
+            var i = randomImgPosition();
             state.slots.forEach(function (slot) {
                 slot.setRandomize(function () {
                     return i;
@@ -220,7 +222,7 @@
         function undoCheat() {
             state.slots.forEach(function (slot) {
                 slot.setRandomize(function () {
-                    return Math.round(Math.random() * 2);
+                    return randomImgPosition();
                 });
             });
         }
@@ -240,7 +242,11 @@
         }
 
         function shouldWinThisGame() {
-            return GAMES_TO_WIN.indexOf($scope.gameCounter) !== -1
+            if(GAMES_TO_WIN === null){
+                return true;
+            } else {
+                return GAMES_TO_WIN.indexOf($scope.gameCounter) !== -1
+            }
         }
 
         function isLastRound() {
