@@ -35,7 +35,7 @@ var CallbackManager = (function() {
              * @param callback The callback to assign an id to.
              * @returns {string} The generated id.
              */
-            generateIdForCallback : function(callback) {
+            generateIdForCallback : function generateIdForCallback(callback) {
                 var id = new Date().getTime() + "--" + (Math.random() * 6);
                 callbacks[id] = callback;
 
@@ -48,7 +48,7 @@ var CallbackManager = (function() {
              * @param id The id for which to return the callback.
              * @returns The callback function.
              */
-            returnCallbackForId : function(id) {
+            returnCallbackForId : function returnCallbackForId(id) {
                 logger.DEBUG("Returning callback for id: " + id);
 
                 return callbacks[id];
@@ -60,7 +60,7 @@ var CallbackManager = (function() {
              * @param id The id for which to return the callback.
              * @returns The callback function.
              */
-            returnAndRemoveCallbackForId: function(id) {
+            returnAndRemoveCallbackForId: function returnAndRemoveCallbackForId(id) {
                 logger.DEBUG("Returning and deleting callback for id: " + id);
 
                 var clbk = callbacks[id];
@@ -75,7 +75,7 @@ var CallbackManager = (function() {
          * Returns the singleton instance.
          * @returns {*}
          */
-        getInstance: function () {
+        getInstance: function getInstance() {
             if (!instance) {
                 instance = init();
             }

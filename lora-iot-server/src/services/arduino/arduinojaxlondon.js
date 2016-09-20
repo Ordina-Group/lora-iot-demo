@@ -1,5 +1,5 @@
 var ArduinoJaxLondon = function() {
-    var messageFactory  = require("../../util/messagefactory").getInstance();
+    var messageFactory  = require("../../messaging/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
 
@@ -12,6 +12,8 @@ var ArduinoJaxLondon = function() {
     var inputSensor     = 10;
 
     var sendPeriodic    = false;
+    var interval        = null;
+    var lastSensorValue = null;
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
@@ -26,13 +28,9 @@ var ArduinoJaxLondon = function() {
             button: buttonSingle
         });
 
-        buttonSingle.on('down', function(){
-            logger.INFO('Button single pressed');
-        });
-
         buttonSingle.on('up', function(){
             logger.INFO('Button single released');
-            messageFactory.sendMessageWithHandler(messageFactory.TARGET_HTTP_WORKER, null, null, 'jax', 'handleJaxCall', {"temp": "42"});
+            messageFactory.sendMessageWithHandler(messageFactory.TARGET_HTTP_WORKER, null, null, 'jax', 'handleJaxCall', {"temp": "" + lastSensorValue});
         });
 
         var buttonFlipFlop = new arduino.Button(inputFlipFlop);
@@ -40,30 +38,38 @@ var ArduinoJaxLondon = function() {
             button: buttonFlipFlop
         });
 
-        buttonFlipFlop.on('down', function(){
-            logger.INFO('Button flipflop pressed');
-        });
-
         buttonFlipFlop.on('up', function(){
             logger.INFO('Button flipflop released');
             sendPeriodic = !sendPeriodic;
             if(sendPeriodic) {
-                //TODO: Add interval to periodically send the temperature via Jax service to serverless endpoint!
+                interval = setInterval(onInterval, 1000);
             } else {
-                //TODO: Remove interval!
+                clearInterval(interval);
             }
         });
 
-        //TODO: Fix temp reading!
+        //TODO: Fix temp reading! (DHT reading with johnny-five might not be possible)
         var sensor = new arduino.Sensor.Digital(10);
         sensor.on("change", function() {
             logger.INFO("Sensor value changed to: " + sensor.value);
+            lastSensorValue = sensor.value;
         });
     };
 
     this.handleMessage = function(data) {
         logger.ERROR("Not implemented yet!");
     };
+
+    /*-------------------------------------------------------------------------------------------------
+     * ------------------------------------------------------------------------------------------------
+     *                                        Private functions
+     * ------------------------------------------------------------------------------------------------
+     ------------------------------------------------------------------------------------------------*/
+    function onInterval() {
+        if(lastSensorValue !== null && lastSensorValue !== undefined) {
+            messageFactory.sendMessageWithHandler(messageFactory.TARGET_HTTP_WORKER, null, null, 'jax', 'handleJaxCall', {"temp": "" + lastSensorValue});
+        }
+    }
 };
 
 module.exports = ArduinoJaxLondon;
