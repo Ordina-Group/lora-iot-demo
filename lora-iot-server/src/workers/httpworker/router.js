@@ -5,8 +5,7 @@ var Router = function(mappedEndpoints) {
     var path    = require('path');
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Private variables.
     var handles     = mappedEndpoints;

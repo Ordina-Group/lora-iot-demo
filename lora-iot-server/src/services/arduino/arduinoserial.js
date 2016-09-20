@@ -1,11 +1,10 @@
 var ArduinoSerialService = function() {
-    var messageFactory  = require("../../util/messagefactory").getInstance();
+    var messageFactory  = require("../../messaging/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var SerialPort      = require('serialport');
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Private variables.
     var port        = null;
@@ -28,10 +27,14 @@ var ArduinoSerialService = function() {
                 }
             }
 
-            port = new SerialPort(portName, {baudRate: 57600,  parser: SerialPort.parsers.raw});
-            port.on('open', onCommOpen);
-            port.on('error', onCommError);
-            port.on('data', onData);
+            if(port !== null) {
+                port = new SerialPort(portName, {baudRate: 57600,  parser: SerialPort.parsers.raw});
+                port.on('open', onCommOpen);
+                port.on('error', onCommError);
+                port.on('data', onData);
+            } else {
+                logger.ERROR("No comm port found to connect to!")
+            }
         });
     };
 

@@ -1,14 +1,13 @@
 var Jax = function() {
     var https           = require("https");
 
-    var messageFactory  = require("../../util/messagefactory").getInstance();
-    var callbackManager = require("../../util/callbackmanager").getInstance();
+    var messageFactory  = require("../../messaging/messagefactory").getInstance();
+    var callbackManager = require("../../messaging/callbackmanager").getInstance();
     var brokerconstants = require("../../workers/databroker/databrokerconstants").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-JAX-LONDON");
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
@@ -87,7 +86,7 @@ var Jax = function() {
 
             messageFactory.sendSimpleMessage(messageFactory.TARGET_BROKER, brokerconstants.FUNC_ADD_TO_CACHE, {cacheName: "endpointCache", value: data});
         });
-    };
+    }
 
     function callServerLessEndpoint(postData, callback) {
         var options = {
@@ -100,8 +99,8 @@ var Jax = function() {
         };
         var request = https.request(options, function(response) {
             response.setEncoding('utf8');
+            //TODO: It would be cleaner to make sure no more chunks of data follow!
             response.on('data', function(chunk){
-                //TODO: This is not clean!
                 callback(response, JSON.parse(chunk));
             });
         });

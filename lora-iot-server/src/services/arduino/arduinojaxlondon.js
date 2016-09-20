@@ -1,5 +1,5 @@
 var ArduinoJaxLondon = function() {
-    var messageFactory  = require("../../util/messagefactory").getInstance();
+    var messageFactory  = require("../../messaging/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
 

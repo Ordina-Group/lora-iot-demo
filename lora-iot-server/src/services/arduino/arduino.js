@@ -6,8 +6,7 @@ var ArduinoService = function() {
     var ArduinoJaxLondon    = require("../arduino/arduinojaxlondon");
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Private variables.
     var board           = null;

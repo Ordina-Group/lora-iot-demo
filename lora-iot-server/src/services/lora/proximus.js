@@ -1,11 +1,10 @@
 var Proximus = function() {
     var https           = require("https");
-    var messageFactory  = require("../../util/messagefactory").getInstance();
+    var messageFactory  = require("../../messaging/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-PROXIMUS--");
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Private variables.
     var host            = "api.enabling.be";
@@ -112,6 +111,16 @@ var Proximus = function() {
         messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "EMPTY"});
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.write("Level set to EMPTY", null, 4);
+        response.end();
+    };
+
+    this.levelExact = function(request, response) {
+        var pieces = request.url.split("/");
+        var level = pieces[pieces.length - 1];
+
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: level});
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write("Level set to " + level + "%", null, 4);
         response.end();
     };
 

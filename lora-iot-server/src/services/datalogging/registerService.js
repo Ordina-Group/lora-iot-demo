@@ -1,6 +1,6 @@
 var RegisterService = function() {
     var logger          = require("../../logging/logger").makeLogger("SERV-REGISTE---");
-    var messageFactory  = require("../../util/messagefactory").getInstance();
+    var messageFactory  = require("../../messaging/messagefactory").getInstance();
 
     //Variables:
     var today           = null;
