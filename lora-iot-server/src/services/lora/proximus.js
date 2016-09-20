@@ -115,6 +115,14 @@ var Proximus = function() {
         response.end();
     };
 
+    this.levelExact = function (request, response) {
+        var value = request.url.split('?')[1]; //I know it's dirty, but i don't know a better solution
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: value});
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write("Level set to "+value+"%", null, 4);
+        response.end();
+    };
+
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
