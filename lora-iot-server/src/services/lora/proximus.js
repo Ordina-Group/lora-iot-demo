@@ -114,13 +114,10 @@ var Proximus = function() {
         response.end();
     };
 
-    this.levelExact = function levelExact(request, response) {
-        var pieces = request.url.split("/");
-        var level = pieces[pieces.length - 1];
-
-        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: level});
+    this.levelExact = function levelExact(request, response, params) {
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: params.level});
         response.writeHead(200, {'Content-Type': 'text/plain'});
-        response.write("Level set to " + level + "%", null, 4);
+        response.write("Level set to " + params.level + "%", null, 4);
         response.end();
     };
 
