@@ -20,7 +20,7 @@ var ArduinoJaxLondon = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.init = function(board, sendMessageCallback) {
+    this.init = function init(board, sendMessageCallback) {
         _self.board = board;
 
         var buttonSingle = new arduino.Button(inputSingle);
@@ -56,7 +56,7 @@ var ArduinoJaxLondon = function() {
         });
     };
 
-    this.handleMessage = function(data) {
+    this.handleMessage = function handleMessage(data) {
         logger.ERROR("Not implemented yet!");
     };
 

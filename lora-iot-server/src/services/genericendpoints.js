@@ -15,7 +15,7 @@ var GenericEndpoints = function() {
      * @param request The request to handle.
      * @param response The response to write to.
      */
-     this.index = function(request, response) {
+     this.index = function index(request, response) {
         logger.INFO("Redirecting from '/' to '/index.html'!");
          response.writeHead(200, {'Content-Type': 'text/plain'});
          response.write("Please use /slotmachine for the slotmachine application, or /booze for the booze application!");
@@ -28,7 +28,7 @@ var GenericEndpoints = function() {
      * @param request The request to handle.
      * @param response The response to write to.
      */
-    this.slotmachine = function(request, response) {
+    this.slotmachine = function slotmachine(request, response) {
         logger.INFO("Redirecting from '/slotmachine' to '/slotmachine/index.html'!");
         response.writeHead(301, {
             "Location" : "/slotmachine/index.html"
@@ -42,7 +42,7 @@ var GenericEndpoints = function() {
      * @param request The request to handle.
      * @param response The response to write to.
      */
-    this.booze = function(request, response) {
+    this.booze = function booze(request, response) {
         logger.INFO("Redirecting from '/booze' to '/booze/index.html'!");
         response.writeHead(301, {
             "Location" : "/booze/index.html"
@@ -57,7 +57,7 @@ var GenericEndpoints = function() {
      * @param request The request to handle.
      * @param response The response to write to.
      */
-     this.upload = function(request, response) {
+     this.upload = function upload(request, response) {
         logger.INFO("Attempting to upload files...");
 
         var files = [];

@@ -25,7 +25,7 @@ var Router = function(mappedEndpoints) {
      * @param request The request as sent by the client.
      * @param response The response to write to.
      */
-    this.route = function(pathName, request, response) {
+    this.route = function route(pathName, request, response) {
         if(isFile(pathName)) {
             //All files on the static file server should be located in the www folder!
             var fullPath = path.normalize(rootFolder + "/" + config.settings.webContentFolder + pathName);

@@ -17,7 +17,7 @@ var ArduinoService = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.setupArduino = function() {
+    this.setupArduino = function setupArduino() {
         if(board !== null) {
             logger.INFO("Arduino already up and running.");
         } else {
@@ -26,7 +26,7 @@ var ArduinoService = function() {
         }
     };
 
-    this.onMessage = function(message) {
+    this.onMessage = function onMessage(message) {
         processMessage(message);
     };
 

@@ -19,7 +19,7 @@ var RegisterService = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.register = function(request, response) {
+    this.register = function register(request, response) {
         switch (request.method) {
             case "GET":
                 response.writeHead(200, {'Content-Type': 'text/plain'});

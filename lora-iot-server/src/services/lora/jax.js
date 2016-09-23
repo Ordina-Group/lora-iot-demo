@@ -14,7 +14,7 @@ var Jax = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.showCache = function(request, response) {
+    this.showCache = function showCache(request, response) {
         logger.INFO("Request received for buttonTrigger...");
 
         switch (request.method) {
@@ -33,11 +33,11 @@ var Jax = function() {
         }
     };
 
-    this.retrieveCacheMessageHandler = function(msg) {
+    this.retrieveCacheMessageHandler = function retrieveCacheMessageHandler(msg) {
         callbackManager.returnAndRemoveCallbackForId(msg.handlerParams.callbackId)(msg.returnData);
     };
 
-    this.testFire = function(request, response) {
+    this.testFire = function testFire(request, response) {
         callServerLessEndpoint({"temp": "42"}, function(serverlessResponse, serverlessResponseBody) {
             var data = {
                 dateTime:           new Date(),

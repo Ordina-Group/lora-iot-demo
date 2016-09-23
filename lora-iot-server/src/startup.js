@@ -129,7 +129,7 @@
              *
              * @param msg
              */
-            onServerWorkerMessageReceived : function(msg) {
+            onServerWorkerMessageReceived : function onServerWorkerMessageReceived(msg) {
                 logger.DEBUG("Message received from server worker: " + msg);
                 targetHandler(msg);
             },
@@ -139,7 +139,7 @@
              *
              * @param msg The message sent by the interval worker that needs to be forwarded to the correct target.
              */
-            onIntervalWorkerMessageReceived : function(msg) {
+            onIntervalWorkerMessageReceived : function onIntervalWorkerMessageReceived(msg) {
                 logger.DEBUG("Message received from interval worker: " + msg);
                 targetHandler(msg);
             },
@@ -149,7 +149,7 @@
              *
              * @param msg The message originally sent by the worker which was sent and handled by the data broker and now sent back again.
              */
-            onDataBrokerMessageReceived : function(msg) {
+            onDataBrokerMessageReceived : function onDataBrokerMessageReceived(msg) {
                 logger.DEBUG("Message received from data broker: " + msg);
                 cluster.workers[msg.workerId].send(msg);
                 //TODO: Support the case where the Data broker actually sends a message by itself (and not responds to an earlier message from a worker!)

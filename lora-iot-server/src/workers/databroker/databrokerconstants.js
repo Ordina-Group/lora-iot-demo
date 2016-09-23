@@ -35,7 +35,7 @@ var DataBrokerConstants = (function() {
          * Returns the singleton instance.
          * @returns {*}
          */
-        getInstance: function () {
+        getInstance: function getInstance() {
             if (!instance) {
                 instance = init();
             }
