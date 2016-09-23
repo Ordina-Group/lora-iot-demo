@@ -27,7 +27,7 @@ var ArduinoSerialService = function() {
                 }
             }
 
-            if(port !== null) {
+            if(portName !== null) {
                 port = new SerialPort(portName, {baudRate: 57600,  parser: SerialPort.parsers.raw});
                 port.on('open', onCommOpen);
                 port.on('error', onCommError);
