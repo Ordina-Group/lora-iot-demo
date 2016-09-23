@@ -26,7 +26,7 @@ var MessageFactory = (function() {
              * @param targetFunction The target function.
              * @param data The data to send, represented as a JSON object.
              */
-            sendSimpleMessage : function(target, targetFunction, data) {
+            sendSimpleMessage : function sendSimpleMessage(target, targetFunction, data) {
                 var payload         = {};
                 payload.workerId    = cluster.worker.id;
                 payload.target      = target;
@@ -34,18 +34,19 @@ var MessageFactory = (function() {
                 payload.data        = data;
                 process.send(payload);
             },
+
             /**
              * Sends a message that contains a handler object, function and params. After the target was reached and the function executed, the message will be forwarded
              * to be handled by handler object and function with the handler params.
              *
              * @param target The target should be one of the items defined in this class.
-             * @param targetFunction The target function on the broker of intworker. These classes/objects should define these values as constants.
-             * @param data The data to send, represented as a JSON object.
+             * @param targetFunction The target function on the broker, interval worker or HTTP worker. These classes/objects should define these values as constants.
+             * @param data The data to send, represented as a JSON object. This is used in the target
              * @param handlerObject
              * @param handlerFunction
              * @param handlerParams
              */
-            sendMessageWithHandler : function(target, targetFunction, data, handlerObject, handlerFunction, handlerParams) {
+            sendMessageWithHandler : function sendMessageWithHandler(target, targetFunction, data, handlerObject, handlerFunction, handlerParams) {
                 var payload             = {};
                 payload.workerId        = cluster.worker.id;
                 payload.handler         = handlerObject;
@@ -64,7 +65,7 @@ var MessageFactory = (function() {
          * Returns the singleton instance.
          * @returns {*}
          */
-        getInstance: function () {
+        getInstance: function getInstance() {
             if (!instance) {
                 instance = init();
             }

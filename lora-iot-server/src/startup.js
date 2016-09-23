@@ -1,6 +1,8 @@
-var DemoApplication = function(runInDebug) {
+"use strict";
+
+(function DemoApplication(runInDebug) {
     var logger          = require("./logging/logger").makeLogger("STARTUP--------");
-    var messageFactory  = require("./util/messagefactory").getInstance();
+    var messageFactory  = require("./messaging/messagefactory").getInstance();
 
     var cluster         = require("cluster");
     var Worker          = require("./workers/worker");
@@ -179,7 +181,4 @@ var DemoApplication = function(runInDebug) {
             }
         }
     }
-};
-
-//Start the application.
-var demo = new DemoApplication();
+})();

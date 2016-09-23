@@ -4,8 +4,7 @@ var IntervalWorker = function() {
     var ws              = require("nodejs-websocket");
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Required private imports for functionality.
     var arduino         = null;

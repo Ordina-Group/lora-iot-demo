@@ -1,3 +1,5 @@
+"use strict";
+
 var Server = function() {
     var logger  = require("./../../logging/logger").makeLogger("SERVER---------");
     var http    = require("http");
@@ -5,8 +7,7 @@ var Server = function() {
     var Router  = require("./router");
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Private variables.
     var id      = null;
@@ -72,6 +73,7 @@ var Server = function() {
             "/booze/levelMedium"            : {execute : proximus.levelMedium,                         params: null},
             "/booze/levelLow"               : {execute : proximus.levelLow,                            params: null},
             "/booze/levelEmpty"             : {execute : proximus.levelEmpty,                          params: null},
+            "/booze/level/*"                : {execute : proximus.levelExact,                          params: ["level"]},
 
             "/jax/showCache"                : {execute : jax.showCache,                                params: null},
             "/jax/test"                     : {execute : jax.testFire,                                 params: null}
