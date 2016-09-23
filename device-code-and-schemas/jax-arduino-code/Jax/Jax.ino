@@ -32,7 +32,7 @@ void setup() {
 
 void loop() {
   //Send a sensor reading each second.
-  delay(100);
+  delay(1000);
 
   //Set LEDs
   digitalWrite(outputPinLedSingle, LOW);

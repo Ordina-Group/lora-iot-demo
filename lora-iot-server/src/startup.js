@@ -169,7 +169,9 @@ var DemoApplication = function(runInDebug) {
                     intWorker.send(msg);
                     break;
                 case messageFactory.TARGET_HTTP_WORKER:
-                    httpWorkers[Math.round(Math.random() * httpWorkers.length) - 1].send(msg);
+                    var index = Math.round(Math.random() * httpWorkers.length) - 1;
+                    index = index === -1 ? 0 : index;
+                    httpWorkers[index].send(msg);
                     break;
                 default:
                     //cluster.workers[msg.workerId].send({data: msg});
