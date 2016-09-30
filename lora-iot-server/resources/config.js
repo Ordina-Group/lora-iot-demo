@@ -38,7 +38,7 @@ var Config = (function() {
                 enableArduinoFunctionality:     true,
 
                 enableNativeArduinoSerial:      true,
-                nativeArduinoPortName:          "ch341",
+                nativeArduinoPortName:          "usbmodem1421",
 
                 activeImplementation:           arduinoImplementations().jaxLondon,
                 implementations:                arduinoImplementations()

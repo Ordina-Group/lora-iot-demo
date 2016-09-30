@@ -28,7 +28,7 @@ var ArduinoSerialService = function() {
             }
 
             if(portName !== null) {
-                port = new SerialPort(portName, {baudRate: 57600,  parser: SerialPort.parsers.raw});
+                port = new SerialPort(portName, {baudRate: 57600,  parser: SerialPort.parsers.readline('\n')});
                 port.on('open', onCommOpen);
                 port.on('error', onCommError);
                 port.on('data', onData);
@@ -63,6 +63,7 @@ var ArduinoSerialService = function() {
 
     function onData(data) {
         logger.INFO("Data : " + data);
+        data = data.replace('\r', '');
 
         messageFactory.sendMessageWithHandler(messageFactory.TARGET_HTTP_WORKER, null, null, 'jax', 'handleJaxCall', {"temp": data + ""});
     }
