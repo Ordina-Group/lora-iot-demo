@@ -5,27 +5,36 @@ var Sensy = function() {
     //Configuration.
     var config  = require("../../../resources/config").getInstance();
 
+    var ids = {
+        M21: {
+            TEMP: "57ecdaf8e0b902133b5c94cf",
+            HUMI: "57ecdaf8e0b902133b5c94d0",
+            MOTI: "57ecdaf8e0b902133b5c94d1"
+        },
+        M22: {
+            TEMP: "57ecdaf8e0b902133b5c94d2",
+            HUMI: "57ecdaf8e0b902133b5c94d3",
+            MOTI: "57ecdaf8e0b902133b5c94d4"
+        }
+    };
+
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     this.handleSensyCall = function handleSensyCall(msg) {
-
         var id = null;
         var data = msg.handlerParams;
 
-        //Sensor IDs for M21
-        //Motion:   57ecdaf8e0b902133b5c94d1
-        //Temp:     57ecdaf8e0b902133b5c94cf
-        //Humidity: 57ecdaf8e0b902133b5c94d0
+        var activeRoom = ids.M21;
 
         if(data.lastIndexOf("M") > -1) {
-            id = "57ecdaf8e0b902133b5c94d1";
+            id = activeRoom.MOTI;
         } else if(data.lastIndexOf("T") > -1) {
-            id = "57ecdaf8e0b902133b5c94cf";
+            id = activeRoom.TEMP;
         } else if(data.lastIndexOf("H") > -1) {
-            id = "57ecdaf8e0b902133b5c94d0";
+            id = activeRoom.HUMI;
         } else {
             logger.ERROR("Data could not be parsed!");
             return;
@@ -40,7 +49,7 @@ var Sensy = function() {
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
     function sendData(id, data) {
-        logger.INFO("Sending data to SENSY endpoint: " + JSON.stringify(data, null, 4));
+        logger.INFO("Sending data for sensor: " + id + " data: " + data);
 
         callServerLessEndpoint(id, data, function(response, responseBody) {
             logger.INFO(JSON.stringify(responseBody, null, 4));
@@ -58,7 +67,6 @@ var Sensy = function() {
         };
         var request = https.request(options, function(response) {
             response.setEncoding('utf8');
-            //TODO: It would be cleaner to make sure no more chunks of data follow!
             response.on('data', function(chunk){
                 callback(response, JSON.parse(chunk));
             });
@@ -69,7 +77,6 @@ var Sensy = function() {
             callback(error, null);
         });
 
-        //request.write(JSON.stringify(postData));
         request.end('{"value": ' + postData + '}');
     }
 };
