@@ -1,9 +1,9 @@
 var ArduinoSlotMachine = function() {
-    var messageFactory  = require("../../messaging/messagefactory").getInstance();
-    var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
+    var messageFactory  = require("../../../messaging/messagefactory").getInstance();
+    var logger          = require("../../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
     var pixel           = require("node-pixel");
-    var LedStripUtils   = require("../arduino/ledstriputils");
+    var LedStripUtils   = require("../ledstriputils");
 
     //Private variables.
     var _self           = this;

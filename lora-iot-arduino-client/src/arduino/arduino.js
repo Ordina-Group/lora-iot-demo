@@ -3,7 +3,7 @@ var ArduinoService = function() {
     var arduino         = require("johnny-five");
     var pixel           = require("node-pixel");
 
-    var ArduinoSlotMachine  = require("../../../lora-iot-server/src/services/arduino/arduinoslotmachine");
+    var ArduinoSlotMachine  = require("../../../lora-iot-server/src/services/arduino/impl/arduinoslotmachine");
 
     //Private variables.
     var board           = null;

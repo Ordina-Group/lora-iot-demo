@@ -60,7 +60,7 @@ var IntervalWorker = function() {
 
             var Arduino = null;
             if(config.arduino.enableNativeArduinoSerial) {
-                Arduino = require("../../services/arduino/arduinoserial");
+                Arduino = require("../../services/arduino/serial/arduinoserial");
             } else {
                 Arduino = require("../../services/arduino/arduino");
             }

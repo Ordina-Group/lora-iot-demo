@@ -35,6 +35,7 @@ var Worker = function() {
                 break;
             case "http":
                 jax = new (require("./../services/lora/jax"));
+                sensy = new (require("./../services/lora/sensy"));
                 cluster.worker.on("message", onMessageFromMasterReceived);
                 new Server();
                 break;

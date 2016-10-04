@@ -1,14 +1,18 @@
 var ArduinoSerialService = function() {
-    var messageFactory  = require("../../messaging/messagefactory").getInstance();
-    var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
+    var messageFactory  = require("../../../messaging/messagefactory").getInstance();
+    var logger          = require("../../../logging/logger").makeLogger("SERV-ARDUINO---");
     var SerialPort      = require('serialport');
 
+    var ArduinoSerialJaxLondon  = require("./impl/arduinoserialjaxlondon");
+    var ArduinoSerialSensy      = require("./impl/arduinoserialsensy");
+
     //Configuration.
-    var config  = require("../../../resources/config").getInstance();
+    var config  = require("../../../../resources/config").getInstance();
 
     //Private variables.
-    var port        = null;
-    var portName    = null;
+    var port            = null;
+    var portName        = null;
+    var implementation  = null;
 
     /*-------------------------------------------------------------------------------------------------
      * ------------------------------------------------------------------------------------------------
@@ -17,10 +21,14 @@ var ArduinoSerialService = function() {
      ------------------------------------------------------------------------------------------------*/
     this.setupArduino = function setupArduino() {
         SerialPort.list(function (err, ports) {
-            logger.INFO("Enumerating serial ports...");
 
+            activateImplementation();
+
+            logger.INFO("Enumerating serial ports...");
             for(var i = 0; i < ports.length; i++) {
                 var p = ports[i];
+                logger.INFO("Port found: " + p.comName);
+
                 if(p.comName.indexOf(config.arduino.nativeArduinoPortName) !== -1) {
                     logger.INFO("Port chosen: " + p.comName);
                     portName = p.comName;
@@ -53,6 +61,19 @@ var ArduinoSerialService = function() {
      *                                        Private functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
+    function activateImplementation() {
+        switch (config.arduino.nativeActiveImplementation) {
+            case config.arduino.nativeImplementations.jaxLondon:
+                implementation = new ArduinoSerialJaxLondon();
+                break;
+            case config.arduino.nativeImplementations.sensy:
+                implementation = new ArduinoSerialSensy();
+                break;
+            default:
+                logger.ERROR("Arduino implementation: " + config.arduino.nativeActiveImplementation + " not found!");
+        }
+    }
+
     function onCommOpen() {
         logger.INFO("COMM port open!");
     }
@@ -65,7 +86,7 @@ var ArduinoSerialService = function() {
         logger.INFO("Data : " + data);
         data = data.replace('\r', '');
 
-        messageFactory.sendMessageWithHandler(messageFactory.TARGET_HTTP_WORKER, null, null, 'jax', 'handleJaxCall', {"temp": data + ""});
+        implementation.handleMessage(data);
     }
 
 };

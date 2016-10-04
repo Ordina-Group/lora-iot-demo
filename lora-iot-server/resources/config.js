@@ -16,6 +16,13 @@ var Config = (function() {
             }
         }
 
+        function nativeArduinoImplementations() {
+            return {
+                jaxLondon:                      "ArduinoSerialJaxLondon",
+                sensy:                          "ArduinoSerialSensy"
+            }
+        }
+
         /*-------------------------------------------------------------------------------------------------
          * ------------------------------------------------------------------------------------------------
          *                                     Public vars/functions
@@ -36,9 +43,11 @@ var Config = (function() {
 
             arduino: {
                 enableArduinoFunctionality:     true,
-
                 enableNativeArduinoSerial:      true,
-                nativeArduinoPortName:          "usbmodem1421",
+
+                nativeArduinoPortName:          "usbmodem",
+                nativeActiveImplementation:     nativeArduinoImplementations().jaxLondon,
+                nativeImplementations:          nativeArduinoImplementations(),
 
                 activeImplementation:           arduinoImplementations().jaxLondon,
                 implementations:                arduinoImplementations()

@@ -1,6 +1,6 @@
 var ArduinoJaxLondon = function() {
-    var messageFactory  = require("../../messaging/messagefactory").getInstance();
-    var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
+    var messageFactory  = require("../../../messaging/messagefactory").getInstance();
+    var logger          = require("../../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
 
     //Private variables.

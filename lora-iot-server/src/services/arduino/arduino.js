@@ -2,8 +2,8 @@ var ArduinoService = function() {
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
 
-    var ArduinoSlotMachine  = require("../arduino/arduinoslotmachine");
-    var ArduinoJaxLondon    = require("../arduino/arduinojaxlondon");
+    var ArduinoSlotMachine  = require("impl/arduinoslotmachine");
+    var ArduinoJaxLondon    = require("impl/arduinojaxlondon");
 
     //Configuration.
     var config  = require("../../../resources/config").getInstance();
