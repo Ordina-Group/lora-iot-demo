@@ -1,5 +1,4 @@
 var ArduinoSerialService = function() {
-    var messageFactory  = require("../../../messaging/messagefactory").getInstance();
     var logger          = require("../../../logging/logger").makeLogger("SERV-ARDUINO---");
     var SerialPort      = require('serialport');
 

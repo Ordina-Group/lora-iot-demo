@@ -42,7 +42,7 @@ var Config = (function() {
             },
 
             arduino: {
-                enableArduinoFunctionality:     true,
+                enableArduinoFunctionality:     false,
                 enableNativeArduinoSerial:      true,
 
                 nativeArduinoPortName:          "usbmodem",
