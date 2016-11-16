@@ -1,6 +1,3 @@
-/**
- * Created by yave on 15/04/16.
- */
 (function() {
     'use strict';
 
