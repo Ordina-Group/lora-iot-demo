@@ -36,7 +36,7 @@
   },
 
   "scripts": {
-    "postinstall": "npm install forever -g && npm install -g bower",
+    "postinstall": "sudo npm install forever -g && sudo npm install -g bower",
     "prestart": "bower install",
     "start": "forever --minUptime 10000 start src/startup.js",
     "predeploy": "=============== LORA/IOT DEMO ===============",
