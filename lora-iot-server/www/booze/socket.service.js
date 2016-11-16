@@ -57,6 +57,10 @@
                                 callbacks[i](0);
                                 break;
                             default :
+                                if(data.level && data.level > 0 && data.level < 100){
+                                    callbacks[i](data.level);
+                                }
+                                break;
                         }
                     }
                 }

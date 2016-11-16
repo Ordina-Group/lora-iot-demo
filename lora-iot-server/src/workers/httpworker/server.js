@@ -1,5 +1,3 @@
-"use strict";
-
 var Server = function() {
     var logger  = require("./../../logging/logger").makeLogger("SERVER---------");
     var http    = require("http");

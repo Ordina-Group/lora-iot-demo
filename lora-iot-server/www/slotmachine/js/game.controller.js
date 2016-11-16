@@ -4,11 +4,22 @@
     angular.module('devoxx')
         .controller('GameCtrl', GameCtrl);
 
-    GameCtrl.$inject = ['$scope', '$mdDialog', 'nodeSocketService', '$timeout'];
+    GameCtrl.$inject = ['$scope', '$mdDialog', 'nodeSocketService', '$timeout', '$localForage', 'settingsService'];
 
-    function GameCtrl($scope, $mdDialog, nodeSocketService, $timeout) {
+    function GameCtrl($scope, $mdDialog, nodeSocketService, $timeout, $localForage, settingsService) {
 
-        $scope.counter = 3;
+        var settings = settingsService.getSettings(),
+            NUMBER_OF_ROUNDS = settings.numberOfRounds,
+            GAMES_TO_WIN = settings.gamesToWin.sort(function(a,b){return a>b}),
+            SHOULD_CHEAT = settings.shouldCheat,
+            LOOP = settings.loopAfterLastWonGame;
+
+        $scope.roundCounter = NUMBER_OF_ROUNDS;
+        $localForage.bind($scope, {
+            key: 'gameCounter', // required
+            defaultValue: 1 // a default value (needed if it is not already in the database)
+        });
+        $scope.gameCounter = 1;
 
         var state = {
             played: false,
@@ -19,8 +30,7 @@
             slots: null
         };
 
-        var mustRegister    = false;
-        var ledsRunning     = false;
+        var mustRegister = false;
 
         $scope.showAdvanced = function () {
             if (mustRegister) {
@@ -28,6 +38,27 @@
                 showRegisterDialog()
             } else {
                 state.played = false;
+            }
+        };
+
+        $scope.getRounds = function () {
+            var arr = [];
+            for (var i = 0; i < NUMBER_OF_ROUNDS; i++) {
+                arr[i] = 'coin' + (i + 1);
+            }
+            return arr;
+        };
+
+        var clearCounter = 0;
+        $scope.clearLocalStorage = function() {
+            if(clearCounter === 2) {
+                $localForage.clear('gameCounter');
+                $scope.gameCounter = 1;
+            }else{
+                clearCounter++;
+                $timeout(function () {
+                    clearCounter = 0;
+                },5000);
             }
         };
 
@@ -55,7 +86,6 @@
             nodeSocketService.registerCallback(handleButtonPresses);
             $("#playButton").click(play);
         }
-
 
         /**
          * Handles screen resize events.
@@ -104,36 +134,32 @@
          */
         function play() {
             if (!state.played) {
-
-                if(!mustRegister && !ledsRunning) {
-                    ledsRunning = true;
-                    nodeSocketService.sendJSONMessage({registered: true});
-                }
-
                 state.played = true;
 
-                document.getElementById('roller').pause();
-                document.getElementById('roller').currentTime = 0;
-                document.getElementById('roller').play();
-                state.slots[0].shuffle(5, onSlotAnimationComplete);
+                playRollerSound();
+                hideCoin();
+
+                if (SHOULD_CHEAT) {
+                    if(shouldWinThisGame()) {
+                        if (isLastRound()) {
+                            cheatToWin();
+                        }
+                    } else {
+                        cheatToLose();
+                    }
+                }
 
                 setTimeout(function () {
-                    state.slots[1].shuffle(5, onSlotAnimationComplete);
-                }, 500);
+                    state.slots[0].shuffle(5);
+                }, 100);
+
+                setTimeout(function () {
+                    state.slots[1].shuffle(5);
+                }, 550);
 
                 setTimeout(function () {
                     state.slots[2].shuffle(5, onSlotAnimationComplete);
                 }, 1000);
-            }
-
-            if ($scope.counter === 3) {
-                $('#coin1').hide();
-            }
-            else if ($scope.counter === 2) {
-                $('#coin2').hide();
-            }
-            else if ($scope.counter === 1) {
-                $('#coin3').hide();
             }
         }
 
@@ -141,33 +167,97 @@
          * Executed each time a slot finished animating.
          */
         function onSlotAnimationComplete() {
-            if (this.element[0].id === 'machine3') {
-                if (hasJackpot()) {
-                    state.winner = true;
-                    state.closeButNoCigar = false;
-                    nodeSocketService.sendJSONMessage({winner: true});
-                    document.getElementById('victory').play();
-                    setTimeout(function () {
-                        startFireworks();
-                        showEndGame();
+            if (hasJackpot()) {
+                state.winner = true;
+                state.closeButNoCigar = false;
+                nodeSocketService.sendJSONMessage({winner: true});
+                playSound('victory');
+                setTimeout(function () {
+                    startFireworks();
+                    showEndGame();
+                }, 1500);
+            }
+            else {
+                state.played = false;
+                $scope.roundCounter--;
+                $scope.$apply();
+
+                if ($scope.roundCounter === 0) {
+                    state.played = true;
+                    state.winner = false;
+                    state.closeButNoCigar = wasItClose();
+                    nodeSocketService.sendJSONMessage({winner: false});
+                    $timeout(function () {
+                        playSound('loser');
+                        showEndGame()
                     }, 1500);
                 }
-                else {
-                    state.played = false;
-                    $scope.counter--;
-
-                    if ($scope.counter === 0) {
-                        state.played = true;
-                        state.winner = false;
-                        state.closeButNoCigar = wasItClose();
-                        nodeSocketService.sendJSONMessage({winner: false});
-                        $timeout(function () {
-                            document.getElementById('loser').play();
-                            showEndGame()
-                        }, 1500);
-                    }
-                }
             }
+        }
+
+        function cheatToLose() {
+            var indexes = get3DifferentImgIndexes();
+            state.slots.forEach(function (slot, i) {
+                slot.setRandomize(function () {
+                    return indexes[i];
+                });
+            });
+        }
+
+        function get3DifferentImgIndexes(){
+            var indexes = [randomImgPosition(), randomImgPosition(), randomImgPosition()];
+            if (indexes[0] === indexes[1] && indexes[1] === indexes[2]) {
+                var index = randomImgPosition();
+                indexes[index] = (indexes[index] + 1) % 3;
+            }
+            return indexes;
+        }
+
+        function randomImgPosition() {
+            return Math.round(Math.random() * 2);
+        }
+
+        function cheatToWin() {
+            var i = randomImgPosition();
+            state.slots.forEach(function (slot) {
+                slot.setRandomize(function () {
+                    return i;
+                });
+            });
+        }
+
+        function undoCheat() {
+            state.slots.forEach(function (slot) {
+                slot.setRandomize(function () {
+                    return randomImgPosition();
+                });
+            });
+        }
+
+        function hideCoin() {
+            $('#coin' + $scope.roundCounter).hide();
+        }
+
+        function playRollerSound() {
+            document.getElementById('roller').pause();
+            document.getElementById('roller').currentTime = 0;
+            document.getElementById('roller').play();
+        }
+
+        function playSound(name){
+            document.getElementById(name).play();
+        }
+
+        function shouldWinThisGame() {
+            if(GAMES_TO_WIN === null){
+                return true;
+            } else {
+                return GAMES_TO_WIN.indexOf($scope.gameCounter) !== -1
+            }
+        }
+
+        function isLastRound() {
+            return $scope.roundCounter === 1;
         }
 
         function hasJackpot() {
@@ -181,12 +271,21 @@
             state.slots[0].active === state.slots[2].active);
         }
 
+        function raiseGameCounter() {
+            if (LOOP && isLastWinningGame()) {
+                $scope.gameCounter = 1;
+            } else {
+                $scope.gameCounter++;
+            }
+        }
+
+        function isLastWinningGame() {
+            return GAMES_TO_WIN.indexOf($scope.gameCounter) === GAMES_TO_WIN.length -1;
+        }
         /**
          * Shows the endgame sub page.
          */
         function showEndGame() {
-            ledsRunning = false;
-
             $mdDialog.show({
                 templateUrl: 'endGame.html',
                 parent: angular.element(document.body),
@@ -194,10 +293,12 @@
                 escapeToClose: false,
                 controller: 'EndGameCtrl',
                 locals: {
-                    gameState:state
+                    gameState: state
                 }
             }).then(function () {
-                $scope.counter = 3;
+                $scope.roundCounter = NUMBER_OF_ROUNDS;
+                raiseGameCounter();
+                undoCheat();
                 $scope.showAdvanced(this);
                 stopFireworks();
             }, function () {
