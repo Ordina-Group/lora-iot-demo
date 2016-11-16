@@ -12,7 +12,7 @@ var DataBroker = function () {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.setupFileStorage = function() {
+    this.setupFileStorage = function setupFileStorage() {
         var folder      = "output/";
         var today       = new Date().toISOString();
         today           = today.split("T")[0];
@@ -32,8 +32,8 @@ var DataBroker = function () {
         });
     };
 
-    this.setupDefaultCaches = function() {
-        //createCache({data : {cacheName: "demoCache" , maxSize: 250}});
+    this.setupDefaultCaches = function setupDefaultCaches() {
+        createCache({data : {cacheName: "endpointCache" , maxSize: 100}});
     };
 
     /*-------------------------------------------------------------------------------------------------

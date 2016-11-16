@@ -64,7 +64,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param fadeDuration Duration for the fade in milliseconds
      * @param callback Function to call when the fade has completed.
      */
-    this.fade = function(targetColors, fadeDuration, callback) {
+    this.fade = function fade(targetColors, fadeDuration, callback) {
         fadeRunning       = true;
         scrollRunning     = false;
         offsetRunning     = false;
@@ -103,7 +103,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param scrollDuration
      * @param callback
      */
-    this.scroll = function(targetColors, scrollDuration, callback) {
+    this.scroll = function scroll(targetColors, scrollDuration, callback) {
         fadeRunning       = false;
         scrollRunning     = true;
         offsetRunning     = false;
@@ -130,7 +130,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param targetColorsArray
      * @param singleFadeDuration
      */
-    this.startCycleFade = function(targetColorsArray, singleFadeDuration) {
+    this.startCycleFade = function startCycleFade(targetColorsArray, singleFadeDuration) {
         fadeRunning       = true;
         scrollRunning     = false;
         offsetRunning     = false;
@@ -147,7 +147,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
     /**
      *
      */
-    this.startOffsetAnimation = function() {
+    this.startOffsetAnimation = function startOffsetAnimation() {
         fadeRunning       = false;
         scrollRunning     = false;
         offsetRunning     = true;
@@ -160,7 +160,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * @param targetColorsArray
      * @param singleScrollDuration
      */
-    this.startScrollerAnimation = function(targetColorsArray, singleScrollDuration) {
+    this.startScrollerAnimation = function startScrollerAnimation(targetColorsArray, singleScrollDuration) {
         if(scrollRunning === true) {
             return;
         }
@@ -187,7 +187,7 @@ var LedStripUtils = function(ledStrip, amountOfLeds) {
      * Stops the currently running animation.
      * It is advised to wait 125 to 250ms after calling this function before starting any new animation!
      */
-    this.stopAnimation = function() {
+    this.stopAnimation = function stopAnimation() {
         fadeRunning     = false;
         scrollRunning   = false;
         offsetRunning   = false;

@@ -1,11 +1,12 @@
 var ArduinoService = function() {
-    var messageFactory  = require("../../util/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
 
+    var ArduinoSlotMachine  = require("impl/arduinoslotmachine");
+    var ArduinoJaxLondon    = require("impl/arduinojaxlondon");
+
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Private variables.
     var board           = null;
@@ -16,7 +17,7 @@ var ArduinoService = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.setupArduino = function() {
+    this.setupArduino = function setupArduino() {
         if(board !== null) {
             logger.INFO("Arduino already up and running.");
         } else {
@@ -25,7 +26,7 @@ var ArduinoService = function() {
         }
     };
 
-    this.onMessage = function(message) {
+    this.onMessage = function onMessage(message) {
         processMessage(message);
     };
 
@@ -46,7 +47,7 @@ var ArduinoService = function() {
                 logger.ERROR("Arduino implementation: " + config.arduino.activeImplementation + " not found!");
         }
         if(implementation !== null) {
-            implementation.init();
+            implementation.init(board, null);
         }
     }
 

@@ -1,9 +1,9 @@
 var ArduinoSlotMachine = function() {
-    var messageFactory  = require("../../util/messagefactory").getInstance();
-    var logger          = require("../../logging/logger").makeLogger("SERV-ARDUINO---");
+    var messageFactory  = require("../../../messaging/messagefactory").getInstance();
+    var logger          = require("../../../logging/logger").makeLogger("SERV-ARDUINO---");
     var arduino         = require("johnny-five");
     var pixel           = require("node-pixel");
-    var LedStripUtils   = require("../arduino/ledstriputils");
+    var LedStripUtils   = require("../ledstriputils");
 
     //Private variables.
     var _self           = this;
@@ -20,7 +20,7 @@ var ArduinoSlotMachine = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.init = function(board) {
+    this.init = function init(board, sendMessageCallback) {
         _self.board = board;
 
         var button = new arduino.Button(inputPin);
@@ -51,17 +51,23 @@ var ArduinoSlotMachine = function() {
 
             button.on('down', function(){
                 logger.INFO('Button pressed');
+                if(sendMessageCallback !== null && sendMessageCallback !== undefined) {
+                    sendMessageCallback({buttonPressed: true});
+                }
                 messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: true});
             });
 
             button.on('up', function(){
                 logger.INFO('Button released');
+                if(sendMessageCallback !== null && sendMessageCallback !== undefined) {
+                    sendMessageCallback({buttonPressed: false});
+                }
                 messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {buttonPressed: false});
             });
         });
     };
 
-    this.handleMessage = function(data) {
+    this.handleMessage = function handleMessage(data) {
         //After registration message => A new user has been registered!
         if(data.registered === true) {
             ledStripUtils.stopAnimation();

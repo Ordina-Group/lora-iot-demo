@@ -1,5 +1,9 @@
-var WeatherGenie = function(runInDebug) {
+"use strict";
+
+(function DemoApplication(runInDebug) {
     var logger          = require("./logging/logger").makeLogger("STARTUP--------");
+    var messageFactory  = require("./messaging/messagefactory").getInstance();
+
     var cluster         = require("cluster");
     var Worker          = require("./workers/worker");
 
@@ -7,6 +11,7 @@ var WeatherGenie = function(runInDebug) {
     var debug           = runInDebug === undefined ? false : runInDebug;
     var broker          = null;
     var intWorker       = null;
+    var httpWorkers     = [];
     var messageHandlers = null;
 
     init();
@@ -66,6 +71,7 @@ var WeatherGenie = function(runInDebug) {
 
             var worker = cluster.fork({name: "http", debug: debug});
             worker.on("message", messageHandlers.onServerWorkerMessageReceived);
+            httpWorkers.push(worker);
         }
 
         //Revive workers if they die!
@@ -87,6 +93,7 @@ var WeatherGenie = function(runInDebug) {
      * @param signal The exit signal.
      */
     function reviveDeadWorker(worker, code, signal) {
+        //CHARGING...
         logger.DEBUG("worker " + worker.id + " died! (details => code: " + code + " signal: " + signal);
 
         //CLEAR!
@@ -118,43 +125,23 @@ var WeatherGenie = function(runInDebug) {
         return {
             /**
              * Handler for messages received from the HTTP worker(s).
-             * The message will be forwarded to the target. (for now almost always the data broker)
+             * The message will be forwarded to the target.
              *
              * @param msg
              */
-            onServerWorkerMessageReceived : function(msg) {
+            onServerWorkerMessageReceived : function onServerWorkerMessageReceived(msg) {
                 logger.DEBUG("Message received from server worker: " + msg);
-
-                switch (msg.target){
-                    case "broker":
-                        broker.send(msg);
-                        break;
-                    case "intworker":
-                        intWorker.send(msg);
-                        break;
-                    default:
-                        cluster.workers[msg.workerId].send({data: msg.data});
-                }
+                targetHandler(msg);
             },
             /**
              * Handler for messages received from the interval worker.
-             * The message will be forwarded to the target. (for now almost always the data broker)
+             * The message will be forwarded to the target.
              *
              * @param msg The message sent by the interval worker that needs to be forwarded to the correct target.
              */
-            onIntervalWorkerMessageReceived : function(msg) {
+            onIntervalWorkerMessageReceived : function onIntervalWorkerMessageReceived(msg) {
                 logger.DEBUG("Message received from interval worker: " + msg);
-
-                switch (msg.target){
-                    case "broker":
-                        broker.send(msg);
-                        break;
-                    case "intworker":
-                        intWorker.send(msg);
-                        break;
-                    default:
-                        cluster.workers[msg.workerId].send({data: msg.data});
-                }
+                targetHandler(msg);
             },
             /**
              * Handler for messages received from the data broker.
@@ -162,13 +149,36 @@ var WeatherGenie = function(runInDebug) {
              *
              * @param msg The message originally sent by the worker which was sent and handled by the data broker and now sent back again.
              */
-            onDataBrokerMessageReceived : function(msg) {
+            onDataBrokerMessageReceived : function onDataBrokerMessageReceived(msg) {
                 logger.DEBUG("Message received from data broker: " + msg);
                 cluster.workers[msg.workerId].send(msg);
+                //TODO: Support the case where the Data broker actually sends a message by itself (and not responds to an earlier message from a worker!)
+            }
+        };
+
+        /**
+         * Actual handler for messages.
+         * The message will be forwarded to the target.
+         *
+         * @param msg The message that contains all the details. This includes the target which is used to route te message!
+         */
+        function targetHandler(msg) {
+            switch (msg.target){
+                case messageFactory.TARGET_BROKER:
+                    broker.send(msg);
+                    break;
+                case messageFactory.TARGET_INTERVAL_WORKER:
+                    intWorker.send(msg);
+                    break;
+                case messageFactory.TARGET_HTTP_WORKER:
+                    var index = Math.round(Math.random() * httpWorkers.length) - 1;
+                    index = index === -1 ? 0 : index;
+                    httpWorkers[index].send(msg);
+                    break;
+                default:
+                    //cluster.workers[msg.workerId].send({data: msg});
+                    logger.ERROR("Cannot find message target: " + msg.target);
             }
         }
     }
-};
-
-//Start the application.
-var wg = new WeatherGenie();
+})();

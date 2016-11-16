@@ -57,6 +57,9 @@
                                 callbacks[i](0);
                                 break;
                             default :
+                                if(data.level && data.level >= 0 && data.level <= 100){
+                                    callbacks[i](data.level);
+                                }
                         }
                     }
                 }
@@ -68,16 +71,6 @@
 
                 connectToWebsocket();
             };
-
-            //var height = 100;
-            //
-            //$interval(function(){
-            //    height!==0? height -= 25 : height = 100;
-            //
-            //    callbacks.forEach(function(cb){
-            //        cb(height)
-            //    });
-            //},10000);
         }
     }
 

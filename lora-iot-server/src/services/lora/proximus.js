@@ -1,11 +1,10 @@
 var Proximus = function() {
     var https           = require("https");
-    var messageFactory  = require("../../util/messagefactory").getInstance();
+    var messageFactory  = require("../../messaging/messagefactory").getInstance();
     var logger          = require("../../logging/logger").makeLogger("SERV-PROXIMUS--");
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Private variables.
     var host            = "api.enabling.be";
@@ -16,7 +15,7 @@ var Proximus = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.devices = function(request, response) {
+    this.devices = function devices(request, response) {
         logger.INFO("Listing registered LoRa devices.");
 
         var options = {
@@ -50,7 +49,7 @@ var Proximus = function() {
         }).end();
     };
 
-    this.buttonTrigger = function(request, response) {
+    this.buttonTrigger = function buttonTrigger(request, response) {
         logger.INFO("Request received for buttonTrigger...");
 
         switch (request.method) {
@@ -65,7 +64,7 @@ var Proximus = function() {
         }
     };
 
-    this.levelTrigger = function (request, response) {
+    this.levelTrigger = function levelTrigger(request, response) {
         logger.INFO("Request received for levelTrigger...");
 
         switch (request.method) {
@@ -80,38 +79,45 @@ var Proximus = function() {
         }
     };
 
-    this.levelFull = function (request, response) {
+    this.levelFull = function levelFull(request, response) {
         messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "FULL"});
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.write("Level set to FULL", null, 4);
         response.end();
     };
 
-    this.levelHigh = function (request, response) {
+    this.levelHigh = function levelHigh(request, response) {
         messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "HIGH"});
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.write("Level set to HIGH", null, 4);
         response.end();
     };
 
-    this.levelMedium = function (request, response) {
+    this.levelMedium = function levelMedium(request, response) {
         messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "MEDIUM"});
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.write("Level set to MEDIUM", null, 4);
         response.end();
     };
 
-    this.levelLow = function (request, response) {
+    this.levelLow = function levelLow(request, response) {
         messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "LOW"});
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.write("Level set to LOW", null, 4);
         response.end();
     };
 
-    this.levelEmpty = function (request, response) {
+    this.levelEmpty = function levelEmpty(request, response) {
         messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: "EMPTY"});
         response.writeHead(200, {'Content-Type': 'text/plain'});
         response.write("Level set to EMPTY", null, 4);
+        response.end();
+    };
+
+    this.levelExact = function levelExact(request, response, params) {
+        messageFactory.sendSimpleMessage(messageFactory.TARGET_INTERVAL_WORKER, "broadcastMessage", {level: params.level});
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write("Level set to " + params.level + "%", null, 4);
         response.end();
     };
 

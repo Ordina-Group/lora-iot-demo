@@ -1,6 +1,6 @@
 var RegisterService = function() {
     var logger          = require("../../logging/logger").makeLogger("SERV-REGISTE---");
-    var messageFactory  = require("../../util/messagefactory").getInstance();
+    var messageFactory  = require("../../messaging/messagefactory").getInstance();
 
     //Variables:
     var today           = null;
@@ -19,7 +19,7 @@ var RegisterService = function() {
      *                                        Public functions
      * ------------------------------------------------------------------------------------------------
      ------------------------------------------------------------------------------------------------*/
-    this.register = function(request, response) {
+    this.register = function register(request, response) {
         switch (request.method) {
             case "GET":
                 response.writeHead(200, {'Content-Type': 'text/plain'});

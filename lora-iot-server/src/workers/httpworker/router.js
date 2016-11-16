@@ -5,8 +5,7 @@ var Router = function(mappedEndpoints) {
     var path    = require('path');
 
     //Configuration.
-    var Config  = require("../../../resources/config");
-    var config  = new Config();
+    var config  = require("../../../resources/config").getInstance();
 
     //Private variables.
     var handles     = mappedEndpoints;
@@ -26,7 +25,7 @@ var Router = function(mappedEndpoints) {
      * @param request The request as sent by the client.
      * @param response The response to write to.
      */
-    this.route = function(pathName, request, response) {
+    this.route = function route(pathName, request, response) {
         if(isFile(pathName)) {
             //All files on the static file server should be located in the www folder!
             var fullPath = path.normalize(rootFolder + "/" + config.settings.webContentFolder + pathName);
@@ -104,7 +103,8 @@ var Router = function(mappedEndpoints) {
     }
 
     /**
-     * Will try and handle a rest endpoint.
+     * Will try and handle a rest endpoint. If any URL params have been defined, these will be extracted and passed to the actual endpoint.
+     * The name of each defined param will be used to store the value in a variable within the object that is passed!
      * Will generate a 404 when the requested rest endpoint cannot be found!
      * Will generate a 400 if the number of parameters does not match with the required number.
      *
@@ -115,7 +115,7 @@ var Router = function(mappedEndpoints) {
      */
     function tryAndHandleRestEndpoint(handles, pathName, request, response) {
         //Find one-on-one mappings without params.
-        if(typeof handles[pathName] === 'object') {
+        if(pathName.lastIndexOf("*") < 0 && typeof handles[pathName] === 'object') {
             logger.INFO("Handling REST request: " + pathName);
 
             handles[pathName].execute(request, response);
@@ -126,10 +126,16 @@ var Router = function(mappedEndpoints) {
                 logger.INFO("Handling REST request: " + pathName);
 
                 var endpoint = handles[correctedEndpoint];
-                var receivedParamCount = pathName.substring(pathName.lastIndexOf("/"), pathName.length).split("&").length;
+                var paramValues = pathName.substring(pathName.lastIndexOf("/") + 1, pathName.length).split("&");
 
-                if(endpoint.params.length === receivedParamCount) {
-                    endpoint.execute(request, response);
+                if(endpoint.params.length === paramValues.length) {
+                    var params = {};
+                    for(var i = 0; i < endpoint.params.length; i++) {
+                        params[endpoint.params[i]] = paramValues[i]
+                    }
+
+                    logger.INFO("Params for endpoint processed: " + JSON.stringify(params, null, 4));
+                    endpoint.execute(request, response, params);
                 } else {
                     displayError(response, 400, "Parameters incorrect => Required: " + JSON.stringify(endpoint.params), pathName);
                 }

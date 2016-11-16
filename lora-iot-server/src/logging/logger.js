@@ -48,7 +48,7 @@ function makeLogger(applicationPart) {
          *
          * @param message The message to print.
          */
-        INIT : function(message) {
+        INIT : function INIT(message) {
             log("INIT", message);
         },
         /**
@@ -56,7 +56,7 @@ function makeLogger(applicationPart) {
          *
          * @param message The message to print.
          */
-        INFO : function(message) {
+        INFO : function INFO(message) {
             log("INFO", message);
         },
         /**
@@ -64,7 +64,7 @@ function makeLogger(applicationPart) {
          *
          * @param message The message to print.
          */
-        DEBUG : function(message) {
+        DEBUG : function DEBUG(message) {
             log("DEBUG", message);
         },
         /**
@@ -72,7 +72,7 @@ function makeLogger(applicationPart) {
          *
          * @param message The message to print.
          */
-        WARNING : function(message) {
+        WARNING : function WARNING(message) {
             log("WARNING", message);
         },
         /**
@@ -81,7 +81,7 @@ function makeLogger(applicationPart) {
          *
          * @param message The message to print.
          */
-        ERROR : function(message) {
+        ERROR : function ERROR(message) {
             error("ERROR", message);
         }
     };

@@ -1,5 +1,5 @@
 var DataBrokerConstants = (function() {
-    var logger = require("../logging/logger").makeLogger("CONSTANTS------");
+    var logger = require("../../logging/logger").makeLogger("CONSTANTS------");
 
     //Private variables.
     var instance;
@@ -35,7 +35,7 @@ var DataBrokerConstants = (function() {
          * Returns the singleton instance.
          * @returns {*}
          */
-        getInstance: function () {
+        getInstance: function getInstance() {
             if (!instance) {
                 instance = init();
             }
